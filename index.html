@@ -3,42 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lusignan Project — Member Connection Map</title>
+<title>House of Lusignan — DNA Project</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7f4;color:#3d3d3a;padding:16px;}
-@media(prefers-color-scheme:dark){body{background:#141414;color:#c2c0b6;}}
-h1{font-size:16px;font-weight:600;margin-bottom:2px;}
-.subtitle{font-size:12px;color:#888;margin-bottom:12px;}
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f7f9;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #555555;
+  --color-border: #e0e0e0;
+  --accent: #1db085;
+}
 
-/* Tabs */
-#tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
-.tab-btn{font-size:11px;padding:5px 13px;border:1px solid #ccc;border-radius:20px;cursor:pointer;background:transparent;color:#888;font-family:inherit;transition:all 0.12s;}
-@media(prefers-color-scheme:dark){.tab-btn{border-color:#444;color:#777;}}
-.tab-btn.active{background:#3d3d3a;color:#fff;border-color:#3d3d3a;}
-@media(prefers-color-scheme:dark){.tab-btn.active{background:#c2c0b6;color:#141414;border-color:#c2c0b6;}}
-.tab-pane{display:none;} .tab-pane.active{display:block;}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #ffffff; color: #1a1a1a; padding: 16px; }
 
-/* Legend */
-.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
-.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:#888;}
-.lsw{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+/* ── Tabs ── */
+#tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; align-items: center; }
+.tab-btn { font-size: 11px; padding: 4px 14px; border: 1.5px solid #ccc; border-radius: 20px; cursor: pointer; font-weight: 500; background: transparent; color: #666; font-family: inherit; transition: all 0.12s; }
+.tab-btn:hover { border-color: #1db085; color: #1db085; }
+.tab-btn.active { background: #1db085; color: #fff !important; border-color: #1db085; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
 
-/* Info bar */
-.info-bar{min-height:34px;font-size:11px;color:#888;border-left:2px solid #ddd;padding-left:8px;margin-bottom:10px;line-height:1.6;}
-@media(prefers-color-scheme:dark){.info-bar{border-color:#333;}}
+/* ── Sub-tabs ── */
+.sub-tab-bar { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.sub-tab-btn { padding: 3px 10px; border-radius: 12px; border: 1.5px solid; font-size: 10px; font-weight: 500; cursor: pointer; background: transparent; font-family: inherit; transition: all 0.12s; }
+.sub-tab-btn.active { color: #fff !important; }
 
-/* Buttons */
-.btn-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
-.mbtn{font-size:10px;padding:3px 10px;border:2px solid;border-radius:16px;cursor:pointer;font-weight:500;transition:all 0.12s;background:transparent;font-family:inherit;}
-.mbtn.on{color:#fff !important;}
-.mbtn.dim{opacity:0.2;}
+/* ── Legend ── */
+.legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #666; }
+.lsw { width: 10px; height: 10px; border-radius: 2px; }
 
-/* Tooltip */
-#tt{position:fixed;background:#fff;border:0.5px solid #ddd;border-radius:8px;padding:9px 11px;font-size:11px;color:#333;pointer-events:none;z-index:999;max-width:290px;display:none;line-height:1.75;box-shadow:0 4px 16px rgba(0,0,0,0.12);}
-@media(prefers-color-scheme:dark){#tt{background:#1e1e1e;border-color:#333;color:#c2c0b6;}}
+/* ── Info bar ── */
+.info-bar { background: #f8fafc; border: 1px solid #e8ecf0; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #555; margin-bottom: 10px; line-height: 1.6; }
 
-/* Chromosome browser */
+/* ── Instruction box ── */
+.instr { background: #f8fafc; border: 1px solid #e8ecf0; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #444; line-height: 1.7; margin-bottom: 12px; }
+
+/* ── Buttons ── */
+.btn-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.mm-btn, .mbtn { font-size: 10px; padding: 3px 10px; border: 2px solid; border-radius: 16px; cursor: pointer; font-weight: 500; transition: all 0.12s; background: transparent; font-family: inherit; }
+.mm-btn.on, .mbtn.on { color: #fff !important; }
+.mm-btn.dim, .mbtn.dim { opacity: 0.2; }
+
+/* ── Canvas ── */
+#mm-canvas { display: block; width: 100%; border-radius: 8px 8px 0 0; }
+
+/* ── MRCA Panel ── */
+#mrca-panel { display: none; border-top: 1px solid #e0e0e0; background: #f8fafc; border-radius: 0 0 10px 10px; max-height: 420px; overflow-y: auto; }
+
+/* ── Tooltip ── */
+#tt { position: fixed; background: #ffffff; border: 1px solid #ddd; border-radius: 8px; padding: 9px 11px; font-size: 11px; color: #333; pointer-events: none; z-index: 999; max-width: 270px; display: none; line-height: 1.75; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+/* ── Family grid ── */
+.fam-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.fam-card { background: #f8fafc; border-radius: 10px; padding: 14px; border-top: 2px solid #ddd; }
+.fam-card h3 { font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+
+/* ── Ethnicity ── */
+.eth-parse-btn { font-size: 10px; padding: 4px 10px; border: 1.5px solid #1db085; border-radius: 8px; cursor: pointer; background: transparent; color: #1db085; font-family: inherit; }
+.eth-parse-btn:hover { background: #1db085; color: #fff; }
+.eth-member-block { margin-bottom: 16px; }
+.eth-member-header { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 0; font-size: 11px; font-weight: 600; }
+
+/* ── Chrom browser ── */
+#chrom-browser { overflow-x: auto; }
+
+/* ── Notes ── */
+.notes-group { margin-bottom: 12px; }
+.notes-group label { font-size: 10px; font-weight: 600; color: #555; display: block; margin-bottom: 4px; }
+.notes-group textarea { width: 100%; font-size: 10px; border: 1px solid #ddd; border-radius: 6px; padding: 7px 9px; resize: vertical; min-height: 60px; line-height: 1.5; font-family: inherit; }
+
+/* ── Eth copy btn ── */
+.eth-copy-btn { font-size: 9px; padding: 2px 8px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; background: #fff; color: #555; font-family: inherit; }
+
+/* ── Chromosome Browser CSS (restored) ── */
 .chrom-section{margin-bottom:22px;}
 .chrom-title{font-size:11px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:8px;}
 .tri-badge{font-size:9px;background:#e67e2222;color:#e67e22;border:1px solid #e67e2255;border-radius:10px;padding:1px 7px;}
@@ -46,123 +86,107 @@ h1{font-size:16px;font-weight:600;margin-bottom:2px;}
 .member-row-label{font-size:9px;width:90px;text-align:right;padding-right:7px;flex-shrink:0;line-height:11px;padding-top:1px;}
 .track-outer{position:relative;flex:1;}
 .track-bg{height:11px;background:#e8e7e4;border-radius:3px;position:relative;}
-@media(prefers-color-scheme:dark){.track-bg{background:#2a2a2a;}}
 .seg-bar{position:absolute;height:11px;border-radius:2px;top:0;cursor:pointer;transition:opacity 0.1s;}
-.seg-bar:hover{opacity:1!important;z-index:10;}
-/* Ethnicity row — shown below the segment bar, clearly visible */
 .eth-row-wrap{display:flex;align-items:center;margin-bottom:1px;}
 .eth-row-label{font-size:8px;width:90px;text-align:right;padding-right:7px;flex-shrink:0;color:#aaa;font-style:italic;}
 .eth-row{height:8px;border-radius:2px;position:relative;overflow:hidden;flex:1;}
 .eth-seg{position:absolute;height:8px;top:0;cursor:default;}
-/* Triangulation group — shown BELOW all member rows as a coloured bar with label */
 .tri-group-row{display:flex;align-items:center;margin-top:3px;}
 .tri-group-spacer{width:90px;flex-shrink:0;}
 .tri-group-track{position:relative;flex:1;height:14px;}
 .tri-group-bar{position:absolute;height:6px;top:4px;border-radius:3px;background:#e67e22;opacity:0.35;}
 .tri-group-label{position:absolute;top:0;font-size:8px;color:#e67e22;white-space:nowrap;font-weight:600;}
-.missing-badge{display:inline-block;font-size:9px;background:#e7531822;color:#c44820;border:1px solid #c4482055;border-radius:8px;padding:1px 7px;margin-left:6px;cursor:help;}
-
-/* Family panel */
-.fam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
-.fam-card{border:1px solid #ddd;border-radius:10px;padding:10px 12px;background:#fff;position:relative;}
-@media(prefers-color-scheme:dark){.fam-card{border-color:#333;background:#1e1e1e;}}
-.fam-card.missing-parent{border-color:#e67e2266;background:#e67e2208;}
-.fam-name{font-size:12px;font-weight:600;margin-bottom:6px;}
 .fam-row{font-size:10px;color:#888;line-height:1.9;display:flex;gap:6px;align-items:flex-start;}
 .fam-label{color:#aaa;width:80px;flex-shrink:0;}
 .fam-value{color:#3d3d3a;flex:1;}
-@media(prefers-color-scheme:dark){.fam-value{color:#c2c0b6;}}
 .fam-tag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:8px;margin-right:3px;margin-bottom:2px;}
-.phasing-tag{background:#1db08522;color:#1db085;border:1px solid #1db08544;}
-.missing-tag{background:#e67e2222;color:#e67e22;border:1px solid #e67e2244;}
-.tested-tag{background:#378ADD22;color:#378ADD;border:1px solid #378ADD44;}
 .fam-request{font-size:10px;color:#888;background:#f8f7f4;border-radius:6px;padding:8px 10px;margin-top:8px;border-left:2px solid #ddd;line-height:1.6;}
-@media(prefers-color-scheme:dark){.fam-request{background:#252525;border-color:#444;}}
-
-/* Ethnicity */
-.upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:14px;}
-.upload-card{border:1px solid #ddd;border-radius:8px;padding:8px 10px;cursor:pointer;position:relative;transition:all 0.12s;}
-@media(prefers-color-scheme:dark){.upload-card{border-color:#333;}}
-.upload-card:hover{border-color:#888;}
-.upload-card.loaded{border-color:#1db085;background:#1db08508;}
-.uc-name{font-size:11px;font-weight:500;margin-bottom:2px;}
-.uc-status{font-size:10px;color:#aaa;}
-.upload-card.loaded .uc-status{color:#1db085;}
-.hidden-input{position:absolute;inset:0;opacity:0;cursor:pointer;}
-.eth-pop-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
-.eth-member-block{margin-bottom:8px;border:1px solid #ddd;border-radius:10px;overflow:hidden;}
-@media(prefers-color-scheme:dark){.eth-member-block{border-color:#333;}}
-.eth-member-header{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;background:#f0efec;user-select:none;}
-@media(prefers-color-scheme:dark){.eth-member-header{background:#1e1e1e;}}
-.eth-member-header:hover{background:#e8e7e4;}
-@media(prefers-color-scheme:dark){.eth-member-header:hover{background:#252525;}}
-.eth-member-name{font-size:11px;font-weight:500;flex:1;}
-.eth-status-pill{font-size:9px;padding:2px 8px;border-radius:10px;background:#e8e7e4;color:#888;}
-@media(prefers-color-scheme:dark){.eth-status-pill{background:#2a2a2a;}}
-.eth-status-pill.loaded{background:#1db08522;color:#1db085;border:1px solid #1db08544;}
-.eth-paste-area{padding:10px 12px;display:none;border-top:1px solid #eee;}
-@media(prefers-color-scheme:dark){.eth-paste-area{border-color:#333;}}
-.eth-paste-area.open{display:block;}
-.eth-ta{width:100%;font-size:10px;border:1px solid #ddd;border-radius:6px;padding:7px 9px;background:transparent;color:inherit;font-family:'Courier New',monospace;resize:vertical;min-height:90px;line-height:1.45;}
-@media(prefers-color-scheme:dark){.eth-ta{border-color:#333;}}
-.eth-ta:focus{outline:none;border-color:#888;}
-.eth-parse-btn{font-size:10px;padding:4px 13px;border:1px solid #ddd;border-radius:12px;cursor:pointer;background:transparent;color:#888;font-family:inherit;transition:all 0.12s;}
-.eth-parse-btn:hover{border-color:#1db085;color:#1db085;}
-.eth-parse-msg{font-size:10px;color:#888;}
-
-/* Notes */
-.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
-.note-card{border:1px solid #ddd;border-radius:10px;padding:10px 12px;background:#fff;}
-@media(prefers-color-scheme:dark){.note-card{border-color:#333;background:#1e1e1e;}}
-.note-title{font-size:11px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
-.note-ta{width:100%;font-size:11px;border:1px solid #ddd;border-radius:6px;padding:6px 8px;background:transparent;color:inherit;font-family:inherit;resize:vertical;min-height:80px;line-height:1.5;}
-@media(prefers-color-scheme:dark){.note-ta{border-color:#333;}}
-.note-ta:focus{outline:none;border-color:#888;}
-.note-meta{font-size:9px;color:#aaa;margin-top:3px;}
-.note-save{font-size:10px;padding:3px 10px;border:1px solid #ddd;border-radius:12px;cursor:pointer;background:transparent;color:#888;font-family:inherit;transition:all 0.12s;margin-top:4px;}
-.note-save:hover{border-color:#1db085;color:#1db085;}
-.note-saved{color:#1db085;border-color:#1db085;}
-
-/* Instruction box */
-.instr{font-size:11px;color:#888;background:#f0efec;border-radius:8px;padding:10px 12px;margin-bottom:12px;line-height:1.7;}
-@media(prefers-color-scheme:dark){.instr{background:#1e1e1e;}}
-.instr strong{color:#3d3d3a;}
-@media(prefers-color-scheme:dark){.instr strong{color:#c2c0b6;}}
-
-/* General */
-canvas{display:block;width:100%;}
-input[type=text],input[type=date]{font-family:inherit;font-size:11px;border:1px solid #ddd;border-radius:6px;padding:4px 8px;background:transparent;color:inherit;width:100%;}
-@media(prefers-color-scheme:dark){input[type=text],input[type=date]{border-color:#333;}}
+.fam-card{border:1px solid #ddd;border-radius:10px;padding:10px 12px;background:#fff;position:relative;}
+.fam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+.tested-tag{background:#378ADD22;color:#378ADD;border:1px solid #378ADD44;}
 </style>
 </head>
 <body>
-<h1>House of Lusignan — Member Connection Map</h1>
-<p class="subtitle">11 project members · 62 shared DNA segments (4cM+) · Phased across 6 family groups</p>
+<script>
+(function(){
+  const correct='lusignan1099';
+  const key='lusignan_auth';
+  if(sessionStorage.getItem(key)===correct)return;
+  const overlay=document.createElement('div');
+  overlay.id='pw-overlay';
+  overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#f0f2f5;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;';
+  overlay.innerHTML=`
+    <div style="text-align:center;max-width:380px;padding:40px;background:white;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.12);">
+      <div style="font-size:36px;margin-bottom:8px;">⚜</div>
+      <div style="font-size:18px;font-weight:700;color:#2C1A0E;margin-bottom:4px;">House of Lusignan</div>
+      <div style="font-size:12px;color:#888;margin-bottom:4px;">DNA Project — Member Portal</div>
+      <div style="font-size:10px;color:#B8963E;margin-bottom:20px;font-style:italic;">Pour Loyauté Maintenir · Lux in Domino</div>
+      <div style="font-size:11px;color:#555;margin-bottom:16px;line-height:1.6;">
+        Connecting 11 descendants across 4 continents through DNA and documentary genealogy. 
+        Tracing the daughters of the House of Lusignan from 885 AD to the present day.
+      </div>
+      <input id="pw-input" type="password" placeholder="Enter project password" 
+        style="width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;box-sizing:border-box;margin-bottom:8px;outline:none;"
+        onkeydown="if(event.key==='Enter')document.getElementById('pw-btn').click()">
+      <button id="pw-btn" onclick="
+        const v=document.getElementById('pw-input').value;
+        if(v==='${correct}'){sessionStorage.setItem('${key}',v);document.getElementById('pw-overlay').remove();}
+        else{document.getElementById('pw-err').style.display='block';}"
+        style="width:100%;padding:10px;background:#B8963E;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;">
+        Enter Project
+      </button>
+      <div id="pw-err" style="display:none;font-size:11px;color:#c44820;">Incorrect password. Please contact the project administrator.</div>
+      <div style="margin-top:16px;font-size:10px;color:#aaa;">
+        <a href="https://ko-fi.com/allelio" target="_blank" style="color:#B8963E;text-decoration:none;">♥ Support Allelio</a>
+        · <a href="mailto:elizabeth@klbr8.com" style="color:#aaa;text-decoration:none;">Contact</a>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+})();
+</script>
+
+<div style="max-width:1100px;margin:0 auto;padding:12px;">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+  <div>
+    <div style="font-size:15px;font-weight:700;color:var(--color-text-primary,#2C1A0E);">⚜ House of Lusignan — DNA Project</div>
+    <div style="font-size:10px;color:#888;">11 members · 62 shared segments · 885 AD → present</div>
+  </div>
+  <a href="https://ko-fi.com/allelio" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:#FF5E5B;color:#fff;border-radius:16px;font-size:11px;font-weight:500;text-decoration:none;">♥ Support Allelio</a>
+</div>
+
 <div id="tabs">
   <button class="tab-btn active" onclick="showTab('mindmap',this)">🕸 Connections</button>
-  <button class="tab-btn" onclick="showTab('chrom',this)">🧬 Chromosomes</button>
-  <button class="tab-btn" onclick="showTab('ethnicity',this)">🌍 Ethnicity</button>
-  <button class="tab-btn" onclick="showTab('family',this)">👨‍👩‍👧 Family</button>
+  <button class="tab-btn" onclick="showTab('chrom',this)">🧬 DNA</button>
+  <button class="tab-btn" onclick="showTab('family',this)">👥 Members</button>
+  <button class="tab-btn" onclick="showTab('mothers',this)">👸 Mothers</button>
+  <button class="tab-btn" onclick="showTab('lineage',this)">👑 Royal Ancestry</button>
   <button class="tab-btn" onclick="showTab('notes',this)">📝 Notes</button>
-  <a href="https://ko-fi.com/allelio" target="_blank" style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:4px 12px;background:#FF5E5B;color:#fff;border-radius:16px;font-size:11px;font-weight:500;text-decoration:none;white-space:nowrap;">♥ Support Allelio</a>
 </div>
-<div id="tt"></div>
 
-<!-- ══════════════ TAB 1: MIND MAP ══════════════ -->
+<!-- ══════════════ TAB 1: CONNECTIONS ══════════════ -->
 <div id="tab-mindmap" class="tab-pane active">
 <div class="legend">
-  <div class="leg"><div class="lsw" style="background:#1db085"></div>Maternal line — confirmed via phasing</div>
-  <div class="leg"><div class="lsw" style="background:#5ba8d4"></div>Maternal line — confirmed via parent</div>
-  <div class="leg"><div class="lsw" style="background:#c44820"></div>Paternal line — confirmed via phasing</div>
+  <div class="leg"><div class="lsw" style="background:#1db085"></div>Maternal — confirmed via phasing</div>
+  <div class="leg"><div class="lsw" style="background:#5ba8d4"></div>Maternal — confirmed via parent</div>
+  <div class="leg"><div class="lsw" style="background:#c44820"></div>Paternal — confirmed via phasing</div>
   <div class="leg"><div class="lsw" style="background:#888;border:1px dashed #bbb"></div>Unresolved</div>
 </div>
-<div class="info-bar" id="mm-info">Click any member to focus on their connections. Click again to reset. Hover segment circles for phasing detail.</div>
+<div class="info-bar" id="mm-info">Click any member to focus on connections. Shift+click a second member to compare MRCA.</div>
 <div class="btn-row" id="mm-btns"></div>
-<canvas id="mm-canvas"></canvas>
+<div style="border-radius:10px;overflow:hidden;border:1px solid var(--color-border);">
+  <canvas id="mm-canvas"></canvas>
+  <div id="mrca-panel"></div>
+</div>
 </div>
 
-<!-- ══════════════ TAB 2: CHROMOSOMES ══════════════ -->
+<!-- ══════════════ TAB 2: CHROMOSOMES + ETHNICITY ══════════════ -->
 <div id="tab-chrom" class="tab-pane">
+<div class="sub-tab-bar">
+  <button class="sub-tab-btn active" id="subtab-chrom-btn" onclick="switchSubTab('chrom')" style="border-color:#1db085;color:#1db085;">🧬 Chromosomes</button>
+  <button class="sub-tab-btn" id="subtab-eth-btn" onclick="switchSubTab('eth')" style="border-color:#9b59b6;color:#9b59b6;">🌍 Ethnicity</button>
+</div>
+<div id="subtab-chrom-content">
+<div id="chrom-inner">
 <div class="legend">
   <div class="leg"><div class="lsw" style="background:#1db085"></div>Maternal (phasing)</div>
   <div class="leg"><div class="lsw" style="background:#5ba8d4"></div>Maternal (parent)</div>
@@ -170,13 +194,24 @@ input[type=text],input[type=date]{font-family:inherit;font-size:11px;border:1px 
   <div class="leg"><div class="lsw" style="background:#888;border:1px dashed #bbb"></div>Unresolved</div>
   <div class="leg"><div class="lsw" style="background:#e67e22;border-radius:0;"></div>Triangulation group</div>
 </div>
-<div class="info-bar">Shared segments plotted per chromosome in order 1–22, X. Orange brackets = triangulation groups (3+ members sharing the same ancestral region). Hover any segment for details.<br><span style="font-size:10px;opacity:0.8">⚠ Ethnicity bands show the <strong>whole-chromosome average</strong> from Eurogenes K13 — not the exact base-pair position of each segment. For position-level ethnicity, run GEDmatch "Paint differences between 2 kits, 1 chromosome" and record observations in the Notes tab.</span><br><span style="font-size:10px;opacity:0.8">🏹 <strong>Amerindian</strong> in K13 reflects genuine Native American ancestry for members where this is confirmed (Deanna, Mindy, Mary, Elizabeth). For others it may be unresolved — check the Family tab.</span></div>
+<div class="info-bar">Shared segments plotted per chromosome in order 1–22, X. Orange brackets = triangulation groups (3+ members sharing the same ancestral region). Hover any segment for details.<br><span style="font-size:10px;opacity:0.8">⚠ Ethnicity bands show the <strong>whole-chromosome average</strong> from Eurogenes K13 — not the exact base-pair position of each segment. For position-level ethnicity, run GEDmatch "Paint differences between 2 kits, 1 chromosome" and record observations in the Notes tab.</span><br><span style="font-size:10px;opacity:0.8">🏹 <strong>Amerindian</strong> in K13 reflects genuine technical population label. For Richard (Costa Rican/Spanish heritage) it reflects Mesoamerican ancestry. For others it may reflect ancient pre-Columbian or deep Eurasian population signals.</div>
 <div class="btn-row" id="ch-filter-btns"></div>
 <div id="chrom-browser"></div>
+
+<div id="bp-groups-panel" style="margin-top:12px;">
+  <div style="font-size:11px;font-weight:600;color:#1a1a1a;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+    🔬 Base Pair Triangulation Groups
+    <span style="font-size:9px;font-weight:400;color:#888;">3+ members sharing overlapping segments on the same chromosome</span>
+  </div>
+  <div id="bp-groups-content"></div>
 </div>
 
-<!-- ══════════════ TAB 3: ETHNICITY ══════════════ -->
-<div id="tab-ethnicity" class="tab-pane">
+</div>
+
+
+</div>
+<div id="subtab-eth-content" style="display:none;">
+<div id="tab-ethnicity-inner">
 <div class="instr">
   <strong>Ethnicity data is preloaded for all 11 members (Eurogenes K13).</strong> The coloured bands visible in the Chromosomes tab show the <strong>whole-chromosome average</strong> — useful for seeing which population dominates each chromosome, but not pinpointed to the exact base-pair position of each shared segment.<br><br>
   <strong>For position-level ethnicity:</strong> Go to GEDmatch → Admixture (Heritage) → <em>"Paint differences between 2 kits, 1 chromosome"</em>. Run this between two members who share a segment on a specific chromosome — the painter shows exactly which population colour appears at that location. Record your observations in <strong>Notes → Chromosome Painter observations</strong>.<br><br>
@@ -200,62 +235,153 @@ input[type=text],input[type=date]{font-family:inherit;font-size:11px;border:1px 
 </div>
 </div>
 
-<!-- ══════════════ TAB 4: FAMILY PANEL ══════════════ -->
-<div id="tab-family" class="tab-pane">
-<div class="instr">
-  <strong>Help us build the family picture.</strong> The information below shows what we currently know about each member's family. Please review your own card and let the project administrator know:<br>
-  · Your earliest known ancestors (names, locations, dates)<br>
-  · Whether your parents or grandparents have DNA tested<br>
-  · Any known family surnames or places that might connect to other members<br><br>
-  Members with a parent who has <strong>not yet tested</strong> are flagged — adding a parent's kit would help resolve currently unresolved segment connections.
+
 </div>
+</div>
+
+<!-- ══════════════ TAB 3: MEMBERS ══════════════ -->
+<div id="tab-family" class="tab-pane">
+<div class="info-bar"><strong>Member profiles</strong> — phasing kits, Heritage Quest progress, verification levels and descent notes. Notes are private to your device.</div>
 <div class="fam-grid" id="fam-grid"></div>
 </div>
 
-<!-- ══════════════ TAB 5: NOTES ══════════════ -->
+<!-- ══════════════ TAB 4: LUSIGNAN MOTHERS ══════════════ -->
+<div id="tab-mothers" class="tab-pane">
+<div class="instr">
+  <strong>Lusignan Mothers — The Daughters of the House</strong><br><br>
+  The Lusignan genetic legacy spread primarily through its daughters, who married into noble families across Europe. Each marriage carried Lusignan blood into new territories — England, Scotland, Savoy, Cyprus, the Holy Land, and eventually New France and New England. The 21 documented Lusignan mothers below represent the principal transmission points from the medieval dynasty to living descendants.<br><br>
+  <em style="font-size:11px;color:#888;">Geni profile links to be added as research progresses. Click "See Elizabeth's descent" on any mother to view the documented pathway in the Royal Ancestry tab.</em>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;" id="lusignan-mothers-grid"></div>
+</div>
+
+<!-- ══════════════ TAB 5: ROYAL ANCESTRY ══════════════ -->
+<div id="tab-lineage" class="tab-pane">
+<div class="instr">
+  <strong>Royal Ancestry & Descent Lines</strong><br><br>
+  Documented descent lines connecting project members to the House of Lusignan and royal gateways. Elizabeth's lines are the most fully documented. Other members' confirmed connections will be added as research progresses. Verification levels run IV (in research) → I (fully documented).<br><br>
+  <em style="font-size:11px;color:#888;">"Ancestry without record becomes legend. Record without formation becomes pride. But record joined with stewardship becomes continuity." — Pour Loyauté Maintenir · Lux in Domino</em>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;" id="member-lineage-tabs"></div>
+<div id="member-lineage-content"></div>
+<div id="elizabeth-lineage-detail" style="display:none;margin-top:16px;">
+
+  <div style="font-size:11px;font-weight:600;color:#B8963E;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #B8963E22;">
+    ⚜ Elizabeth Hollands — Full Lineage Research
+  </div>
+
+  <!-- 4 Lines from Jeanne -->
+  <div style="margin-bottom:14px;">
+    <div style="font-size:10px;font-weight:600;color:#2C1A0E;margin-bottom:8px;">👑 Descent from Jeanne de Lusignan (c.1260–1323) — 3 Lines via Joan de Geneville</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">
+
+      <div style="background:#fff8f0;border-radius:8px;padding:12px;border-left:3px solid #c44820;">
+        <div style="font-size:10px;font-weight:600;color:#c44820;margin-bottom:4px;">Line A — Audley/Stoughton</div>
+        <div style="font-size:9px;color:#555;line-height:1.7;">Jeanne → Joan de Geneville → Joan de Mortimer → Audley → Touchet → <strong style="color:#c44820;">⚠ Combe/Baskerville gap</strong> → Stoughton → Rose Otis → Poitevin → Tremblay → Elizabeth</div>
+        <div style="margin-top:6px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:#c4482022;color:#c44820;">⚠ Level II — Gap pending</div>
+      </div>
+
+      <div style="background:#fff8f0;border-radius:8px;padding:12px;border-left:3px solid #c44820;">
+        <div style="font-size:10px;font-weight:600;color:#c44820;margin-bottom:4px;">Line B — Grandison/Stoughton</div>
+        <div style="font-size:9px;color:#555;line-height:1.7;">Jeanne → Joan de Geneville → <strong>Blanche de Mortimer</strong> (different daughter) → Grandison → Stoughton → Rose Otis → Poitevin → Tremblay → Elizabeth</div>
+        <div style="margin-top:6px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:#c4482022;color:#c44820;">⚠ Level II — Same gap, different Mortimer daughter</div>
+      </div>
+
+      <div style="background:#f0f4ff;border-radius:8px;padding:12px;border-left:3px solid #378ADD;">
+        <div style="font-size:10px;font-weight:600;color:#378ADD;margin-bottom:4px;">Line C — Mortimer/Boteler (Scottish)</div>
+        <div style="font-size:9px;color:#555;line-height:1.7;">Jeanne → Joan de Geneville → Roger Mortimer 2nd Earl → Joan de Boteler → Scottish Ross → <strong>Simon Ross of Gladfield</strong> (b.1728) → Elizabeth</div>
+        <div style="margin-top:6px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:#1db08522;color:#1db085;">✓ Level II — World Tree confirmed</div>
+      </div>
+
+      <div style="background:#f0f4ff;border-radius:8px;padding:12px;border-left:3px solid #378ADD;">
+        <div style="font-size:10px;font-weight:600;color:#378ADD;margin-bottom:4px;">Line D — Mortimer/Beauchamp (Scottish)</div>
+        <div style="font-size:9px;color:#555;line-height:1.7;">Jeanne → Joan de Geneville → Katherine Mortimer → Thomas de Beauchamp, Earl of Warwick → Scottish Ross → <strong>Simon Ross of Gladfield</strong> (b.1728) → Elizabeth</div>
+        <div style="margin-top:6px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:#1db08522;color:#1db085;">✓ Level II — World Tree confirmed</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Agnes Paternal Line -->
+  <div style="margin-bottom:14px;">
+    <div style="font-size:10px;font-weight:600;color:#2C1A0E;margin-bottom:8px;">🔴 Paternal Line — Agnes de Lusignan (b.1230) via Drouin</div>
+    <div style="background:#fff8f0;border-radius:8px;padding:12px;border-left:3px solid #c44820;">
+      <div style="font-size:9px;color:#555;line-height:1.8;">
+        Elizabeth → Brian Hollands → Irene Muncey → Cécile Deschênes → Marie-Alpheda Sasseville → Demerise Brassard → Catherine Gagnon → Joseph-Marie Gagnon → Marguerite Drouin → Robert Drouin → <strong>Clementine de Balzac</strong> (b.1530) → Guillaume de Balzac → Pierre de Balzac → <strong>Antoinette de Castelnau-Caylus</strong> (1445–1494) → Catherine de Chauvigny → Guy II → Guy I → André de Chauvigny II → <strong>Guillaume de Chauvigny III</strong> (b.1250) → <strong style="color:#c44820;">Agnes de Lusignan</strong> (b.1230 d.1256)
+      </div>
+      <div style="margin-top:6px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:#9b59b622;color:#9b59b6;">⭐ Agnes = daughter of Hugh X + Isabelle d'Angoulême (former wife of King John of England)</div>
+      <div style="margin-top:4px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:#1db08522;color:#1db085;">✓ Level III — GEDCOM confirmed (46,312 person tree)</div>
+    </div>
+  </div>
+
+  <!-- Royal Gateways -->
+  <div style="margin-bottom:14px;">
+    <div style="font-size:10px;font-weight:600;color:#2C1A0E;margin-bottom:8px;">👑 Royal Gateways — Confirmed</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;">
+
+      <div style="background:#f9f9f9;border-radius:8px;padding:10px;border-left:3px solid #e8954a;">
+        <div style="font-size:10px;font-weight:600;color:#e8954a;margin-bottom:3px;">Anne Couvent (b.1604) — Maternal</div>
+        <div style="font-size:9px;color:#555;line-height:1.6;">→ Isabella de Lusignan via Craon → Mauny → Maridor<br>Gateways: Louis VIII France · Henry III England · Frederick Barbarossa · Amalric I Jerusalem · Baldwin I Constantinople · Fernando III Castile · Thibault I Navarre</div>
+        <div style="margin-top:5px;font-size:9px;color:#888;">Source: Gagné &amp; Kokanosky (2007)</div>
+      </div>
+
+      <div style="background:#f9f9f9;border-radius:8px;padding:10px;border-left:3px solid #2e8b57;">
+        <div style="font-size:10px;font-weight:600;color:#2e8b57;margin-bottom:3px;">Catherine de Baillon (b.1645) — Paternal</div>
+        <div style="font-size:9px;color:#555;line-height:1.6;">→ Emenon de Lusignan via Marle → Picquigny → Mortimer → Thouars<br>42 Byzantine ancestors incl. full Laskaris dynasty · Charlemagne · Edward I · Alfonso IX · Grimaldi Monaco</div>
+        <div style="margin-top:5px;font-size:9px;color:#888;">Source: SGCF + John P. DuLong</div>
+      </div>
+
+      <div style="background:#f9f9f9;border-radius:8px;padding:10px;border-left:3px solid #c44820;">
+        <div style="font-size:10px;font-weight:600;color:#c44820;margin-bottom:3px;">Rose Stoughton (b.1629) — Maternal</div>
+        <div style="font-size:9px;color:#555;line-height:1.6;">→ Jeanne de Lusignan via Geneville → Mortimer → Audley → Stoughton<br>Henry III England · House of Lancaster · Magna Carta barons · Stewart Kings of Scotland</div>
+        <div style="margin-top:5px;font-size:9px;color:#888;">Source: Douglas Richardson, Plantagenet Ancestry</div>
+      </div>
+
+      <div style="background:#f9f9f9;border-radius:8px;padding:10px;border-left:3px solid #378ADD;">
+        <div style="font-size:10px;font-weight:600;color:#378ADD;margin-bottom:3px;">Anne Leneuf (b.c.1632) — Maternal</div>
+        <div style="font-size:9px;color:#555;line-height:1.6;">→ Eudes Grande Oreille de Lusignan via Le Marchand → Conteville → Saxe → Babenberg (31 generations)<br>Henry III England · Baldwin V Flanders · Dukes of Normandy</div>
+        <div style="margin-top:5px;font-size:9px;color:#888;">Source: GEDCOM confirmed + Mémoires SGCF</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Potential connections -->
+  <div style="margin-bottom:8px;">
+    <div style="font-size:10px;font-weight:600;color:#2C1A0E;margin-bottom:8px;">🔬 Potential Connections — In Research (all in GEDCOM as direct lines)</div>
+    <div style="background:#fffbf0;border-radius:8px;padding:10px;border-left:3px solid #f39c12;font-size:9px;color:#555;line-height:1.8;">
+      <strong style="color:#f39c12;">Pierre de Comeau II</strong> — DNA confirmed, documentation pending · Claude de Lorraine + Antoinette de Bourbon → Mary of Guise · House of Lorraine/Bourbon<br>
+      <strong style="color:#f39c12;">Jean de Bourbon</strong> — Bourbon connection · Iron Mask stories<br>
+      <strong style="color:#f39c12;">Lavoie/Savoie</strong> — Jacques de Savoie Duke of Nemours confirmed in GEDCOM · surname change on arrival in New France plausible<br>
+      <strong style="color:#f39c12;">Judith Rigaud</strong> — François de Rohan-Gié + Catherine de Silly de la Roche<br>
+      <strong style="color:#f39c12;">Robert Paré</strong> — Hypothetical Marguerite Arginet de Valois → Henry II France
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 6: NOTES ══════════════ -->
 <div id="tab-notes" class="tab-pane">
-<div class="info-bar">Research notes per member and per triangulation group. Notes are saved locally in your browser.</div>
+<div class="info-bar">Research notes per member and per triangulation group. Notes are saved privately on your device only — not visible to other members.</div>
 <div id="notes-container"></div>
+
+<div id="tt"></div>
 </div>
 
 <script>
-(function(){
-  const correct='lusignan1099';
-  const key='lusignan_auth';
-  if(sessionStorage.getItem(key)===correct) return;
-  const overlay=document.createElement('div');
-  overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#f8f7f4;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;';
-  overlay.innerHTML=`<div style="text-align:center;max-width:340px;padding:40px;">
-    <div style="font-size:32px;margin-bottom:12px;">🏰</div>
-    <h2 style="font-size:18px;font-weight:600;margin-bottom:4px;color:#3d3d3a;">House of Lusignan</h2>
-    <p style="font-size:12px;color:#888;margin-bottom:24px;">DNA Connection Project — Members Only</p>
-    <input id="pw-input" type="password" placeholder="Enter project password" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;outline:none;box-sizing:border-box;margin-bottom:10px;">
-    <button id="pw-btn" style="width:100%;padding:10px;background:#3d3d3a;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;">Enter</button>
-    <p id="pw-err" style="font-size:11px;color:#c44820;margin-top:8px;display:none;">Incorrect password. Contact the project administrator.</p>
-  </div>`;
-  document.addEventListener('DOMContentLoaded',function(){
-    document.body.appendChild(overlay);
-    const input=document.getElementById('pw-input');
-    const btn=document.getElementById('pw-btn');
-    const err=document.getElementById('pw-err');
-    function check(){
-      if(input.value===correct){
-        sessionStorage.setItem(key,correct);
-        overlay.remove();
-      } else {
-        err.style.display='block';
-        input.value='';
-        input.focus();
-      }
-    }
-    btn.addEventListener('click',check);
-    input.addEventListener('keydown',function(e){if(e.key==='Enter')check();});
-    input.focus();
-  });
-})();
-</script>
 
-<script>
+
+
+
+
+
+// Track shift key for MRCA pair selection
+window._shiftHeld=false;
+window.addEventListener('keydown',e=>{if(e.key==='Shift')window._shiftHeld=true;});
+window.addEventListener('keyup',e=>{if(e.key==='Shift')window._shiftHeld=false;});
+
 // ══════════════ SHARED DATA ══════════════
 const MEMBERS=['Aaron Parry','Cary','*Deanna Wood','Diana Folk','Elizabeth Hollands','Gregory Fellows','*Martin Lindner','Mary Doonan','*Mindy','Richard Smith','*Sarah Lindner'];
 const MCOL={'Aaron Parry':'#c44820','Cary':'#2e8b57','*Deanna Wood':'#7F77DD','Diana Folk':'#1db085','Elizabeth Hollands':'#378ADD','Gregory Fellows':'#e67e22','*Martin Lindner':'#9b59b6','Mary Doonan':'#e8954a','*Mindy':'#17a589','Richard Smith':'#2471a3','*Sarah Lindner':'#cb4335'};
@@ -263,17 +389,17 @@ const COL={'mom-at':'#1db085','mom':'#5ba8d4','dad':'#c44820','unresolved':'#888
 const SIDE_LABEL={'mom-at':'Maternal (confirmed via phasing)','mom':'Maternal (confirmed via parent)','dad':'Paternal (confirmed via phasing)','unresolved':'Unresolved'};
 
 const FAMILY_DATA={
-  'Aaron Parry':{phasing:[],missing_parents:true,amerindian:'unknown',request:'Aaron — do you have a parent who has tested? Adding a parent kit would help resolve your chr1, chr2, chr8 and chr13 connections. Could you also share your earliest known ancestral surnames and locations? Do you have any known Native American ancestry?'},
-  'Cary':{phasing:[{label:'*MBLK',role:'mother'},{label:'*MK',role:'paternal uncle'},{label:'Maire Kokkonen',role:'paternal aunt'},{label:'*LK',role:'daughter'}],missing_parents:false,amerindian:'not found on mother\'s side yet',request:"Cary — your phasing family is well represented. No Indigenous ancestry has been found on your mother's (*MBLK) side yet. Do you have any documented Native American ancestry on either side?"},
-  '*Deanna Wood':{phasing:[{label:'Myrtle',role:'mother'},{label:'Kirk',role:'husband'},{label:'Jamie',role:'niece'},{label:'Demetria',role:'daughter'}],missing_parents:false,amerindian:'confirmed',request:"Deanna — your family is well represented. Could you share more about your known Native American ancestry — which line does it come through, and how far back?"},
-  'Diana Folk':{phasing:[],missing_parents:true,amerindian:'unknown',request:'Diana — your connections to Gregory (chr1) and Mary (chr9) are currently unresolved because we have no phasing kit for you. Do you have a parent who has tested? Do you have any known Native American ancestry?'},
-  'Elizabeth Hollands':{phasing:[{label:'*CTH',role:'mother'},{label:'*AT',role:'maternal grandpa'},{label:'*BH',role:'father'},{label:'*PHL',role:'sibling'},{label:'*AAH',role:'niece'},{label:'*DJL',role:'nephew'}],missing_parents:false,amerindian:'confirmed',request:''},
-  'Gregory Fellows':{phasing:[],missing_parents:true,amerindian:'unknown',request:'Gregory — your connection to Diana (chr1) and Mary (chr16) are unresolved. Do you have a parent who has tested? Do you have any known Native American ancestry?'},
-  '*Martin Lindner':{phasing:[{label:'*Gaby',role:'mother'}],missing_parents:true,amerindian:'unknown',request:"Martin — we have your mother Gaby's kit which is very helpful. Has your father tested? Do you have any known Native American ancestry?"},
-  'Mary Doonan':{phasing:[],missing_parents:true,amerindian:'confirmed',request:'Mary — you have connections to many members but no phasing kit currently. Do you have a parent who has tested? Could you share more about your known Native American ancestry — which line does it come through?'},
-  '*Mindy':{phasing:[{label:'*JWW',role:'father'},{label:'*RRH',role:'mother'}],missing_parents:false,amerindian:'confirmed',request:"Mindy — both your parents are in the project which is excellent. Could you share more about your known Native American ancestry — which parent does it come through, JWW or RRH?"},
-  'Richard Smith':{phasing:[],missing_parents:true,amerindian:'unknown',request:'Richard — you connect to several members but have no phasing kit. Do you have a parent who has tested? Do you have any known Native American ancestry?'},
-  '*Sarah Lindner':{phasing:[{label:'*Christa',role:'mother'}],missing_parents:true,amerindian:'unknown',request:"Sarah — we have your mother Christa's kit. Has your father tested? Do you have any known Native American ancestry on either side?"},
+  'Aaron Parry':{phasing:[],missing_parents:true,request:'Aaron — do you have a parent who has tested? Adding a parent kit would help resolve your chr1, chr2, chr8 and chr13 connections. Could you also share your earliest known ancestral surnames and locations?'},
+  'Cary':{phasing:[{label:'*MBLK',role:'mother'},{label:'*MK',role:'paternal uncle'},{label:'Maire Kokkonen',role:'paternal aunt'},{label:'*LK',role:'daughter'}],missing_parents:false,request:"Cary — your phasing family is well represented. Do you have a parent who has tested on your father's side?"},
+  '*Deanna Wood':{phasing:[{label:'Myrtle',role:'mother'},{label:'Kirk',role:'husband'},{label:'Jamie',role:'niece'},{label:'Demetria',role:'daughter'}],missing_parents:false,request:'Deanna — your family is well represented. Could you share more about the origin of your maternal AT line connections?'},
+  'Diana Folk':{phasing:[],missing_parents:true,request:'Diana — your connections to Gregory (chr1) and Mary (chr9) are currently unresolved. Do you have a parent who has tested?'},
+  'Elizabeth Hollands':{phasing:[{label:'*CTH',role:'mother'},{label:'*AT',role:'maternal grandpa'},{label:'*BH',role:'father'},{label:'*PHL',role:'sibling'},{label:'*AAH',role:'niece'},{label:'*DJL',role:'nephew'}],missing_parents:false,request:''},
+  'Gregory Fellows':{phasing:[],missing_parents:true,request:'Gregory — your connection to Diana (chr1) and Mary (chr16) are unresolved. Do you have a parent who has tested?'},
+  '*Martin Lindner':{phasing:[{label:'*Gaby',role:'mother'}],missing_parents:true,regional:'Barra/Shetland Scottish · East Prussia/Gumbinnen · Hohenzollern · Dutch/Danish nobility',request:"Martin — we have your mother Gaby's kit which is very helpful. Has your father tested?"},
+  'Mary Doonan':{phasing:[],missing_parents:true,request:'Mary — you have connections to many members but no phasing kit currently. Do you have a parent who has tested?'},
+  '*Mindy':{phasing:[{label:'*JWW',role:'father'},{label:'*RRH',role:'mother'}],missing_parents:false,request:'Mindy — both your parents are in the project which is excellent. Your maternal RRH and paternal JWW lines are well represented.'},
+  'Richard Smith':{phasing:[],missing_parents:true,regional:'Predominantly Costa Rican with Spanish colonial heritage · European royal house connections via West_Med and East_Med components · Spanish ancestry is a key differentiator',request:'Richard — you connect to several members but have no phasing kit. Do you have a parent who has tested? Your Costa Rican and Spanish heritage may be the key to your European royal house connections.'},
+  '*Sarah Lindner':{phasing:[{label:'*Christa',role:'mother'}],missing_parents:true,request:"Sarah — we have your mother Christa's kit. Has your father tested?"},
 };
 
 const CONNS=[
@@ -328,6 +454,7 @@ const CONNS=[
   {A:'Elizabeth Hollands',B:'Mary Doonan',chr:'20',cM:4.4,side:'mom',s:58406750,e:59353625,phase:"Elizabeth's mom (CTH)"},
   {A:'Elizabeth Hollands',B:'Richard Smith',chr:'3',cM:5.1,side:'mom-at',s:141647298,e:145517239,phase:"Elizabeth's grandpa (AT)"},
   {A:'Elizabeth Hollands',B:'Richard Smith',chr:'22',cM:4.1,side:'mom',s:48020986,e:48739642,phase:"Elizabeth's mom (CTH)"},
+  {A:'Elizabeth Hollands',B:'*Martin Lindner',chr:'?',cM:4.9,side:'unresolved',s:0,e:0,phase:'Newly confirmed — chromosome not yet determined'},
   {A:'Gregory Fellows',B:'Mary Doonan',chr:'16',cM:4.6,side:'unresolved',s:26886022,e:32137965,phase:'no phasing kit covers this pair'},
   {A:'Mary Doonan',B:'Richard Smith',chr:'3',cM:4.6,side:'dad',s:181588762,e:184091149,phase:"Elizabeth's dad (BH)"},
   // Cary's connections
@@ -359,15 +486,293 @@ const CL={1:249250621,2:243199373,3:198022430,4:191154276,5:180915260,6:17111506
 // Ethnicity data preloaded for all members (Eurogenes K13)
 const ethData={"Richard Smith":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":20.3},{"pop":"Amerindian","pct_start":20.3,"pct_end":35.4},{"pop":"West_Med","pct_start":35.4,"pct_end":50.1},{"pop":"Baltic","pct_start":50.1,"pct_end":64.6},{"pop":"East_Med","pct_start":64.6,"pct_end":77.2},{"pop":"Siberian","pct_start":77.2,"pct_end":81.4},{"pop":"Northeast_African","pct_start":81.4,"pct_end":85.4},{"pop":"West_Asian","pct_start":85.4,"pct_end":86.9},{"pop":"Red_Sea","pct_start":86.9,"pct_end":88.2}],"2":[{"pop":"Amerindian","pct_start":0,"pct_end":27.7},{"pop":"West_Med","pct_start":27.7,"pct_end":40.0},{"pop":"Sub","pct_start":40.0,"pct_end":51.8},{"pop":"Baltic","pct_start":51.8,"pct_end":62.8},{"pop":"Siberian","pct_start":62.8,"pct_end":72.4},{"pop":"Northeast_African","pct_start":72.4,"pct_end":77.8},{"pop":"North_Atlantic","pct_start":77.8,"pct_end":82.3},{"pop":"East_Med","pct_start":82.3,"pct_end":86.1},{"pop":"West_Asian","pct_start":86.1,"pct_end":88.4},{"pop":"Red_Sea","pct_start":88.4,"pct_end":90.0}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":30.4},{"pop":"Sub","pct_start":30.4,"pct_end":52.1},{"pop":"West_Med","pct_start":52.1,"pct_end":66.4},{"pop":"Amerindian","pct_start":66.4,"pct_end":79.8},{"pop":"South_Asian","pct_start":79.8,"pct_end":89.4},{"pop":"Northeast_African","pct_start":89.4,"pct_end":95.2},{"pop":"Baltic","pct_start":95.2,"pct_end":100.7},{"pop":"East_Med","pct_start":100.7,"pct_end":104.8},{"pop":"Red_Sea","pct_start":104.8,"pct_end":107.7},{"pop":"East_Asian","pct_start":107.7,"pct_end":108.8},{"pop":"Siberian","pct_start":108.8,"pct_end":109.6}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":28.1},{"pop":"West_Med","pct_start":28.1,"pct_end":49.6},{"pop":"Amerindian","pct_start":49.6,"pct_end":67.3},{"pop":"Sub","pct_start":67.3,"pct_end":79.0},{"pop":"East_Med","pct_start":79.0,"pct_end":88.8},{"pop":"Northeast_African","pct_start":88.8,"pct_end":93.5},{"pop":"Oceanian","pct_start":93.5,"pct_end":97.0},{"pop":"Red_Sea","pct_start":97.0,"pct_end":99.9},{"pop":"West_Asian","pct_start":99.9,"pct_end":102.3},{"pop":"East_Asian","pct_start":102.3,"pct_end":103.6}],"5":[{"pop":"Amerindian","pct_start":0,"pct_end":21.6},{"pop":"West_Med","pct_start":21.6,"pct_end":37.9},{"pop":"North_Atlantic","pct_start":37.9,"pct_end":53.3},{"pop":"Sub","pct_start":53.3,"pct_end":60.8},{"pop":"East_Med","pct_start":60.8,"pct_end":67.7},{"pop":"West_Asian","pct_start":67.7,"pct_end":73.0},{"pop":"Red_Sea","pct_start":73.0,"pct_end":77.4},{"pop":"South_Asian","pct_start":77.4,"pct_end":81.2},{"pop":"Baltic","pct_start":81.2,"pct_end":84.8},{"pop":"Northeast_African","pct_start":84.8,"pct_end":88.0}],"6":[{"pop":"West_Med","pct_start":0,"pct_end":23.0},{"pop":"Sub","pct_start":23.0,"pct_end":42.6},{"pop":"Amerindian","pct_start":42.6,"pct_end":58.4},{"pop":"East_Med","pct_start":58.4,"pct_end":73.8},{"pop":"Baltic","pct_start":73.8,"pct_end":84.2},{"pop":"Siberian","pct_start":84.2,"pct_end":88.6},{"pop":"West_Asian","pct_start":88.6,"pct_end":92.7},{"pop":"North_Atlantic","pct_start":92.7,"pct_end":96.2},{"pop":"Red_Sea","pct_start":96.2,"pct_end":99.1},{"pop":"Oceanian","pct_start":99.1,"pct_end":101.2}],"7":[{"pop":"West_Med","pct_start":0,"pct_end":19.6},{"pop":"Amerindian","pct_start":19.6,"pct_end":38.8},{"pop":"Sub","pct_start":38.8,"pct_end":57.2},{"pop":"North_Atlantic","pct_start":57.2,"pct_end":73.3},{"pop":"East_Med","pct_start":73.3,"pct_end":84.6},{"pop":"Baltic","pct_start":84.6,"pct_end":92.9},{"pop":"Siberian","pct_start":92.9,"pct_end":95.3},{"pop":"East_Asian","pct_start":95.3,"pct_end":97.5},{"pop":"South_Asian","pct_start":97.5,"pct_end":99.1},{"pop":"Red_Sea","pct_start":99.1,"pct_end":99.8},{"pop":"Oceanian","pct_start":99.8,"pct_end":100.5}],"8":[{"pop":"Amerindian","pct_start":0,"pct_end":45.0},{"pop":"Sub","pct_start":45.0,"pct_end":62.9},{"pop":"North_Atlantic","pct_start":62.9,"pct_end":79.7},{"pop":"West_Med","pct_start":79.7,"pct_end":95.7},{"pop":"East_Asian","pct_start":95.7,"pct_end":101.6},{"pop":"Oceanian","pct_start":101.6,"pct_end":106.2},{"pop":"Red_Sea","pct_start":106.2,"pct_end":109.4},{"pop":"Baltic","pct_start":109.4,"pct_end":111.9},{"pop":"West_Asian","pct_start":111.9,"pct_end":113.4}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":18.9},{"pop":"East_Med","pct_start":18.9,"pct_end":37.8},{"pop":"Amerindian","pct_start":37.8,"pct_end":53.8},{"pop":"West_Med","pct_start":53.8,"pct_end":66.5},{"pop":"Baltic","pct_start":66.5,"pct_end":76.7},{"pop":"West_Asian","pct_start":76.7,"pct_end":84.2},{"pop":"Sub","pct_start":84.2,"pct_end":88.8}],"10":[{"pop":"Amerindian","pct_start":0,"pct_end":17.2},{"pop":"Sub","pct_start":17.2,"pct_end":33.1},{"pop":"West_Med","pct_start":33.1,"pct_end":48.3},{"pop":"North_Atlantic","pct_start":48.3,"pct_end":63.2},{"pop":"East_Asian","pct_start":63.2,"pct_end":69.9},{"pop":"East_Med","pct_start":69.9,"pct_end":72.3},{"pop":"Baltic","pct_start":72.3,"pct_end":74.3},{"pop":"West_Asian","pct_start":74.3,"pct_end":76.2}],"11":[{"pop":"Sub","pct_start":0,"pct_end":39.7},{"pop":"Amerindian","pct_start":39.7,"pct_end":60.6},{"pop":"West_Med","pct_start":60.6,"pct_end":81.4},{"pop":"North_Atlantic","pct_start":81.4,"pct_end":101.5},{"pop":"Baltic","pct_start":101.5,"pct_end":114.4},{"pop":"Northeast_African","pct_start":114.4,"pct_end":124.4},{"pop":"East_Med","pct_start":124.4,"pct_end":130.2},{"pop":"Red_Sea","pct_start":130.2,"pct_end":134.6},{"pop":"East_Asian","pct_start":134.6,"pct_end":135.6}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":37.3},{"pop":"West_Med","pct_start":37.3,"pct_end":53.8},{"pop":"Amerindian","pct_start":53.8,"pct_end":70.0},{"pop":"West_Asian","pct_start":70.0,"pct_end":81.3},{"pop":"East_Med","pct_start":81.3,"pct_end":88.8},{"pop":"Northeast_African","pct_start":88.8,"pct_end":94.6},{"pop":"Sub","pct_start":94.6,"pct_end":98.1},{"pop":"Oceanian","pct_start":98.1,"pct_end":99.7},{"pop":"South_Asian","pct_start":99.7,"pct_end":100.3}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":29.1},{"pop":"Amerindian","pct_start":29.1,"pct_end":52.6},{"pop":"Northeast_African","pct_start":52.6,"pct_end":59.7},{"pop":"Baltic","pct_start":59.7,"pct_end":66.0},{"pop":"West_Med","pct_start":66.0,"pct_end":71.9},{"pop":"Red_Sea","pct_start":71.9,"pct_end":76.1},{"pop":"Sub","pct_start":76.1,"pct_end":79.3},{"pop":"West_Asian","pct_start":79.3,"pct_end":81.4},{"pop":"South_Asian","pct_start":81.4,"pct_end":83.5}],"14":[{"pop":"Baltic","pct_start":0,"pct_end":19.9},{"pop":"Sub","pct_start":19.9,"pct_end":39.7},{"pop":"Amerindian","pct_start":39.7,"pct_end":56.3},{"pop":"East_Med","pct_start":56.3,"pct_end":71.7},{"pop":"West_Asian","pct_start":71.7,"pct_end":83.4},{"pop":"West_Med","pct_start":83.4,"pct_end":91.5},{"pop":"East_Asian","pct_start":91.5,"pct_end":98.3},{"pop":"Siberian","pct_start":98.3,"pct_end":104.4},{"pop":"North_Atlantic","pct_start":104.4,"pct_end":105.5}],"15":[{"pop":"North_Atlantic","pct_start":0,"pct_end":25.5},{"pop":"Amerindian","pct_start":25.5,"pct_end":46.2},{"pop":"Sub","pct_start":46.2,"pct_end":60.2},{"pop":"Baltic","pct_start":60.2,"pct_end":73.7},{"pop":"West_Med","pct_start":73.7,"pct_end":86.9},{"pop":"Oceanian","pct_start":86.9,"pct_end":94.8}],"16":[{"pop":"Amerindian","pct_start":0,"pct_end":24.6},{"pop":"West_Asian","pct_start":24.6,"pct_end":43.8},{"pop":"Sub","pct_start":43.8,"pct_end":63.0},{"pop":"East_Med","pct_start":63.0,"pct_end":73.0},{"pop":"East_Asian","pct_start":73.0,"pct_end":81.2},{"pop":"West_Med","pct_start":81.2,"pct_end":89.1},{"pop":"North_Atlantic","pct_start":89.1,"pct_end":93.7},{"pop":"Northeast_African","pct_start":93.7,"pct_end":97.6},{"pop":"Siberian","pct_start":97.6,"pct_end":101.0}],"17":[{"pop":"Amerindian","pct_start":0,"pct_end":21.4},{"pop":"East_Med","pct_start":21.4,"pct_end":40.8},{"pop":"Sub","pct_start":40.8,"pct_end":59.0},{"pop":"North_Atlantic","pct_start":59.0,"pct_end":73.6},{"pop":"West_Asian","pct_start":73.6,"pct_end":83.3},{"pop":"South_Asian","pct_start":83.3,"pct_end":87.4},{"pop":"East_Asian","pct_start":87.4,"pct_end":90.6},{"pop":"Oceanian","pct_start":90.6,"pct_end":93.6},{"pop":"Baltic","pct_start":93.6,"pct_end":95.1}],"18":[{"pop":"Sub","pct_start":0,"pct_end":22.9},{"pop":"Amerindian","pct_start":22.9,"pct_end":42.5},{"pop":"Baltic","pct_start":42.5,"pct_end":62.0},{"pop":"East_Med","pct_start":62.0,"pct_end":75.9},{"pop":"West_Med","pct_start":75.9,"pct_end":81.7},{"pop":"East_Asian","pct_start":81.7,"pct_end":84.0},{"pop":"Oceanian","pct_start":84.0,"pct_end":86.0}],"19":[{"pop":"Sub","pct_start":0,"pct_end":36.7},{"pop":"Amerindian","pct_start":36.7,"pct_end":66.5},{"pop":"West_Med","pct_start":66.5,"pct_end":95.0},{"pop":"North_Atlantic","pct_start":95.0,"pct_end":116.2},{"pop":"East_Asian","pct_start":116.2,"pct_end":126.0}],"20":[{"pop":"West_Med","pct_start":0,"pct_end":32.5},{"pop":"North_Atlantic","pct_start":32.5,"pct_end":55.9},{"pop":"Baltic","pct_start":55.9,"pct_end":74.2},{"pop":"Sub","pct_start":74.2,"pct_end":84.7},{"pop":"Red_Sea","pct_start":84.7,"pct_end":94.5},{"pop":"East_Med","pct_start":94.5,"pct_end":100.9},{"pop":"Amerindian","pct_start":100.9,"pct_end":106.7},{"pop":"Siberian","pct_start":106.7,"pct_end":109.2},{"pop":"East_Asian","pct_start":109.2,"pct_end":110.6}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":29.1},{"pop":"West_Med","pct_start":29.1,"pct_end":58.2},{"pop":"East_Med","pct_start":58.2,"pct_end":66.7},{"pop":"Amerindian","pct_start":66.7,"pct_end":73.9},{"pop":"Northeast_African","pct_start":73.9,"pct_end":77.9},{"pop":"Oceanian","pct_start":77.9,"pct_end":80.4}],"22":[{"pop":"Amerindian","pct_start":0,"pct_end":36.4},{"pop":"Sub","pct_start":36.4,"pct_end":55.9},{"pop":"West_Med","pct_start":55.9,"pct_end":70.7},{"pop":"South_Asian","pct_start":70.7,"pct_end":80.2},{"pop":"North_Atlantic","pct_start":80.2,"pct_end":87.2},{"pop":"Oceanian","pct_start":87.2,"pct_end":89.8},{"pop":"Red_Sea","pct_start":89.8,"pct_end":91.8},{"pop":"Northeast_African","pct_start":91.8,"pct_end":93.2}]},"Mary Doonan":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":38.8},{"pop":"Baltic","pct_start":38.8,"pct_end":73.3},{"pop":"West_Med","pct_start":73.3,"pct_end":88.1},{"pop":"East_Med","pct_start":88.1,"pct_end":92.5},{"pop":"Amerindian","pct_start":92.5,"pct_end":94.8},{"pop":"East_Asian","pct_start":94.8,"pct_end":96.8},{"pop":"West_Asian","pct_start":96.8,"pct_end":98.5},{"pop":"Northeast_African","pct_start":98.5,"pct_end":99.6}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":64.9},{"pop":"Baltic","pct_start":64.9,"pct_end":79.7},{"pop":"West_Med","pct_start":79.7,"pct_end":93.6},{"pop":"East_Med","pct_start":93.6,"pct_end":95.5},{"pop":"Amerindian","pct_start":95.5,"pct_end":97.1},{"pop":"South_Asian","pct_start":97.1,"pct_end":98.6},{"pop":"Siberian","pct_start":98.6,"pct_end":99.4},{"pop":"Oceanian","pct_start":99.4,"pct_end":100.0}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":57.6},{"pop":"Baltic","pct_start":57.6,"pct_end":75.6},{"pop":"West_Med","pct_start":75.6,"pct_end":91.0},{"pop":"Red_Sea","pct_start":91.0,"pct_end":96.1},{"pop":"Amerindian","pct_start":96.1,"pct_end":96.7}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.8},{"pop":"West_Med","pct_start":35.8,"pct_end":62.4},{"pop":"Baltic","pct_start":62.4,"pct_end":82.3},{"pop":"East_Med","pct_start":82.3,"pct_end":96.7},{"pop":"Sub","pct_start":96.7,"pct_end":100.1},{"pop":"East_Asian","pct_start":100.1,"pct_end":102.0}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.2},{"pop":"Baltic","pct_start":35.2,"pct_end":59.3},{"pop":"West_Med","pct_start":59.3,"pct_end":74.0},{"pop":"West_Asian","pct_start":74.0,"pct_end":87.9},{"pop":"East_Med","pct_start":87.9,"pct_end":92.1},{"pop":"South_Asian","pct_start":92.1,"pct_end":96.3},{"pop":"East_Asian","pct_start":96.3,"pct_end":98.2},{"pop":"Oceanian","pct_start":98.2,"pct_end":99.3},{"pop":"Northeast_African","pct_start":99.3,"pct_end":100.0}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.7},{"pop":"Baltic","pct_start":48.7,"pct_end":73.4},{"pop":"East_Med","pct_start":73.4,"pct_end":88.5},{"pop":"West_Med","pct_start":88.5,"pct_end":97.2},{"pop":"South_Asian","pct_start":97.2,"pct_end":98.7}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.0},{"pop":"Baltic","pct_start":49.0,"pct_end":70.6},{"pop":"West_Asian","pct_start":70.6,"pct_end":81.1},{"pop":"West_Med","pct_start":81.1,"pct_end":86.8},{"pop":"Red_Sea","pct_start":86.8,"pct_end":92.2},{"pop":"South_Asian","pct_start":92.2,"pct_end":96.6},{"pop":"East_Med","pct_start":96.6,"pct_end":98.4},{"pop":"Siberian","pct_start":98.4,"pct_end":99.2},{"pop":"Northeast_African","pct_start":99.2,"pct_end":100.0}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":56.9},{"pop":"West_Med","pct_start":56.9,"pct_end":73.3},{"pop":"East_Med","pct_start":73.3,"pct_end":87.5},{"pop":"Siberian","pct_start":87.5,"pct_end":91.8},{"pop":"Oceanian","pct_start":91.8,"pct_end":95.3},{"pop":"Baltic","pct_start":95.3,"pct_end":98.4},{"pop":"South_Asian","pct_start":98.4,"pct_end":99.5}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.1},{"pop":"West_Med","pct_start":46.1,"pct_end":73.3},{"pop":"Baltic","pct_start":73.3,"pct_end":88.3},{"pop":"West_Asian","pct_start":88.3,"pct_end":93.4},{"pop":"East_Med","pct_start":93.4,"pct_end":97.9},{"pop":"Oceanian","pct_start":97.9,"pct_end":100.0}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.7},{"pop":"West_Med","pct_start":46.7,"pct_end":66.6},{"pop":"West_Asian","pct_start":66.6,"pct_end":82.9},{"pop":"Baltic","pct_start":82.9,"pct_end":92.9},{"pop":"East_Asian","pct_start":92.9,"pct_end":96.5},{"pop":"Amerindian","pct_start":96.5,"pct_end":99.3},{"pop":"Northeast_African","pct_start":99.3,"pct_end":99.9}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.4},{"pop":"East_Med","pct_start":48.4,"pct_end":68.8},{"pop":"Baltic","pct_start":68.8,"pct_end":80.1},{"pop":"Red_Sea","pct_start":80.1,"pct_end":90.3},{"pop":"West_Asian","pct_start":90.3,"pct_end":94.5},{"pop":"West_Med","pct_start":94.5,"pct_end":97.2},{"pop":"East_Asian","pct_start":97.2,"pct_end":98.5}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.0},{"pop":"Baltic","pct_start":42.0,"pct_end":71.7},{"pop":"West_Med","pct_start":71.7,"pct_end":87.6},{"pop":"East_Med","pct_start":87.6,"pct_end":95.0},{"pop":"Amerindian","pct_start":95.0,"pct_end":98.7},{"pop":"Sub","pct_start":98.7,"pct_end":100.1}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.0},{"pop":"West_Med","pct_start":46.0,"pct_end":81.1},{"pop":"Red_Sea","pct_start":81.1,"pct_end":90.7},{"pop":"Baltic","pct_start":90.7,"pct_end":95.5},{"pop":"East_Asian","pct_start":95.5,"pct_end":97.4},{"pop":"Sub","pct_start":97.4,"pct_end":98.7}],"14":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.1},{"pop":"West_Med","pct_start":42.1,"pct_end":68.2},{"pop":"Baltic","pct_start":68.2,"pct_end":83.3},{"pop":"East_Med","pct_start":83.3,"pct_end":87.6},{"pop":"East_Asian","pct_start":87.6,"pct_end":91.3},{"pop":"Amerindian","pct_start":91.3,"pct_end":94.2},{"pop":"Sub","pct_start":94.2,"pct_end":96.8},{"pop":"Red_Sea","pct_start":96.8,"pct_end":98.8},{"pop":"South_Asian","pct_start":98.8,"pct_end":100.6}],"15":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.5},{"pop":"Baltic","pct_start":41.5,"pct_end":71.9},{"pop":"West_Asian","pct_start":71.9,"pct_end":82.7},{"pop":"West_Med","pct_start":82.7,"pct_end":89.5},{"pop":"Red_Sea","pct_start":89.5,"pct_end":96.2},{"pop":"East_Med","pct_start":96.2,"pct_end":98.4},{"pop":"Oceanian","pct_start":98.4,"pct_end":100.0},{"pop":"Sub","pct_start":100.0,"pct_end":101.2}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.1},{"pop":"West_Med","pct_start":41.1,"pct_end":71.1},{"pop":"Baltic","pct_start":71.1,"pct_end":84.9},{"pop":"West_Asian","pct_start":84.9,"pct_end":91.7},{"pop":"Oceanian","pct_start":91.7,"pct_end":95.4},{"pop":"Northeast_African","pct_start":95.4,"pct_end":96.4}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.4},{"pop":"West_Med","pct_start":51.4,"pct_end":69.7},{"pop":"West_Asian","pct_start":69.7,"pct_end":87.3},{"pop":"Baltic","pct_start":87.3,"pct_end":93.9},{"pop":"Sub","pct_start":93.9,"pct_end":97.6},{"pop":"Northeast_African","pct_start":97.6,"pct_end":100.3},{"pop":"East_Med","pct_start":100.3,"pct_end":102.9}],"18":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.5},{"pop":"West_Med","pct_start":49.5,"pct_end":75.0},{"pop":"Baltic","pct_start":75.0,"pct_end":91.5},{"pop":"South_Asian","pct_start":91.5,"pct_end":94.2},{"pop":"Amerindian","pct_start":94.2,"pct_end":96.9},{"pop":"Oceanian","pct_start":96.9,"pct_end":99.1},{"pop":"Red_Sea","pct_start":99.1,"pct_end":99.7}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.0},{"pop":"Baltic","pct_start":50.0,"pct_end":70.0},{"pop":"West_Med","pct_start":70.0,"pct_end":84.1},{"pop":"West_Asian","pct_start":84.1,"pct_end":91.2},{"pop":"Amerindian","pct_start":91.2,"pct_end":97.2},{"pop":"South_Asian","pct_start":97.2,"pct_end":99.4}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.9},{"pop":"West_Med","pct_start":44.9,"pct_end":67.3},{"pop":"Baltic","pct_start":67.3,"pct_end":83.2},{"pop":"East_Med","pct_start":83.2,"pct_end":98.0},{"pop":"South_Asian","pct_start":98.0,"pct_end":99.9},{"pop":"Sub","pct_start":99.9,"pct_end":100.5}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.8},{"pop":"Baltic","pct_start":40.8,"pct_end":81.5},{"pop":"East_Med","pct_start":81.5,"pct_end":96.3},{"pop":"Amerindian","pct_start":96.3,"pct_end":98.9},{"pop":"East_Asian","pct_start":98.9,"pct_end":99.7}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.1},{"pop":"West_Med","pct_start":35.1,"pct_end":64.7},{"pop":"Baltic","pct_start":64.7,"pct_end":86.6},{"pop":"Red_Sea","pct_start":86.6,"pct_end":90.8},{"pop":"West_Asian","pct_start":90.8,"pct_end":93.6},{"pop":"Oceanian","pct_start":93.6,"pct_end":94.3},{"pop":"Siberian","pct_start":94.3,"pct_end":94.9}]},"*Deanna Wood":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":32.9},{"pop":"Baltic","pct_start":32.9,"pct_end":56.9},{"pop":"West_Med","pct_start":56.9,"pct_end":72.8},{"pop":"West_Asian","pct_start":72.8,"pct_end":83.3},{"pop":"East_Med","pct_start":83.3,"pct_end":92.0},{"pop":"Amerindian","pct_start":92.0,"pct_end":95.6},{"pop":"Red_Sea","pct_start":95.6,"pct_end":98.5},{"pop":"South_Asian","pct_start":98.5,"pct_end":100.0}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":56.9},{"pop":"Baltic","pct_start":56.9,"pct_end":83.2},{"pop":"West_Med","pct_start":83.2,"pct_end":94.3},{"pop":"Oceanian","pct_start":94.3,"pct_end":96.8},{"pop":"West_Asian","pct_start":96.8,"pct_end":99.0}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.3},{"pop":"West_Med","pct_start":42.3,"pct_end":63.8},{"pop":"Baltic","pct_start":63.8,"pct_end":83.7},{"pop":"West_Asian","pct_start":83.7,"pct_end":96.9},{"pop":"Sub","pct_start":96.9,"pct_end":97.8},{"pop":"East_Asian","pct_start":97.8,"pct_end":98.6}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.8},{"pop":"Baltic","pct_start":48.8,"pct_end":80.8},{"pop":"West_Med","pct_start":80.8,"pct_end":93.6},{"pop":"South_Asian","pct_start":93.6,"pct_end":96.3},{"pop":"East_Asian","pct_start":96.3,"pct_end":98.3},{"pop":"Sub","pct_start":98.3,"pct_end":100.1},{"pop":"East_Med","pct_start":100.1,"pct_end":101.5}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.9},{"pop":"West_Med","pct_start":48.9,"pct_end":68.3},{"pop":"Baltic","pct_start":68.3,"pct_end":80.3},{"pop":"West_Asian","pct_start":80.3,"pct_end":86.8},{"pop":"East_Med","pct_start":86.8,"pct_end":91.7},{"pop":"Amerindian","pct_start":91.7,"pct_end":96.5},{"pop":"Red_Sea","pct_start":96.5,"pct_end":99.1},{"pop":"Siberian","pct_start":99.1,"pct_end":100.1}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":39.8},{"pop":"West_Med","pct_start":39.8,"pct_end":64.5},{"pop":"Baltic","pct_start":64.5,"pct_end":85.6},{"pop":"Oceanian","pct_start":85.6,"pct_end":89.5},{"pop":"West_Asian","pct_start":89.5,"pct_end":92.8},{"pop":"East_Med","pct_start":92.8,"pct_end":96.1},{"pop":"South_Asian","pct_start":96.1,"pct_end":97.6},{"pop":"Siberian","pct_start":97.6,"pct_end":98.8},{"pop":"Amerindian","pct_start":98.8,"pct_end":100.0}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.4},{"pop":"East_Med","pct_start":43.4,"pct_end":61.2},{"pop":"Baltic","pct_start":61.2,"pct_end":76.4},{"pop":"West_Asian","pct_start":76.4,"pct_end":86.9},{"pop":"West_Med","pct_start":86.9,"pct_end":92.8},{"pop":"Red_Sea","pct_start":92.8,"pct_end":96.5},{"pop":"South_Asian","pct_start":96.5,"pct_end":98.7},{"pop":"East_Asian","pct_start":98.7,"pct_end":100.1}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":34.4},{"pop":"West_Med","pct_start":34.4,"pct_end":53.9},{"pop":"Baltic","pct_start":53.9,"pct_end":70.3},{"pop":"West_Asian","pct_start":70.3,"pct_end":80.6},{"pop":"East_Med","pct_start":80.6,"pct_end":90.6},{"pop":"Red_Sea","pct_start":90.6,"pct_end":94.3},{"pop":"Amerindian","pct_start":94.3,"pct_end":97.9},{"pop":"Oceanian","pct_start":97.9,"pct_end":100.0}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":45.6},{"pop":"East_Med","pct_start":45.6,"pct_end":60.6},{"pop":"Baltic","pct_start":60.6,"pct_end":74.9},{"pop":"Amerindian","pct_start":74.9,"pct_end":83.8},{"pop":"West_Med","pct_start":83.8,"pct_end":90.3},{"pop":"South_Asian","pct_start":90.3,"pct_end":94.9},{"pop":"East_Asian","pct_start":94.9,"pct_end":97.8},{"pop":"West_Asian","pct_start":97.8,"pct_end":99.9}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":31.8},{"pop":"West_Med","pct_start":31.8,"pct_end":55.0},{"pop":"Baltic","pct_start":55.0,"pct_end":77.0},{"pop":"East_Med","pct_start":77.0,"pct_end":86.6},{"pop":"West_Asian","pct_start":86.6,"pct_end":93.7},{"pop":"Amerindian","pct_start":93.7,"pct_end":96.4}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.2},{"pop":"Baltic","pct_start":43.2,"pct_end":79.1},{"pop":"West_Asian","pct_start":79.1,"pct_end":89.0},{"pop":"South_Asian","pct_start":89.0,"pct_end":91.9},{"pop":"Sub","pct_start":91.9,"pct_end":94.6}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.5},{"pop":"Baltic","pct_start":44.5,"pct_end":62.2},{"pop":"West_Med","pct_start":62.2,"pct_end":73.8},{"pop":"West_Asian","pct_start":73.8,"pct_end":83.6},{"pop":"Sub","pct_start":83.6,"pct_end":91.7},{"pop":"East_Med","pct_start":91.7,"pct_end":98.8},{"pop":"Red_Sea","pct_start":98.8,"pct_end":104.5},{"pop":"Oceanian","pct_start":104.5,"pct_end":106.4},{"pop":"Siberian","pct_start":106.4,"pct_end":108.1}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.5},{"pop":"Baltic","pct_start":46.5,"pct_end":71.0},{"pop":"East_Med","pct_start":71.0,"pct_end":85.6},{"pop":"West_Med","pct_start":85.6,"pct_end":92.4},{"pop":"Amerindian","pct_start":92.4,"pct_end":97.5},{"pop":"South_Asian","pct_start":97.5,"pct_end":98.4},{"pop":"Siberian","pct_start":98.4,"pct_end":99.3}],"14":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.2},{"pop":"Baltic","pct_start":44.2,"pct_end":72.7},{"pop":"East_Med","pct_start":72.7,"pct_end":81.3},{"pop":"South_Asian","pct_start":81.3,"pct_end":87.3},{"pop":"West_Med","pct_start":87.3,"pct_end":93.0},{"pop":"West_Asian","pct_start":93.0,"pct_end":98.7},{"pop":"Amerindian","pct_start":98.7,"pct_end":99.7}],"15":[{"pop":"Baltic","pct_start":0,"pct_end":36.9},{"pop":"East_Med","pct_start":36.9,"pct_end":59.3},{"pop":"North_Atlantic","pct_start":59.3,"pct_end":81.1},{"pop":"West_Med","pct_start":81.1,"pct_end":98.6},{"pop":"Amerindian","pct_start":98.6,"pct_end":99.7}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.7},{"pop":"West_Med","pct_start":49.7,"pct_end":69.6},{"pop":"Baltic","pct_start":69.6,"pct_end":87.1},{"pop":"West_Asian","pct_start":87.1,"pct_end":97.1},{"pop":"Northeast_African","pct_start":97.1,"pct_end":99.3}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.4},{"pop":"West_Med","pct_start":51.4,"pct_end":72.7},{"pop":"Baltic","pct_start":72.7,"pct_end":85.3},{"pop":"West_Asian","pct_start":85.3,"pct_end":95.1},{"pop":"Amerindian","pct_start":95.1,"pct_end":97.3},{"pop":"Oceanian","pct_start":97.3,"pct_end":99.1},{"pop":"East_Asian","pct_start":99.1,"pct_end":100.0}],"18":[{"pop":"Amerindian","pct_start":0,"pct_end":27.1},{"pop":"North_Atlantic","pct_start":27.1,"pct_end":50.6},{"pop":"Baltic","pct_start":50.6,"pct_end":69.2},{"pop":"West_Med","pct_start":69.2,"pct_end":78.5},{"pop":"East_Med","pct_start":78.5,"pct_end":87.0},{"pop":"Siberian","pct_start":87.0,"pct_end":91.9},{"pop":"West_Asian","pct_start":91.9,"pct_end":96.7}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":34.4},{"pop":"Baltic","pct_start":34.4,"pct_end":60.5},{"pop":"West_Med","pct_start":60.5,"pct_end":76.5},{"pop":"East_Med","pct_start":76.5,"pct_end":83.6},{"pop":"South_Asian","pct_start":83.6,"pct_end":90.2},{"pop":"Amerindian","pct_start":90.2,"pct_end":94.3},{"pop":"Siberian","pct_start":94.3,"pct_end":97.2},{"pop":"Sub","pct_start":97.2,"pct_end":100.1},{"pop":"West_Asian","pct_start":100.1,"pct_end":102.9}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":69.9},{"pop":"Baltic","pct_start":69.9,"pct_end":83.5},{"pop":"East_Med","pct_start":83.5,"pct_end":91.0},{"pop":"West_Med","pct_start":91.0,"pct_end":96.1},{"pop":"Amerindian","pct_start":96.1,"pct_end":100.1}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":53.0},{"pop":"Baltic","pct_start":53.0,"pct_end":85.4},{"pop":"Amerindian","pct_start":85.4,"pct_end":93.2},{"pop":"Red_Sea","pct_start":93.2,"pct_end":94.9}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.6},{"pop":"Baltic","pct_start":43.6,"pct_end":82.2},{"pop":"West_Asian","pct_start":82.2,"pct_end":94.4},{"pop":"Sub","pct_start":94.4,"pct_end":99.4},{"pop":"Northeast_African","pct_start":99.4,"pct_end":104.0},{"pop":"Red_Sea","pct_start":104.0,"pct_end":105.1}]},"Aaron Parry":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.7},{"pop":"Baltic","pct_start":55.7,"pct_end":71.1},{"pop":"West_Med","pct_start":71.1,"pct_end":85.8},{"pop":"West_Asian","pct_start":85.8,"pct_end":91.6},{"pop":"Amerindian","pct_start":91.6,"pct_end":94.3},{"pop":"South_Asian","pct_start":94.3,"pct_end":96.7},{"pop":"Red_Sea","pct_start":96.7,"pct_end":99.0}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":53.7},{"pop":"Baltic","pct_start":53.7,"pct_end":78.3},{"pop":"West_Asian","pct_start":78.3,"pct_end":89.3},{"pop":"West_Med","pct_start":89.3,"pct_end":99.3}],"3":[{"pop":"Baltic","pct_start":0,"pct_end":40.9},{"pop":"North_Atlantic","pct_start":40.9,"pct_end":71.2},{"pop":"West_Med","pct_start":71.2,"pct_end":87.7},{"pop":"Red_Sea","pct_start":87.7,"pct_end":92.1},{"pop":"Oceanian","pct_start":92.1,"pct_end":95.1},{"pop":"West_Asian","pct_start":95.1,"pct_end":97.7},{"pop":"Siberian","pct_start":97.7,"pct_end":100.0}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.6},{"pop":"Baltic","pct_start":52.6,"pct_end":89.0},{"pop":"Red_Sea","pct_start":89.0,"pct_end":94.8},{"pop":"West_Med","pct_start":94.8,"pct_end":98.8},{"pop":"West_Asian","pct_start":98.8,"pct_end":100.0}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.7},{"pop":"Baltic","pct_start":50.7,"pct_end":73.9},{"pop":"East_Med","pct_start":73.9,"pct_end":84.7},{"pop":"West_Med","pct_start":84.7,"pct_end":91.8},{"pop":"West_Asian","pct_start":91.8,"pct_end":97.8},{"pop":"Northeast_African","pct_start":97.8,"pct_end":99.7}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":45.4},{"pop":"Baltic","pct_start":45.4,"pct_end":72.8},{"pop":"West_Med","pct_start":72.8,"pct_end":82.4},{"pop":"East_Med","pct_start":82.4,"pct_end":88.8},{"pop":"West_Asian","pct_start":88.8,"pct_end":94.4},{"pop":"East_Asian","pct_start":94.4,"pct_end":98.6},{"pop":"Red_Sea","pct_start":98.6,"pct_end":100.0}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.9},{"pop":"Baltic","pct_start":55.9,"pct_end":74.7},{"pop":"West_Med","pct_start":74.7,"pct_end":92.6},{"pop":"West_Asian","pct_start":92.6,"pct_end":97.2}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.9},{"pop":"Baltic","pct_start":51.9,"pct_end":79.2},{"pop":"West_Med","pct_start":79.2,"pct_end":87.9},{"pop":"West_Asian","pct_start":87.9,"pct_end":92.1},{"pop":"Sub","pct_start":92.1,"pct_end":94.9},{"pop":"Amerindian","pct_start":94.9,"pct_end":97.3},{"pop":"Red_Sea","pct_start":97.3,"pct_end":99.2},{"pop":"East_Asian","pct_start":99.2,"pct_end":100.4},{"pop":"Northeast_African","pct_start":100.4,"pct_end":101.3}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":58.6},{"pop":"West_Med","pct_start":58.6,"pct_end":81.1},{"pop":"Baltic","pct_start":81.1,"pct_end":91.1},{"pop":"Amerindian","pct_start":91.1,"pct_end":94.3},{"pop":"South_Asian","pct_start":94.3,"pct_end":97.4},{"pop":"Sub","pct_start":97.4,"pct_end":98.9},{"pop":"Red_Sea","pct_start":98.9,"pct_end":99.8},{"pop":"Oceanian","pct_start":99.8,"pct_end":100.5},{"pop":"Siberian","pct_start":100.5,"pct_end":101.1}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.1},{"pop":"West_Med","pct_start":52.1,"pct_end":69.5},{"pop":"East_Med","pct_start":69.5,"pct_end":83.2},{"pop":"Baltic","pct_start":83.2,"pct_end":92.7},{"pop":"Amerindian","pct_start":92.7,"pct_end":98.1},{"pop":"East_Asian","pct_start":98.1,"pct_end":100.0}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.1},{"pop":"West_Med","pct_start":40.1,"pct_end":59.4},{"pop":"Baltic","pct_start":59.4,"pct_end":78.4},{"pop":"West_Asian","pct_start":78.4,"pct_end":88.5},{"pop":"East_Med","pct_start":88.5,"pct_end":94.9},{"pop":"Siberian","pct_start":94.9,"pct_end":97.1},{"pop":"Amerindian","pct_start":97.1,"pct_end":98.5},{"pop":"South_Asian","pct_start":98.5,"pct_end":99.6}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.3},{"pop":"Baltic","pct_start":44.3,"pct_end":66.0},{"pop":"East_Med","pct_start":66.0,"pct_end":85.0},{"pop":"West_Med","pct_start":85.0,"pct_end":97.2},{"pop":"West_Asian","pct_start":97.2,"pct_end":99.1},{"pop":"Red_Sea","pct_start":99.1,"pct_end":99.9}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":67.9},{"pop":"Baltic","pct_start":67.9,"pct_end":81.1},{"pop":"East_Med","pct_start":81.1,"pct_end":88.8},{"pop":"West_Med","pct_start":88.8,"pct_end":96.2},{"pop":"Amerindian","pct_start":96.2,"pct_end":98.3},{"pop":"East_Asian","pct_start":98.3,"pct_end":100.0}],"14":[{"pop":"Baltic","pct_start":0,"pct_end":39.8},{"pop":"North_Atlantic","pct_start":39.8,"pct_end":59.9},{"pop":"West_Asian","pct_start":59.9,"pct_end":76.1},{"pop":"West_Med","pct_start":76.1,"pct_end":89.7},{"pop":"East_Med","pct_start":89.7,"pct_end":95.4},{"pop":"Red_Sea","pct_start":95.4,"pct_end":98.1},{"pop":"Oceanian","pct_start":98.1,"pct_end":100.0}],"15":[{"pop":"North_Atlantic","pct_start":0,"pct_end":60.2},{"pop":"Baltic","pct_start":60.2,"pct_end":82.0},{"pop":"West_Med","pct_start":82.0,"pct_end":91.0},{"pop":"Red_Sea","pct_start":91.0,"pct_end":96.4},{"pop":"Siberian","pct_start":96.4,"pct_end":98.6},{"pop":"Amerindian","pct_start":98.6,"pct_end":100.1}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":33.6},{"pop":"Baltic","pct_start":33.6,"pct_end":57.0},{"pop":"West_Med","pct_start":57.0,"pct_end":72.3},{"pop":"East_Med","pct_start":72.3,"pct_end":87.2},{"pop":"East_Asian","pct_start":87.2,"pct_end":90.7},{"pop":"Amerindian","pct_start":90.7,"pct_end":93.9},{"pop":"Red_Sea","pct_start":93.9,"pct_end":96.9},{"pop":"Northeast_African","pct_start":96.9,"pct_end":98.8}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":34.3},{"pop":"Baltic","pct_start":34.3,"pct_end":60.3},{"pop":"West_Med","pct_start":60.3,"pct_end":78.4},{"pop":"Red_Sea","pct_start":78.4,"pct_end":87.4},{"pop":"West_Asian","pct_start":87.4,"pct_end":92.8},{"pop":"South_Asian","pct_start":92.8,"pct_end":97.2},{"pop":"Amerindian","pct_start":97.2,"pct_end":98.7},{"pop":"Sub","pct_start":98.7,"pct_end":100.0}],"18":[{"pop":"North_Atlantic","pct_start":0,"pct_end":29.2},{"pop":"Baltic","pct_start":29.2,"pct_end":54.6},{"pop":"West_Med","pct_start":54.6,"pct_end":76.8},{"pop":"Red_Sea","pct_start":76.8,"pct_end":88.2},{"pop":"East_Med","pct_start":88.2,"pct_end":94.1},{"pop":"Oceanian","pct_start":94.1,"pct_end":98.4},{"pop":"West_Asian","pct_start":98.4,"pct_end":100.0},{"pop":"Sub","pct_start":100.0,"pct_end":101.3}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":39.4},{"pop":"Baltic","pct_start":39.4,"pct_end":65.2},{"pop":"East_Med","pct_start":65.2,"pct_end":86.8},{"pop":"West_Med","pct_start":86.8,"pct_end":93.8},{"pop":"Oceanian","pct_start":93.8,"pct_end":96.9},{"pop":"Amerindian","pct_start":96.9,"pct_end":99.0},{"pop":"Northeast_African","pct_start":99.0,"pct_end":100.0}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":60.4},{"pop":"Baltic","pct_start":60.4,"pct_end":87.8},{"pop":"West_Asian","pct_start":87.8,"pct_end":93.9},{"pop":"Red_Sea","pct_start":93.9,"pct_end":99.9}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.0},{"pop":"Baltic","pct_start":51.0,"pct_end":70.2},{"pop":"West_Asian","pct_start":70.2,"pct_end":83.1},{"pop":"Red_Sea","pct_start":83.1,"pct_end":87.6},{"pop":"West_Med","pct_start":87.6,"pct_end":91.0},{"pop":"Oceanian","pct_start":91.0,"pct_end":92.0},{"pop":"South_Asian","pct_start":92.0,"pct_end":92.7}],"22":[{"pop":"Baltic","pct_start":0,"pct_end":28.4},{"pop":"North_Atlantic","pct_start":28.4,"pct_end":54.3},{"pop":"West_Asian","pct_start":54.3,"pct_end":73.0},{"pop":"West_Med","pct_start":73.0,"pct_end":85.0},{"pop":"East_Med","pct_start":85.0,"pct_end":93.9},{"pop":"Sub","pct_start":93.9,"pct_end":100.6},{"pop":"South_Asian","pct_start":100.6,"pct_end":106.7}]},"Diana Folk":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.3},{"pop":"Baltic","pct_start":40.3,"pct_end":63.6},{"pop":"West_Med","pct_start":63.6,"pct_end":85.0},{"pop":"West_Asian","pct_start":85.0,"pct_end":93.1},{"pop":"East_Med","pct_start":93.1,"pct_end":95.0},{"pop":"East_Asian","pct_start":95.0,"pct_end":95.9},{"pop":"Amerindian","pct_start":95.9,"pct_end":96.6}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.1},{"pop":"Baltic","pct_start":50.1,"pct_end":70.8},{"pop":"West_Med","pct_start":70.8,"pct_end":81.7},{"pop":"West_Asian","pct_start":81.7,"pct_end":88.8},{"pop":"Red_Sea","pct_start":88.8,"pct_end":94.1},{"pop":"Sub","pct_start":94.1,"pct_end":97.4},{"pop":"East_Med","pct_start":97.4,"pct_end":100.6},{"pop":"Amerindian","pct_start":100.6,"pct_end":102.7}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.9},{"pop":"Baltic","pct_start":46.9,"pct_end":70.2},{"pop":"West_Med","pct_start":70.2,"pct_end":92.6},{"pop":"West_Asian","pct_start":92.6,"pct_end":97.4},{"pop":"East_Med","pct_start":97.4,"pct_end":100.0},{"pop":"Sub","pct_start":100.0,"pct_end":100.7}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":70.0},{"pop":"Baltic","pct_start":70.0,"pct_end":91.8},{"pop":"West_Med","pct_start":91.8,"pct_end":94.6}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":47.6},{"pop":"Baltic","pct_start":47.6,"pct_end":80.2},{"pop":"West_Med","pct_start":80.2,"pct_end":87.8},{"pop":"South_Asian","pct_start":87.8,"pct_end":93.3},{"pop":"Sub","pct_start":93.3,"pct_end":98.7},{"pop":"East_Asian","pct_start":98.7,"pct_end":103.0},{"pop":"East_Med","pct_start":103.0,"pct_end":105.4}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.5},{"pop":"Baltic","pct_start":41.5,"pct_end":74.0},{"pop":"West_Med","pct_start":74.0,"pct_end":84.0},{"pop":"Red_Sea","pct_start":84.0,"pct_end":91.3},{"pop":"West_Asian","pct_start":91.3,"pct_end":96.7},{"pop":"Northeast_African","pct_start":96.7,"pct_end":99.7}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.3},{"pop":"Baltic","pct_start":51.3,"pct_end":82.7},{"pop":"West_Med","pct_start":82.7,"pct_end":90.9},{"pop":"Red_Sea","pct_start":90.9,"pct_end":95.8},{"pop":"Oceanian","pct_start":95.8,"pct_end":97.4},{"pop":"Northeast_African","pct_start":97.4,"pct_end":98.2}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.5},{"pop":"Baltic","pct_start":51.5,"pct_end":73.2},{"pop":"Red_Sea","pct_start":73.2,"pct_end":83.3},{"pop":"West_Med","pct_start":83.3,"pct_end":89.7},{"pop":"East_Med","pct_start":89.7,"pct_end":95.8},{"pop":"South_Asian","pct_start":95.8,"pct_end":98.5},{"pop":"Sub","pct_start":98.5,"pct_end":100.3},{"pop":"East_Asian","pct_start":100.3,"pct_end":101.5}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.4},{"pop":"West_Med","pct_start":48.4,"pct_end":65.8},{"pop":"Baltic","pct_start":65.8,"pct_end":83.1},{"pop":"Red_Sea","pct_start":83.1,"pct_end":95.2},{"pop":"Siberian","pct_start":95.2,"pct_end":99.0},{"pop":"West_Asian","pct_start":99.0,"pct_end":99.9}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.9},{"pop":"Baltic","pct_start":41.9,"pct_end":67.5},{"pop":"West_Asian","pct_start":67.5,"pct_end":92.8},{"pop":"West_Med","pct_start":92.8,"pct_end":95.4},{"pop":"Northeast_African","pct_start":95.4,"pct_end":97.9},{"pop":"South_Asian","pct_start":97.9,"pct_end":99.4}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.7},{"pop":"Baltic","pct_start":41.7,"pct_end":61.0},{"pop":"West_Med","pct_start":61.0,"pct_end":76.2},{"pop":"West_Asian","pct_start":76.2,"pct_end":86.6},{"pop":"East_Med","pct_start":86.6,"pct_end":94.9},{"pop":"Red_Sea","pct_start":94.9,"pct_end":97.6}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":53.5},{"pop":"Baltic","pct_start":53.5,"pct_end":73.3},{"pop":"West_Asian","pct_start":73.3,"pct_end":89.2},{"pop":"South_Asian","pct_start":89.2,"pct_end":93.7},{"pop":"West_Med","pct_start":93.7,"pct_end":97.6},{"pop":"Sub","pct_start":97.6,"pct_end":99.6}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.8},{"pop":"Baltic","pct_start":50.8,"pct_end":77.9},{"pop":"East_Med","pct_start":77.9,"pct_end":89.8},{"pop":"West_Med","pct_start":89.8,"pct_end":94.6},{"pop":"South_Asian","pct_start":94.6,"pct_end":97.7},{"pop":"West_Asian","pct_start":97.7,"pct_end":100.1},{"pop":"Sub","pct_start":100.1,"pct_end":102.5}],"14":[{"pop":"East_Med","pct_start":0,"pct_end":44.2},{"pop":"Baltic","pct_start":44.2,"pct_end":62.2},{"pop":"North_Atlantic","pct_start":62.2,"pct_end":75.3},{"pop":"West_Med","pct_start":75.3,"pct_end":81.4},{"pop":"East_Asian","pct_start":81.4,"pct_end":83.5},{"pop":"Oceanian","pct_start":83.5,"pct_end":84.9}],"15":[{"pop":"North_Atlantic","pct_start":0,"pct_end":33.1},{"pop":"West_Med","pct_start":33.1,"pct_end":53.1},{"pop":"West_Asian","pct_start":53.1,"pct_end":72.4},{"pop":"Sub","pct_start":72.4,"pct_end":87.2},{"pop":"Baltic","pct_start":87.2,"pct_end":100.5},{"pop":"Red_Sea","pct_start":100.5,"pct_end":107.5},{"pop":"Amerindian","pct_start":107.5,"pct_end":111.3},{"pop":"East_Asian","pct_start":111.3,"pct_end":113.3},{"pop":"East_Med","pct_start":113.3,"pct_end":114.9}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.2},{"pop":"Baltic","pct_start":50.2,"pct_end":77.3},{"pop":"East_Med","pct_start":77.3,"pct_end":84.1},{"pop":"West_Asian","pct_start":84.1,"pct_end":90.7},{"pop":"West_Med","pct_start":90.7,"pct_end":95.2},{"pop":"Northeast_African","pct_start":95.2,"pct_end":98.0},{"pop":"Oceanian","pct_start":98.0,"pct_end":99.9}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":30.1},{"pop":"Baltic","pct_start":30.1,"pct_end":58.6},{"pop":"West_Asian","pct_start":58.6,"pct_end":74.0},{"pop":"West_Med","pct_start":74.0,"pct_end":88.2},{"pop":"Red_Sea","pct_start":88.2,"pct_end":93.5},{"pop":"Siberian","pct_start":93.5,"pct_end":96.7},{"pop":"South_Asian","pct_start":96.7,"pct_end":98.9},{"pop":"Northeast_African","pct_start":98.9,"pct_end":100.0}],"18":[{"pop":"North_Atlantic","pct_start":0,"pct_end":69.5},{"pop":"West_Asian","pct_start":69.5,"pct_end":82.6},{"pop":"Baltic","pct_start":82.6,"pct_end":90.2},{"pop":"East_Med","pct_start":90.2,"pct_end":96.3},{"pop":"West_Med","pct_start":96.3,"pct_end":98.2},{"pop":"Oceanian","pct_start":98.2,"pct_end":100.1}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":33.7},{"pop":"Baltic","pct_start":33.7,"pct_end":62.6},{"pop":"East_Med","pct_start":62.6,"pct_end":75.5},{"pop":"West_Med","pct_start":75.5,"pct_end":83.6},{"pop":"Northeast_African","pct_start":83.6,"pct_end":89.0},{"pop":"Red_Sea","pct_start":89.0,"pct_end":93.4},{"pop":"West_Asian","pct_start":93.4,"pct_end":97.4},{"pop":"Oceanian","pct_start":97.4,"pct_end":100.0}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.8},{"pop":"Baltic","pct_start":50.8,"pct_end":74.0},{"pop":"West_Asian","pct_start":74.0,"pct_end":94.3},{"pop":"Amerindian","pct_start":94.3,"pct_end":98.0},{"pop":"Oceanian","pct_start":98.0,"pct_end":99.9}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.3},{"pop":"Baltic","pct_start":42.3,"pct_end":82.6},{"pop":"West_Med","pct_start":82.6,"pct_end":89.9},{"pop":"South_Asian","pct_start":89.9,"pct_end":93.0},{"pop":"Red_Sea","pct_start":93.0,"pct_end":96.0},{"pop":"West_Asian","pct_start":96.0,"pct_end":98.2},{"pop":"Northeast_African","pct_start":98.2,"pct_end":100.0}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":63.9},{"pop":"East_Med","pct_start":63.9,"pct_end":78.4},{"pop":"Baltic","pct_start":78.4,"pct_end":90.5},{"pop":"East_Asian","pct_start":90.5,"pct_end":95.5},{"pop":"Oceanian","pct_start":95.5,"pct_end":100.0}]},"Elizabeth Hollands":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.1},{"pop":"Baltic","pct_start":40.1,"pct_end":72.4},{"pop":"West_Med","pct_start":72.4,"pct_end":82.1},{"pop":"East_Med","pct_start":82.1,"pct_end":90.2},{"pop":"Siberian","pct_start":90.2,"pct_end":94.2},{"pop":"Red_Sea","pct_start":94.2,"pct_end":97.4},{"pop":"South_Asian","pct_start":97.4,"pct_end":99.8}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.0},{"pop":"Baltic","pct_start":35.0,"pct_end":61.5},{"pop":"West_Med","pct_start":61.5,"pct_end":81.9},{"pop":"East_Med","pct_start":81.9,"pct_end":91.1},{"pop":"Siberian","pct_start":91.1,"pct_end":95.2},{"pop":"West_Asian","pct_start":95.2,"pct_end":98.3},{"pop":"South_Asian","pct_start":98.3,"pct_end":100.0}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":33.3},{"pop":"Baltic","pct_start":33.3,"pct_end":62.5},{"pop":"West_Med","pct_start":62.5,"pct_end":78.4},{"pop":"Red_Sea","pct_start":78.4,"pct_end":88.7},{"pop":"West_Asian","pct_start":88.7,"pct_end":93.5},{"pop":"South_Asian","pct_start":93.5,"pct_end":96.9},{"pop":"East_Med","pct_start":96.9,"pct_end":99.7}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":58.2},{"pop":"West_Med","pct_start":58.2,"pct_end":79.0},{"pop":"East_Med","pct_start":79.0,"pct_end":89.9},{"pop":"Baltic","pct_start":89.9,"pct_end":95.8},{"pop":"Siberian","pct_start":95.8,"pct_end":98.4},{"pop":"Oceanian","pct_start":98.4,"pct_end":99.7}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.2},{"pop":"West_Med","pct_start":35.2,"pct_end":62.2},{"pop":"Baltic","pct_start":62.2,"pct_end":81.6},{"pop":"East_Med","pct_start":81.6,"pct_end":89.9},{"pop":"West_Asian","pct_start":89.9,"pct_end":94.3},{"pop":"East_Asian","pct_start":94.3,"pct_end":98.5},{"pop":"Oceanian","pct_start":98.5,"pct_end":99.4},{"pop":"Red_Sea","pct_start":99.4,"pct_end":100.0}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.3},{"pop":"Baltic","pct_start":50.3,"pct_end":67.6},{"pop":"West_Med","pct_start":67.6,"pct_end":82.4},{"pop":"Red_Sea","pct_start":82.4,"pct_end":87.6},{"pop":"East_Asian","pct_start":87.6,"pct_end":91.0},{"pop":"East_Med","pct_start":91.0,"pct_end":94.2},{"pop":"West_Asian","pct_start":94.2,"pct_end":97.0},{"pop":"Oceanian","pct_start":97.0,"pct_end":99.4}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.5},{"pop":"Baltic","pct_start":35.5,"pct_end":65.6},{"pop":"East_Med","pct_start":65.6,"pct_end":85.4},{"pop":"West_Asian","pct_start":85.4,"pct_end":95.7},{"pop":"West_Med","pct_start":95.7,"pct_end":99.5}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.4},{"pop":"West_Med","pct_start":49.4,"pct_end":69.0},{"pop":"Baltic","pct_start":69.0,"pct_end":77.4},{"pop":"South_Asian","pct_start":77.4,"pct_end":84.9},{"pop":"East_Med","pct_start":84.9,"pct_end":91.0},{"pop":"West_Asian","pct_start":91.0,"pct_end":95.6},{"pop":"Red_Sea","pct_start":95.6,"pct_end":99.7}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":34.0},{"pop":"Baltic","pct_start":34.0,"pct_end":65.1},{"pop":"West_Med","pct_start":65.1,"pct_end":87.8},{"pop":"West_Asian","pct_start":87.8,"pct_end":95.0},{"pop":"Amerindian","pct_start":95.0,"pct_end":97.7},{"pop":"Red_Sea","pct_start":97.7,"pct_end":98.9}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.8},{"pop":"Baltic","pct_start":40.8,"pct_end":66.3},{"pop":"West_Med","pct_start":66.3,"pct_end":91.8},{"pop":"Amerindian","pct_start":91.8,"pct_end":96.3},{"pop":"East_Asian","pct_start":96.3,"pct_end":98.2},{"pop":"East_Med","pct_start":98.2,"pct_end":99.8}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.3},{"pop":"West_Med","pct_start":52.3,"pct_end":78.1},{"pop":"Baltic","pct_start":78.1,"pct_end":85.1},{"pop":"East_Med","pct_start":85.1,"pct_end":91.5},{"pop":"South_Asian","pct_start":91.5,"pct_end":97.6},{"pop":"Northeast_African","pct_start":97.6,"pct_end":100.0}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":39.7},{"pop":"Baltic","pct_start":39.7,"pct_end":58.2},{"pop":"West_Med","pct_start":58.2,"pct_end":73.8},{"pop":"West_Asian","pct_start":73.8,"pct_end":84.9},{"pop":"East_Med","pct_start":84.9,"pct_end":92.2},{"pop":"Northeast_African","pct_start":92.2,"pct_end":96.0},{"pop":"South_Asian","pct_start":96.0,"pct_end":98.3},{"pop":"Oceanian","pct_start":98.3,"pct_end":99.6}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":45.7},{"pop":"Baltic","pct_start":45.7,"pct_end":67.9},{"pop":"West_Med","pct_start":67.9,"pct_end":87.1},{"pop":"West_Asian","pct_start":87.1,"pct_end":92.9},{"pop":"Amerindian","pct_start":92.9,"pct_end":97.3},{"pop":"South_Asian","pct_start":97.3,"pct_end":99.8}],"14":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.9},{"pop":"Baltic","pct_start":42.9,"pct_end":71.8},{"pop":"West_Med","pct_start":71.8,"pct_end":89.9},{"pop":"Amerindian","pct_start":89.9,"pct_end":95.0},{"pop":"East_Med","pct_start":95.0,"pct_end":98.4},{"pop":"South_Asian","pct_start":98.4,"pct_end":100.0}],"15":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.2},{"pop":"West_Med","pct_start":52.2,"pct_end":71.6},{"pop":"East_Med","pct_start":71.6,"pct_end":85.6},{"pop":"Baltic","pct_start":85.6,"pct_end":96.4},{"pop":"Siberian","pct_start":96.4,"pct_end":98.4},{"pop":"Amerindian","pct_start":98.4,"pct_end":99.2}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.9},{"pop":"West_Med","pct_start":52.9,"pct_end":64.1},{"pop":"East_Med","pct_start":64.1,"pct_end":71.7},{"pop":"Baltic","pct_start":71.7,"pct_end":78.3},{"pop":"West_Asian","pct_start":78.3,"pct_end":83.8},{"pop":"South_Asian","pct_start":83.8,"pct_end":88.2},{"pop":"Red_Sea","pct_start":88.2,"pct_end":91.5},{"pop":"East_Asian","pct_start":91.5,"pct_end":94.6},{"pop":"Northeast_African","pct_start":94.6,"pct_end":97.0}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":29.5},{"pop":"Baltic","pct_start":29.5,"pct_end":51.7},{"pop":"East_Med","pct_start":51.7,"pct_end":68.4},{"pop":"West_Med","pct_start":68.4,"pct_end":79.4},{"pop":"West_Asian","pct_start":79.4,"pct_end":86.8},{"pop":"Red_Sea","pct_start":86.8,"pct_end":93.7},{"pop":"Amerindian","pct_start":93.7,"pct_end":98.9}],"18":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.1},{"pop":"Baltic","pct_start":35.1,"pct_end":59.9},{"pop":"West_Med","pct_start":59.9,"pct_end":80.2},{"pop":"South_Asian","pct_start":80.2,"pct_end":86.3},{"pop":"Red_Sea","pct_start":86.3,"pct_end":92.2},{"pop":"West_Asian","pct_start":92.2,"pct_end":94.8},{"pop":"East_Asian","pct_start":94.8,"pct_end":97.4},{"pop":"Oceanian","pct_start":97.4,"pct_end":99.8}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":61.7},{"pop":"Baltic","pct_start":61.7,"pct_end":78.8},{"pop":"West_Med","pct_start":78.8,"pct_end":95.1},{"pop":"Amerindian","pct_start":95.1,"pct_end":99.9}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.9},{"pop":"Baltic","pct_start":42.9,"pct_end":67.8},{"pop":"East_Med","pct_start":67.8,"pct_end":80.2},{"pop":"West_Med","pct_start":80.2,"pct_end":89.8},{"pop":"South_Asian","pct_start":89.8,"pct_end":96.9},{"pop":"Red_Sea","pct_start":96.9,"pct_end":98.4},{"pop":"West_Asian","pct_start":98.4,"pct_end":99.2}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":33.3},{"pop":"West_Med","pct_start":33.3,"pct_end":56.2},{"pop":"Baltic","pct_start":56.2,"pct_end":70.0},{"pop":"West_Asian","pct_start":70.0,"pct_end":81.2},{"pop":"East_Med","pct_start":81.2,"pct_end":88.0},{"pop":"Northeast_African","pct_start":88.0,"pct_end":91.9},{"pop":"Siberian","pct_start":91.9,"pct_end":95.0},{"pop":"Red_Sea","pct_start":95.0,"pct_end":97.4},{"pop":"Oceanian","pct_start":97.4,"pct_end":99.2}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.4},{"pop":"West_Med","pct_start":51.4,"pct_end":82.7},{"pop":"East_Med","pct_start":82.7,"pct_end":88.7},{"pop":"Northeast_African","pct_start":88.7,"pct_end":94.7},{"pop":"Baltic","pct_start":94.7,"pct_end":97.4},{"pop":"Amerindian","pct_start":97.4,"pct_end":100.0}]},"Gregory Fellows":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.3},{"pop":"Baltic","pct_start":41.3,"pct_end":64.2},{"pop":"West_Asian","pct_start":64.2,"pct_end":78.6},{"pop":"West_Med","pct_start":78.6,"pct_end":91.4},{"pop":"East_Med","pct_start":91.4,"pct_end":96.1},{"pop":"Red_Sea","pct_start":96.1,"pct_end":97.6},{"pop":"South_Asian","pct_start":97.6,"pct_end":99.0},{"pop":"Siberian","pct_start":99.0,"pct_end":100.0}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.3},{"pop":"Baltic","pct_start":49.3,"pct_end":68.7},{"pop":"West_Asian","pct_start":68.7,"pct_end":82.0},{"pop":"West_Med","pct_start":82.0,"pct_end":88.5},{"pop":"Red_Sea","pct_start":88.5,"pct_end":93.6},{"pop":"Siberian","pct_start":93.6,"pct_end":96.6},{"pop":"East_Med","pct_start":96.6,"pct_end":98.0},{"pop":"East_Asian","pct_start":98.0,"pct_end":98.9},{"pop":"Northeast_African","pct_start":98.9,"pct_end":99.8}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.8},{"pop":"Baltic","pct_start":49.8,"pct_end":83.5},{"pop":"West_Med","pct_start":83.5,"pct_end":96.7},{"pop":"Red_Sea","pct_start":96.7,"pct_end":99.1}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.6},{"pop":"Baltic","pct_start":55.6,"pct_end":81.6},{"pop":"West_Med","pct_start":81.6,"pct_end":89.8},{"pop":"East_Med","pct_start":89.8,"pct_end":94.6},{"pop":"Siberian","pct_start":94.6,"pct_end":96.6},{"pop":"Red_Sea","pct_start":96.6,"pct_end":98.3},{"pop":"Amerindian","pct_start":98.3,"pct_end":99.8}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":36.8},{"pop":"West_Asian","pct_start":36.8,"pct_end":61.8},{"pop":"Baltic","pct_start":61.8,"pct_end":82.2},{"pop":"West_Med","pct_start":82.2,"pct_end":94.8},{"pop":"Siberian","pct_start":94.8,"pct_end":97.3},{"pop":"Red_Sea","pct_start":97.3,"pct_end":98.9}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.4},{"pop":"Baltic","pct_start":40.4,"pct_end":67.1},{"pop":"East_Med","pct_start":67.1,"pct_end":86.7},{"pop":"West_Med","pct_start":86.7,"pct_end":100.0},{"pop":"Sub","pct_start":100.0,"pct_end":101.1}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.8},{"pop":"Baltic","pct_start":44.8,"pct_end":68.6},{"pop":"West_Med","pct_start":68.6,"pct_end":89.4},{"pop":"East_Med","pct_start":89.4,"pct_end":99.5}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":63.3},{"pop":"Baltic","pct_start":63.3,"pct_end":83.6},{"pop":"West_Asian","pct_start":83.6,"pct_end":91.3},{"pop":"Red_Sea","pct_start":91.3,"pct_end":95.5},{"pop":"East_Med","pct_start":95.5,"pct_end":98.4},{"pop":"South_Asian","pct_start":98.4,"pct_end":99.7}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.9},{"pop":"Baltic","pct_start":49.9,"pct_end":78.4},{"pop":"West_Med","pct_start":78.4,"pct_end":88.1},{"pop":"West_Asian","pct_start":88.1,"pct_end":97.5},{"pop":"Northeast_African","pct_start":97.5,"pct_end":99.5}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":53.6},{"pop":"West_Asian","pct_start":53.6,"pct_end":71.9},{"pop":"Baltic","pct_start":71.9,"pct_end":87.6},{"pop":"West_Med","pct_start":87.6,"pct_end":97.2},{"pop":"South_Asian","pct_start":97.2,"pct_end":100.1}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.5},{"pop":"Baltic","pct_start":43.5,"pct_end":77.4},{"pop":"West_Asian","pct_start":77.4,"pct_end":83.9},{"pop":"East_Med","pct_start":83.9,"pct_end":89.9},{"pop":"West_Med","pct_start":89.9,"pct_end":93.5},{"pop":"Oceanian","pct_start":93.5,"pct_end":96.1},{"pop":"Red_Sea","pct_start":96.1,"pct_end":98.2},{"pop":"East_Asian","pct_start":98.2,"pct_end":99.1},{"pop":"Amerindian","pct_start":99.1,"pct_end":100.0}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.6},{"pop":"Baltic","pct_start":46.6,"pct_end":72.2},{"pop":"West_Med","pct_start":72.2,"pct_end":92.2},{"pop":"East_Med","pct_start":92.2,"pct_end":96.5},{"pop":"West_Asian","pct_start":96.5,"pct_end":98.7},{"pop":"Oceanian","pct_start":98.7,"pct_end":99.6}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":62.2},{"pop":"Baltic","pct_start":62.2,"pct_end":85.3},{"pop":"West_Med","pct_start":85.3,"pct_end":92.3},{"pop":"South_Asian","pct_start":92.3,"pct_end":96.0},{"pop":"West_Asian","pct_start":96.0,"pct_end":98.7},{"pop":"Northeast_African","pct_start":98.7,"pct_end":99.5}],"14":[{"pop":"North_Atlantic","pct_start":0,"pct_end":51.6},{"pop":"Baltic","pct_start":51.6,"pct_end":78.9},{"pop":"West_Med","pct_start":78.9,"pct_end":95.0},{"pop":"South_Asian","pct_start":95.0,"pct_end":97.2},{"pop":"East_Asian","pct_start":97.2,"pct_end":99.3}],"15":[{"pop":"Baltic","pct_start":0,"pct_end":40.3},{"pop":"North_Atlantic","pct_start":40.3,"pct_end":66.4},{"pop":"West_Med","pct_start":66.4,"pct_end":85.0},{"pop":"Red_Sea","pct_start":85.0,"pct_end":91.1},{"pop":"East_Med","pct_start":91.1,"pct_end":96.7},{"pop":"Siberian","pct_start":96.7,"pct_end":99.9}],"16":[{"pop":"Baltic","pct_start":0,"pct_end":39.6},{"pop":"North_Atlantic","pct_start":39.6,"pct_end":76.3},{"pop":"East_Med","pct_start":76.3,"pct_end":89.7},{"pop":"West_Med","pct_start":89.7,"pct_end":94.2},{"pop":"Red_Sea","pct_start":94.2,"pct_end":96.7},{"pop":"Amerindian","pct_start":96.7,"pct_end":98.9},{"pop":"Oceanian","pct_start":98.9,"pct_end":100.0}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.3},{"pop":"Baltic","pct_start":35.3,"pct_end":61.9},{"pop":"West_Med","pct_start":61.9,"pct_end":76.5},{"pop":"West_Asian","pct_start":76.5,"pct_end":91.1},{"pop":"East_Med","pct_start":91.1,"pct_end":95.2},{"pop":"South_Asian","pct_start":95.2,"pct_end":96.5},{"pop":"Amerindian","pct_start":96.5,"pct_end":97.3}],"18":[{"pop":"Baltic","pct_start":0,"pct_end":39.5},{"pop":"North_Atlantic","pct_start":39.5,"pct_end":69.6},{"pop":"West_Med","pct_start":69.6,"pct_end":89.1},{"pop":"Oceanian","pct_start":89.1,"pct_end":93.3},{"pop":"Siberian","pct_start":93.3,"pct_end":97.3},{"pop":"Red_Sea","pct_start":97.3,"pct_end":100.0},{"pop":"Sub","pct_start":100.0,"pct_end":102.5}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":59.7},{"pop":"West_Med","pct_start":59.7,"pct_end":75.4},{"pop":"Baltic","pct_start":75.4,"pct_end":86.1},{"pop":"West_Asian","pct_start":86.1,"pct_end":94.2},{"pop":"Northeast_African","pct_start":94.2,"pct_end":100.0}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.8},{"pop":"Baltic","pct_start":52.8,"pct_end":88.9},{"pop":"West_Med","pct_start":88.9,"pct_end":98.7},{"pop":"Oceanian","pct_start":98.7,"pct_end":100.0}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":82.1},{"pop":"Baltic","pct_start":82.1,"pct_end":92.5},{"pop":"West_Asian","pct_start":92.5,"pct_end":97.9}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":68.8},{"pop":"West_Med","pct_start":68.8,"pct_end":85.0},{"pop":"Amerindian","pct_start":85.0,"pct_end":91.0},{"pop":"Baltic","pct_start":91.0,"pct_end":94.1},{"pop":"Sub","pct_start":94.1,"pct_end":95.9}]},"*Martin Lindner":{"1":[{"pop":"Baltic","pct_start":0,"pct_end":34.8},{"pop":"North_Atlantic","pct_start":34.8,"pct_end":63.2},{"pop":"West_Med","pct_start":63.2,"pct_end":80.3},{"pop":"West_Asian","pct_start":80.3,"pct_end":90.8},{"pop":"Red_Sea","pct_start":90.8,"pct_end":94.4},{"pop":"East_Asian","pct_start":94.4,"pct_end":96.0},{"pop":"Siberian","pct_start":96.0,"pct_end":97.6},{"pop":"East_Med","pct_start":97.6,"pct_end":98.5}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.2},{"pop":"Baltic","pct_start":44.2,"pct_end":72.9},{"pop":"East_Med","pct_start":72.9,"pct_end":88.7},{"pop":"West_Med","pct_start":88.7,"pct_end":95.0},{"pop":"Red_Sea","pct_start":95.0,"pct_end":98.8},{"pop":"Sub","pct_start":98.8,"pct_end":100.3},{"pop":"Siberian","pct_start":100.3,"pct_end":101.0}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.0},{"pop":"Baltic","pct_start":41.0,"pct_end":67.1},{"pop":"West_Med","pct_start":67.1,"pct_end":80.8},{"pop":"East_Med","pct_start":80.8,"pct_end":86.9},{"pop":"West_Asian","pct_start":86.9,"pct_end":91.9},{"pop":"South_Asian","pct_start":91.9,"pct_end":95.6},{"pop":"Amerindian","pct_start":95.6,"pct_end":99.2},{"pop":"Oceanian","pct_start":99.2,"pct_end":100.1}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.7},{"pop":"Baltic","pct_start":43.7,"pct_end":66.7},{"pop":"East_Med","pct_start":66.7,"pct_end":86.4},{"pop":"West_Med","pct_start":86.4,"pct_end":95.9},{"pop":"East_Asian","pct_start":95.9,"pct_end":98.8},{"pop":"Oceanian","pct_start":98.8,"pct_end":100.0}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.4},{"pop":"Baltic","pct_start":46.4,"pct_end":74.5},{"pop":"West_Med","pct_start":74.5,"pct_end":88.6},{"pop":"East_Med","pct_start":88.6,"pct_end":97.6},{"pop":"Oceanian","pct_start":97.6,"pct_end":99.0},{"pop":"Red_Sea","pct_start":99.0,"pct_end":100.0}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":53.2},{"pop":"Baltic","pct_start":53.2,"pct_end":84.1},{"pop":"West_Med","pct_start":84.1,"pct_end":89.9},{"pop":"West_Asian","pct_start":89.9,"pct_end":93.8},{"pop":"Oceanian","pct_start":93.8,"pct_end":96.7},{"pop":"Siberian","pct_start":96.7,"pct_end":98.8},{"pop":"Red_Sea","pct_start":98.8,"pct_end":100.0}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":56.7},{"pop":"Baltic","pct_start":56.7,"pct_end":89.2},{"pop":"Red_Sea","pct_start":89.2,"pct_end":95.6},{"pop":"West_Med","pct_start":95.6,"pct_end":97.9},{"pop":"East_Asian","pct_start":97.9,"pct_end":99.4},{"pop":"Siberian","pct_start":99.4,"pct_end":100.1}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":26.5},{"pop":"Baltic","pct_start":26.5,"pct_end":51.6},{"pop":"West_Med","pct_start":51.6,"pct_end":76.3},{"pop":"West_Asian","pct_start":76.3,"pct_end":93.5},{"pop":"South_Asian","pct_start":93.5,"pct_end":98.1},{"pop":"Oceanian","pct_start":98.1,"pct_end":99.4},{"pop":"Amerindian","pct_start":99.4,"pct_end":100.1}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.3},{"pop":"Baltic","pct_start":43.3,"pct_end":71.8},{"pop":"West_Asian","pct_start":71.8,"pct_end":84.8},{"pop":"West_Med","pct_start":84.8,"pct_end":91.7},{"pop":"Red_Sea","pct_start":91.7,"pct_end":95.8},{"pop":"Siberian","pct_start":95.8,"pct_end":96.5}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":60.4},{"pop":"East_Med","pct_start":60.4,"pct_end":78.5},{"pop":"Baltic","pct_start":78.5,"pct_end":86.5},{"pop":"Red_Sea","pct_start":86.5,"pct_end":91.4},{"pop":"South_Asian","pct_start":91.4,"pct_end":96.0},{"pop":"Sub","pct_start":96.0,"pct_end":99.2},{"pop":"Siberian","pct_start":99.2,"pct_end":101.4},{"pop":"Oceanian","pct_start":101.4,"pct_end":102.3},{"pop":"Amerindian","pct_start":102.3,"pct_end":103.1}],"11":[{"pop":"Baltic","pct_start":0,"pct_end":34.2},{"pop":"North_Atlantic","pct_start":34.2,"pct_end":61.9},{"pop":"East_Med","pct_start":61.9,"pct_end":75.6},{"pop":"West_Asian","pct_start":75.6,"pct_end":85.7},{"pop":"Red_Sea","pct_start":85.7,"pct_end":90.0},{"pop":"West_Med","pct_start":90.0,"pct_end":93.6},{"pop":"Northeast_African","pct_start":93.6,"pct_end":96.6},{"pop":"East_Asian","pct_start":96.6,"pct_end":97.7}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.0},{"pop":"Baltic","pct_start":44.0,"pct_end":68.1},{"pop":"West_Med","pct_start":68.1,"pct_end":84.1},{"pop":"West_Asian","pct_start":84.1,"pct_end":88.3},{"pop":"East_Med","pct_start":88.3,"pct_end":92.4},{"pop":"Red_Sea","pct_start":92.4,"pct_end":96.2},{"pop":"Sub","pct_start":96.2,"pct_end":98.4},{"pop":"Oceanian","pct_start":98.4,"pct_end":100.3},{"pop":"Amerindian","pct_start":100.3,"pct_end":101.7}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.9},{"pop":"Baltic","pct_start":50.9,"pct_end":80.0},{"pop":"East_Med","pct_start":80.0,"pct_end":86.8},{"pop":"West_Med","pct_start":86.8,"pct_end":92.3},{"pop":"Oceanian","pct_start":92.3,"pct_end":95.4},{"pop":"Amerindian","pct_start":95.4,"pct_end":96.6},{"pop":"Sub","pct_start":96.6,"pct_end":97.2}],"14":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.2},{"pop":"East_Med","pct_start":42.2,"pct_end":57.2},{"pop":"Baltic","pct_start":57.2,"pct_end":71.0},{"pop":"West_Asian","pct_start":71.0,"pct_end":84.8},{"pop":"West_Med","pct_start":84.8,"pct_end":94.9},{"pop":"Sub","pct_start":94.9,"pct_end":98.3},{"pop":"Amerindian","pct_start":98.3,"pct_end":99.7},{"pop":"Oceanian","pct_start":99.7,"pct_end":100.6}],"15":[{"pop":"Baltic","pct_start":0,"pct_end":33.5},{"pop":"West_Med","pct_start":33.5,"pct_end":59.3},{"pop":"North_Atlantic","pct_start":59.3,"pct_end":82.5},{"pop":"East_Med","pct_start":82.5,"pct_end":92.6},{"pop":"South_Asian","pct_start":92.6,"pct_end":95.8},{"pop":"Red_Sea","pct_start":95.8,"pct_end":98.6},{"pop":"Sub","pct_start":98.6,"pct_end":101.4},{"pop":"Northeast_African","pct_start":101.4,"pct_end":102.9}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.6},{"pop":"East_Med","pct_start":35.6,"pct_end":55.0},{"pop":"Baltic","pct_start":55.0,"pct_end":73.1},{"pop":"West_Asian","pct_start":73.1,"pct_end":87.5},{"pop":"West_Med","pct_start":87.5,"pct_end":95.6},{"pop":"Siberian","pct_start":95.6,"pct_end":99.1},{"pop":"South_Asian","pct_start":99.1,"pct_end":100.0}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.2},{"pop":"Baltic","pct_start":46.2,"pct_end":84.7},{"pop":"West_Med","pct_start":84.7,"pct_end":98.5},{"pop":"Siberian","pct_start":98.5,"pct_end":99.9}],"18":[{"pop":"North_Atlantic","pct_start":0,"pct_end":58.6},{"pop":"East_Med","pct_start":58.6,"pct_end":70.3},{"pop":"Baltic","pct_start":70.3,"pct_end":81.3},{"pop":"West_Med","pct_start":81.3,"pct_end":88.8},{"pop":"West_Asian","pct_start":88.8,"pct_end":95.7},{"pop":"Northeast_African","pct_start":95.7,"pct_end":98.9},{"pop":"Oceanian","pct_start":98.9,"pct_end":100.1}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":32.8},{"pop":"Baltic","pct_start":32.8,"pct_end":57.0},{"pop":"East_Med","pct_start":57.0,"pct_end":75.8},{"pop":"West_Med","pct_start":75.8,"pct_end":84.1},{"pop":"West_Asian","pct_start":84.1,"pct_end":92.3},{"pop":"East_Asian","pct_start":92.3,"pct_end":96.0},{"pop":"Red_Sea","pct_start":96.0,"pct_end":99.6}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.6},{"pop":"Baltic","pct_start":41.6,"pct_end":69.5},{"pop":"East_Med","pct_start":69.5,"pct_end":80.9},{"pop":"West_Med","pct_start":80.9,"pct_end":91.3},{"pop":"East_Asian","pct_start":91.3,"pct_end":96.1},{"pop":"South_Asian","pct_start":96.1,"pct_end":96.8}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":30.3},{"pop":"West_Med","pct_start":30.3,"pct_end":56.5},{"pop":"Baltic","pct_start":56.5,"pct_end":76.3},{"pop":"East_Med","pct_start":76.3,"pct_end":91.5},{"pop":"Oceanian","pct_start":91.5,"pct_end":98.2},{"pop":"Sub","pct_start":98.2,"pct_end":101.3},{"pop":"Amerindian","pct_start":101.3,"pct_end":102.7}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":31.0},{"pop":"Baltic","pct_start":31.0,"pct_end":56.4},{"pop":"West_Asian","pct_start":56.4,"pct_end":79.5},{"pop":"West_Med","pct_start":79.5,"pct_end":87.9},{"pop":"Amerindian","pct_start":87.9,"pct_end":96.3},{"pop":"Oceanian","pct_start":96.3,"pct_end":98.9},{"pop":"Red_Sea","pct_start":98.9,"pct_end":100.0}]},"*Mindy":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":45.0},{"pop":"Baltic","pct_start":45.0,"pct_end":67.2},{"pop":"West_Med","pct_start":67.2,"pct_end":85.0},{"pop":"Amerindian","pct_start":85.0,"pct_end":92.5},{"pop":"East_Asian","pct_start":92.5,"pct_end":95.5},{"pop":"West_Asian","pct_start":95.5,"pct_end":97.2},{"pop":"Northeast_African","pct_start":97.2,"pct_end":98.7},{"pop":"East_Med","pct_start":98.7,"pct_end":99.4}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.6},{"pop":"West_Med","pct_start":55.6,"pct_end":69.2},{"pop":"Baltic","pct_start":69.2,"pct_end":82.6},{"pop":"West_Asian","pct_start":82.6,"pct_end":91.8},{"pop":"Red_Sea","pct_start":91.8,"pct_end":96.3},{"pop":"Amerindian","pct_start":96.3,"pct_end":98.7},{"pop":"Northeast_African","pct_start":98.7,"pct_end":100.1}],"3":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.6},{"pop":"Baltic","pct_start":41.6,"pct_end":72.9},{"pop":"West_Med","pct_start":72.9,"pct_end":92.1},{"pop":"West_Asian","pct_start":92.1,"pct_end":97.6},{"pop":"Oceanian","pct_start":97.6,"pct_end":98.9},{"pop":"Northeast_African","pct_start":98.9,"pct_end":99.7}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":47.0},{"pop":"Baltic","pct_start":47.0,"pct_end":64.5},{"pop":"West_Med","pct_start":64.5,"pct_end":73.9},{"pop":"East_Med","pct_start":73.9,"pct_end":82.3},{"pop":"Amerindian","pct_start":82.3,"pct_end":88.1},{"pop":"Siberian","pct_start":88.1,"pct_end":93.5},{"pop":"East_Asian","pct_start":93.5,"pct_end":97.8},{"pop":"West_Asian","pct_start":97.8,"pct_end":99.5}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.0},{"pop":"Baltic","pct_start":52.0,"pct_end":76.7},{"pop":"West_Med","pct_start":76.7,"pct_end":85.1},{"pop":"West_Asian","pct_start":85.1,"pct_end":92.4},{"pop":"Amerindian","pct_start":92.4,"pct_end":95.3},{"pop":"Red_Sea","pct_start":95.3,"pct_end":98.1},{"pop":"South_Asian","pct_start":98.1,"pct_end":100.0}],"6":[{"pop":"Baltic","pct_start":0,"pct_end":35.2},{"pop":"North_Atlantic","pct_start":35.2,"pct_end":60.2},{"pop":"West_Med","pct_start":60.2,"pct_end":77.3},{"pop":"Amerindian","pct_start":77.3,"pct_end":87.4},{"pop":"East_Med","pct_start":87.4,"pct_end":91.4},{"pop":"West_Asian","pct_start":91.4,"pct_end":95.3},{"pop":"East_Asian","pct_start":95.3,"pct_end":98.6},{"pop":"Siberian","pct_start":98.6,"pct_end":99.9}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":34.4},{"pop":"Baltic","pct_start":34.4,"pct_end":51.7},{"pop":"West_Med","pct_start":51.7,"pct_end":65.9},{"pop":"Amerindian","pct_start":65.9,"pct_end":78.5},{"pop":"East_Med","pct_start":78.5,"pct_end":90.0},{"pop":"East_Asian","pct_start":90.0,"pct_end":94.5},{"pop":"Northeast_African","pct_start":94.5,"pct_end":98.2},{"pop":"Red_Sea","pct_start":98.2,"pct_end":99.6}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.8},{"pop":"Baltic","pct_start":46.8,"pct_end":76.9},{"pop":"West_Asian","pct_start":76.9,"pct_end":91.0},{"pop":"East_Med","pct_start":91.0,"pct_end":98.0},{"pop":"West_Med","pct_start":98.0,"pct_end":99.3}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.1},{"pop":"West_Med","pct_start":55.1,"pct_end":76.7},{"pop":"Baltic","pct_start":76.7,"pct_end":93.7},{"pop":"Red_Sea","pct_start":93.7,"pct_end":97.3},{"pop":"East_Asian","pct_start":97.3,"pct_end":99.1},{"pop":"Amerindian","pct_start":99.1,"pct_end":100.1},{"pop":"Sub","pct_start":100.1,"pct_end":100.8}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":61.1},{"pop":"Baltic","pct_start":61.1,"pct_end":87.8},{"pop":"West_Med","pct_start":87.8,"pct_end":93.9},{"pop":"Amerindian","pct_start":93.9,"pct_end":97.2},{"pop":"Red_Sea","pct_start":97.2,"pct_end":99.3},{"pop":"East_Med","pct_start":99.3,"pct_end":100.0}],"11":[{"pop":"Baltic","pct_start":0,"pct_end":39.7},{"pop":"North_Atlantic","pct_start":39.7,"pct_end":66.0},{"pop":"West_Med","pct_start":66.0,"pct_end":81.0},{"pop":"East_Med","pct_start":81.0,"pct_end":87.9},{"pop":"West_Asian","pct_start":87.9,"pct_end":94.4},{"pop":"Oceanian","pct_start":94.4,"pct_end":97.3},{"pop":"Amerindian","pct_start":97.3,"pct_end":99.9}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":47.4},{"pop":"West_Med","pct_start":47.4,"pct_end":65.2},{"pop":"Amerindian","pct_start":65.2,"pct_end":75.7},{"pop":"East_Med","pct_start":75.7,"pct_end":83.7},{"pop":"West_Asian","pct_start":83.7,"pct_end":90.8},{"pop":"Baltic","pct_start":90.8,"pct_end":95.7},{"pop":"Red_Sea","pct_start":95.7,"pct_end":97.4},{"pop":"Oceanian","pct_start":97.4,"pct_end":98.9},{"pop":"South_Asian","pct_start":98.9,"pct_end":99.9}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":52.4},{"pop":"Baltic","pct_start":52.4,"pct_end":82.0},{"pop":"West_Med","pct_start":82.0,"pct_end":88.2},{"pop":"Amerindian","pct_start":88.2,"pct_end":93.4},{"pop":"West_Asian","pct_start":93.4,"pct_end":97.5}],"14":[{"pop":"North_Atlantic","pct_start":0,"pct_end":57.9},{"pop":"Baltic","pct_start":57.9,"pct_end":81.8},{"pop":"East_Asian","pct_start":81.8,"pct_end":86.1},{"pop":"West_Med","pct_start":86.1,"pct_end":89.3},{"pop":"South_Asian","pct_start":89.3,"pct_end":92.5},{"pop":"East_Med","pct_start":92.5,"pct_end":95.3},{"pop":"Sub","pct_start":95.3,"pct_end":97.9},{"pop":"Siberian","pct_start":97.9,"pct_end":98.7},{"pop":"Amerindian","pct_start":98.7,"pct_end":99.4}],"15":[{"pop":"North_Atlantic","pct_start":0,"pct_end":56.3},{"pop":"Baltic","pct_start":56.3,"pct_end":80.8},{"pop":"West_Med","pct_start":80.8,"pct_end":94.8},{"pop":"Sub","pct_start":94.8,"pct_end":98.1},{"pop":"West_Asian","pct_start":98.1,"pct_end":100.0},{"pop":"Red_Sea","pct_start":100.0,"pct_end":101.9},{"pop":"Siberian","pct_start":101.9,"pct_end":102.6}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.0},{"pop":"Baltic","pct_start":40.0,"pct_end":76.3},{"pop":"West_Med","pct_start":76.3,"pct_end":99.4},{"pop":"Sub","pct_start":99.4,"pct_end":100.1}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.4},{"pop":"Baltic","pct_start":48.4,"pct_end":65.9},{"pop":"Amerindian","pct_start":65.9,"pct_end":79.2},{"pop":"East_Med","pct_start":79.2,"pct_end":87.9},{"pop":"West_Med","pct_start":87.9,"pct_end":93.5},{"pop":"West_Asian","pct_start":93.5,"pct_end":97.9},{"pop":"East_Asian","pct_start":97.9,"pct_end":99.9},{"pop":"Sub","pct_start":99.9,"pct_end":100.5}],"18":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.1},{"pop":"Baltic","pct_start":50.1,"pct_end":73.9},{"pop":"East_Med","pct_start":73.9,"pct_end":94.4},{"pop":"West_Med","pct_start":94.4,"pct_end":100.0}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":46.1},{"pop":"West_Med","pct_start":46.1,"pct_end":63.1},{"pop":"Amerindian","pct_start":63.1,"pct_end":78.1},{"pop":"Siberian","pct_start":78.1,"pct_end":89.7},{"pop":"West_Asian","pct_start":89.7,"pct_end":95.0},{"pop":"South_Asian","pct_start":95.0,"pct_end":99.4}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.8},{"pop":"East_Med","pct_start":49.8,"pct_end":72.1},{"pop":"Baltic","pct_start":72.1,"pct_end":86.7},{"pop":"South_Asian","pct_start":86.7,"pct_end":92.9},{"pop":"West_Asian","pct_start":92.9,"pct_end":95.4},{"pop":"Siberian","pct_start":95.4,"pct_end":97.9},{"pop":"Amerindian","pct_start":97.9,"pct_end":100.0},{"pop":"Sub","pct_start":100.0,"pct_end":100.6}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":49.8},{"pop":"Baltic","pct_start":49.8,"pct_end":71.4},{"pop":"East_Med","pct_start":71.4,"pct_end":84.2},{"pop":"West_Asian","pct_start":84.2,"pct_end":94.1},{"pop":"South_Asian","pct_start":94.1,"pct_end":100.0}],"22":[{"pop":"West_Med","pct_start":0,"pct_end":23.8},{"pop":"Baltic","pct_start":23.8,"pct_end":42.2},{"pop":"Siberian","pct_start":42.2,"pct_end":56.1},{"pop":"South_Asian","pct_start":56.1,"pct_end":69.8},{"pop":"Amerindian","pct_start":69.8,"pct_end":82.0},{"pop":"West_Asian","pct_start":82.0,"pct_end":89.0},{"pop":"North_Atlantic","pct_start":89.0,"pct_end":94.7},{"pop":"Red_Sea","pct_start":94.7,"pct_end":99.8}]},"*Sarah Lindner":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.6},{"pop":"Baltic","pct_start":43.6,"pct_end":69.8},{"pop":"West_Med","pct_start":69.8,"pct_end":92.7},{"pop":"Red_Sea","pct_start":92.7,"pct_end":96.0},{"pop":"South_Asian","pct_start":96.0,"pct_end":99.2},{"pop":"Amerindian","pct_start":99.2,"pct_end":100.0}],"2":[{"pop":"North_Atlantic","pct_start":0,"pct_end":40.8},{"pop":"Baltic","pct_start":40.8,"pct_end":77.6},{"pop":"West_Asian","pct_start":77.6,"pct_end":92.0},{"pop":"South_Asian","pct_start":92.0,"pct_end":94.9},{"pop":"East_Med","pct_start":94.9,"pct_end":97.6},{"pop":"West_Med","pct_start":97.6,"pct_end":98.8}],"3":[{"pop":"Baltic","pct_start":0,"pct_end":45.9},{"pop":"North_Atlantic","pct_start":45.9,"pct_end":74.1},{"pop":"East_Med","pct_start":74.1,"pct_end":85.3},{"pop":"West_Med","pct_start":85.3,"pct_end":96.1},{"pop":"Siberian","pct_start":96.1,"pct_end":98.5},{"pop":"West_Asian","pct_start":98.5,"pct_end":99.7},{"pop":"Sub","pct_start":99.7,"pct_end":100.9}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.2},{"pop":"Baltic","pct_start":48.2,"pct_end":87.8},{"pop":"Red_Sea","pct_start":87.8,"pct_end":92.9},{"pop":"West_Med","pct_start":92.9,"pct_end":97.9},{"pop":"Siberian","pct_start":97.9,"pct_end":99.1},{"pop":"Northeast_African","pct_start":99.1,"pct_end":99.7}],"5":[{"pop":"North_Atlantic","pct_start":0,"pct_end":37.7},{"pop":"Baltic","pct_start":37.7,"pct_end":66.0},{"pop":"West_Asian","pct_start":66.0,"pct_end":77.1},{"pop":"West_Med","pct_start":77.1,"pct_end":85.2},{"pop":"South_Asian","pct_start":85.2,"pct_end":90.8},{"pop":"Red_Sea","pct_start":90.8,"pct_end":94.1},{"pop":"East_Med","pct_start":94.1,"pct_end":96.8},{"pop":"Amerindian","pct_start":96.8,"pct_end":98.5},{"pop":"Northeast_African","pct_start":98.5,"pct_end":99.6}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.5},{"pop":"Baltic","pct_start":43.5,"pct_end":70.1},{"pop":"West_Med","pct_start":70.1,"pct_end":87.8},{"pop":"East_Med","pct_start":87.8,"pct_end":98.4},{"pop":"Amerindian","pct_start":98.4,"pct_end":99.2},{"pop":"Siberian","pct_start":99.2,"pct_end":99.9}],"7":[{"pop":"North_Atlantic","pct_start":0,"pct_end":56.3},{"pop":"West_Asian","pct_start":56.3,"pct_end":70.7},{"pop":"Baltic","pct_start":70.7,"pct_end":84.8},{"pop":"West_Med","pct_start":84.8,"pct_end":94.3},{"pop":"Amerindian","pct_start":94.3,"pct_end":98.4},{"pop":"South_Asian","pct_start":98.4,"pct_end":99.8}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.0},{"pop":"Baltic","pct_start":42.0,"pct_end":60.0},{"pop":"West_Med","pct_start":60.0,"pct_end":75.4},{"pop":"East_Med","pct_start":75.4,"pct_end":86.9},{"pop":"West_Asian","pct_start":86.9,"pct_end":94.9},{"pop":"Red_Sea","pct_start":94.9,"pct_end":99.5},{"pop":"Northeast_African","pct_start":99.5,"pct_end":100.1}],"9":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.5},{"pop":"Baltic","pct_start":43.5,"pct_end":74.1},{"pop":"West_Med","pct_start":74.1,"pct_end":90.9},{"pop":"East_Med","pct_start":90.9,"pct_end":95.3},{"pop":"Siberian","pct_start":95.3,"pct_end":97.5},{"pop":"Oceanian","pct_start":97.5,"pct_end":99.2},{"pop":"Red_Sea","pct_start":99.2,"pct_end":99.8}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":38.1},{"pop":"Baltic","pct_start":38.1,"pct_end":64.0},{"pop":"West_Med","pct_start":64.0,"pct_end":83.3},{"pop":"West_Asian","pct_start":83.3,"pct_end":94.9},{"pop":"Red_Sea","pct_start":94.9,"pct_end":96.3},{"pop":"East_Med","pct_start":96.3,"pct_end":97.4},{"pop":"Oceanian","pct_start":97.4,"pct_end":98.2}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":60.6},{"pop":"Baltic","pct_start":60.6,"pct_end":86.0},{"pop":"West_Med","pct_start":86.0,"pct_end":95.8},{"pop":"Siberian","pct_start":95.8,"pct_end":98.7},{"pop":"Sub","pct_start":98.7,"pct_end":100.4},{"pop":"East_Asian","pct_start":100.4,"pct_end":101.6}],"12":[{"pop":"North_Atlantic","pct_start":0,"pct_end":28.5},{"pop":"West_Med","pct_start":28.5,"pct_end":47.7},{"pop":"Baltic","pct_start":47.7,"pct_end":66.0},{"pop":"East_Med","pct_start":66.0,"pct_end":84.3},{"pop":"West_Asian","pct_start":84.3,"pct_end":90.8},{"pop":"Red_Sea","pct_start":90.8,"pct_end":94.3},{"pop":"Amerindian","pct_start":94.3,"pct_end":96.6},{"pop":"Oceanian","pct_start":96.6,"pct_end":98.5},{"pop":"Siberian","pct_start":98.5,"pct_end":99.9}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.6},{"pop":"Baltic","pct_start":43.6,"pct_end":74.3},{"pop":"East_Med","pct_start":74.3,"pct_end":95.7},{"pop":"South_Asian","pct_start":95.7,"pct_end":99.8}],"14":[{"pop":"North_Atlantic","pct_start":0,"pct_end":35.2},{"pop":"Baltic","pct_start":35.2,"pct_end":62.2},{"pop":"West_Asian","pct_start":62.2,"pct_end":81.0},{"pop":"Amerindian","pct_start":81.0,"pct_end":87.7},{"pop":"East_Med","pct_start":87.7,"pct_end":93.1},{"pop":"West_Med","pct_start":93.1,"pct_end":97.1},{"pop":"Red_Sea","pct_start":97.1,"pct_end":100.1}],"15":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.7},{"pop":"Baltic","pct_start":44.7,"pct_end":78.9},{"pop":"East_Med","pct_start":78.9,"pct_end":88.5},{"pop":"West_Med","pct_start":88.5,"pct_end":96.6},{"pop":"East_Asian","pct_start":96.6,"pct_end":100.0}],"16":[{"pop":"North_Atlantic","pct_start":0,"pct_end":41.2},{"pop":"Baltic","pct_start":41.2,"pct_end":71.2},{"pop":"West_Med","pct_start":71.2,"pct_end":86.7},{"pop":"West_Asian","pct_start":86.7,"pct_end":100.0}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":64.8},{"pop":"East_Med","pct_start":64.8,"pct_end":80.0},{"pop":"Baltic","pct_start":80.0,"pct_end":92.9},{"pop":"Amerindian","pct_start":92.9,"pct_end":95.6},{"pop":"Red_Sea","pct_start":95.6,"pct_end":97.6},{"pop":"Northeast_African","pct_start":97.6,"pct_end":98.7},{"pop":"West_Asian","pct_start":98.7,"pct_end":99.5}],"18":[{"pop":"North_Atlantic","pct_start":0,"pct_end":43.9},{"pop":"West_Med","pct_start":43.9,"pct_end":75.5},{"pop":"Baltic","pct_start":75.5,"pct_end":92.1},{"pop":"South_Asian","pct_start":92.1,"pct_end":98.7},{"pop":"Red_Sea","pct_start":98.7,"pct_end":100.0}],"19":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.3},{"pop":"Baltic","pct_start":44.3,"pct_end":71.2},{"pop":"Oceanian","pct_start":71.2,"pct_end":78.8},{"pop":"East_Med","pct_start":78.8,"pct_end":85.6},{"pop":"West_Med","pct_start":85.6,"pct_end":91.5},{"pop":"Red_Sea","pct_start":91.5,"pct_end":95.9},{"pop":"Amerindian","pct_start":95.9,"pct_end":100.0}],"20":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.8},{"pop":"West_Asian","pct_start":48.8,"pct_end":63.1},{"pop":"West_Med","pct_start":63.1,"pct_end":75.9},{"pop":"East_Med","pct_start":75.9,"pct_end":86.1},{"pop":"Baltic","pct_start":86.1,"pct_end":92.2},{"pop":"Siberian","pct_start":92.2,"pct_end":95.6},{"pop":"Northeast_African","pct_start":95.6,"pct_end":98.0},{"pop":"Oceanian","pct_start":98.0,"pct_end":99.9}],"21":[{"pop":"North_Atlantic","pct_start":0,"pct_end":47.7},{"pop":"Baltic","pct_start":47.7,"pct_end":81.1},{"pop":"West_Asian","pct_start":81.1,"pct_end":92.1},{"pop":"West_Med","pct_start":92.1,"pct_end":96.3},{"pop":"Red_Sea","pct_start":96.3,"pct_end":100.0}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":54.8},{"pop":"West_Asian","pct_start":54.8,"pct_end":79.5},{"pop":"Baltic","pct_start":79.5,"pct_end":98.7},{"pop":"Oceanian","pct_start":98.7,"pct_end":100.0}]},"Cary":{"1":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.4},{"pop":"Baltic","pct_start":55.4,"pct_end":79.9},{"pop":"West_Asian","pct_start":79.9,"pct_end":87.3},{"pop":"Northeast_African","pct_start":87.3,"pct_end":90.7},{"pop":"Siberian","pct_start":90.7,"pct_end":93.9},{"pop":"South_Asian","pct_start":93.9,"pct_end":96.6},{"pop":"East_Med","pct_start":96.6,"pct_end":99.2},{"pop":"West_Med","pct_start":99.2,"pct_end":99.8}],"2":[{"pop":"Baltic","pct_start":0,"pct_end":49.0},{"pop":"North_Atlantic","pct_start":49.0,"pct_end":84.1},{"pop":"Siberian","pct_start":84.1,"pct_end":92.7},{"pop":"South_Asian","pct_start":92.7,"pct_end":96.4},{"pop":"Northeast_African","pct_start":96.4,"pct_end":99.0},{"pop":"West_Asian","pct_start":99.0,"pct_end":100.0}],"3":[{"pop":"Baltic","pct_start":0,"pct_end":39.8},{"pop":"North_Atlantic","pct_start":39.8,"pct_end":78.7},{"pop":"West_Med","pct_start":78.7,"pct_end":87.2},{"pop":"Siberian","pct_start":87.2,"pct_end":94.3},{"pop":"Northeast_African","pct_start":94.3,"pct_end":97.7},{"pop":"West_Asian","pct_start":97.7,"pct_end":98.9},{"pop":"Red_Sea","pct_start":98.9,"pct_end":99.9}],"4":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.2},{"pop":"Baltic","pct_start":55.2,"pct_end":86.5},{"pop":"East_Med","pct_start":86.5,"pct_end":92.0},{"pop":"East_Asian","pct_start":92.0,"pct_end":95.6},{"pop":"Siberian","pct_start":95.6,"pct_end":98.5},{"pop":"Oceanian","pct_start":98.5,"pct_end":99.7}],"5":[{"pop":"Baltic","pct_start":0,"pct_end":49.7},{"pop":"North_Atlantic","pct_start":49.7,"pct_end":82.6},{"pop":"West_Asian","pct_start":82.6,"pct_end":88.6},{"pop":"Siberian","pct_start":88.6,"pct_end":93.0},{"pop":"West_Med","pct_start":93.0,"pct_end":95.3},{"pop":"Amerindian","pct_start":95.3,"pct_end":97.2},{"pop":"South_Asian","pct_start":97.2,"pct_end":98.8},{"pop":"Red_Sea","pct_start":98.8,"pct_end":99.8}],"6":[{"pop":"North_Atlantic","pct_start":0,"pct_end":44.7},{"pop":"Baltic","pct_start":44.7,"pct_end":72.2},{"pop":"West_Asian","pct_start":72.2,"pct_end":82.6},{"pop":"West_Med","pct_start":82.6,"pct_end":90.8},{"pop":"Red_Sea","pct_start":90.8,"pct_end":94.4},{"pop":"Amerindian","pct_start":94.4,"pct_end":96.3},{"pop":"Siberian","pct_start":96.3,"pct_end":97.2},{"pop":"East_Asian","pct_start":97.2,"pct_end":98.0},{"pop":"South_Asian","pct_start":98.0,"pct_end":98.7}],"7":[{"pop":"Baltic","pct_start":0,"pct_end":54.7},{"pop":"North_Atlantic","pct_start":54.7,"pct_end":87.6},{"pop":"South_Asian","pct_start":87.6,"pct_end":96.8},{"pop":"Siberian","pct_start":96.8,"pct_end":98.6},{"pop":"Oceanian","pct_start":98.6,"pct_end":99.8},{"pop":"Sub","pct_start":99.8,"pct_end":101.0}],"8":[{"pop":"North_Atlantic","pct_start":0,"pct_end":50.5},{"pop":"Baltic","pct_start":50.5,"pct_end":81.3},{"pop":"West_Asian","pct_start":81.3,"pct_end":87.4},{"pop":"West_Med","pct_start":87.4,"pct_end":93.4},{"pop":"East_Asian","pct_start":93.4,"pct_end":98.5},{"pop":"Oceanian","pct_start":98.5,"pct_end":99.7}],"9":[{"pop":"Baltic","pct_start":0,"pct_end":44.6},{"pop":"East_Med","pct_start":44.6,"pct_end":69.8},{"pop":"North_Atlantic","pct_start":69.8,"pct_end":87.3},{"pop":"Siberian","pct_start":87.3,"pct_end":92.1},{"pop":"Oceanian","pct_start":92.1,"pct_end":96.1},{"pop":"South_Asian","pct_start":96.1,"pct_end":99.5}],"10":[{"pop":"North_Atlantic","pct_start":0,"pct_end":48.1},{"pop":"Baltic","pct_start":48.1,"pct_end":68.7},{"pop":"West_Med","pct_start":68.7,"pct_end":87.4},{"pop":"Siberian","pct_start":87.4,"pct_end":93.4},{"pop":"East_Med","pct_start":93.4,"pct_end":97.3},{"pop":"Oceanian","pct_start":97.3,"pct_end":100.1}],"11":[{"pop":"North_Atlantic","pct_start":0,"pct_end":42.8},{"pop":"Baltic","pct_start":42.8,"pct_end":71.2},{"pop":"West_Med","pct_start":71.2,"pct_end":89.2},{"pop":"Siberian","pct_start":89.2,"pct_end":99.8}],"12":[{"pop":"Baltic","pct_start":0,"pct_end":45.8},{"pop":"North_Atlantic","pct_start":45.8,"pct_end":77.4},{"pop":"West_Med","pct_start":77.4,"pct_end":93.1},{"pop":"East_Asian","pct_start":93.1,"pct_end":95.3},{"pop":"Northeast_African","pct_start":95.3,"pct_end":97.0},{"pop":"West_Asian","pct_start":97.0,"pct_end":98.3}],"13":[{"pop":"North_Atlantic","pct_start":0,"pct_end":36.4},{"pop":"Baltic","pct_start":36.4,"pct_end":64.8},{"pop":"West_Med","pct_start":64.8,"pct_end":83.5},{"pop":"West_Asian","pct_start":83.5,"pct_end":91.0},{"pop":"Siberian","pct_start":91.0,"pct_end":98.2},{"pop":"Sub","pct_start":98.2,"pct_end":99.6},{"pop":"East_Med","pct_start":99.6,"pct_end":100.5},{"pop":"Amerindian","pct_start":100.5,"pct_end":101.4}],"14":[{"pop":"Baltic","pct_start":0,"pct_end":47.7},{"pop":"North_Atlantic","pct_start":47.7,"pct_end":84.9},{"pop":"West_Asian","pct_start":84.9,"pct_end":91.2},{"pop":"East_Med","pct_start":91.2,"pct_end":95.7},{"pop":"Siberian","pct_start":95.7,"pct_end":98.2},{"pop":"Northeast_African","pct_start":98.2,"pct_end":100.1}],"15":[{"pop":"Baltic","pct_start":0,"pct_end":52.3},{"pop":"North_Atlantic","pct_start":52.3,"pct_end":85.6},{"pop":"Siberian","pct_start":85.6,"pct_end":91.4},{"pop":"Amerindian","pct_start":91.4,"pct_end":95.8},{"pop":"West_Asian","pct_start":95.8,"pct_end":98.9},{"pop":"Northeast_African","pct_start":98.9,"pct_end":99.9}],"16":[{"pop":"Baltic","pct_start":0,"pct_end":42.3},{"pop":"North_Atlantic","pct_start":42.3,"pct_end":73.1},{"pop":"West_Med","pct_start":73.1,"pct_end":91.3},{"pop":"South_Asian","pct_start":91.3,"pct_end":96.1},{"pop":"Northeast_African","pct_start":96.1,"pct_end":98.1},{"pop":"Siberian","pct_start":98.1,"pct_end":99.9}],"17":[{"pop":"North_Atlantic","pct_start":0,"pct_end":37.7},{"pop":"Baltic","pct_start":37.7,"pct_end":75.1},{"pop":"East_Med","pct_start":75.1,"pct_end":84.7},{"pop":"West_Asian","pct_start":84.7,"pct_end":91.1},{"pop":"Amerindian","pct_start":91.1,"pct_end":94.0},{"pop":"Red_Sea","pct_start":94.0,"pct_end":95.6}],"18":[{"pop":"Baltic","pct_start":0,"pct_end":49.7},{"pop":"North_Atlantic","pct_start":49.7,"pct_end":78.9},{"pop":"Siberian","pct_start":78.9,"pct_end":88.7},{"pop":"West_Asian","pct_start":88.7,"pct_end":95.5},{"pop":"Sub","pct_start":95.5,"pct_end":99.8},{"pop":"Northeast_African","pct_start":99.8,"pct_end":102.8},{"pop":"East_Med","pct_start":102.8,"pct_end":104.3}],"19":[{"pop":"Baltic","pct_start":0,"pct_end":45.5},{"pop":"North_Atlantic","pct_start":45.5,"pct_end":76.7},{"pop":"West_Asian","pct_start":76.7,"pct_end":88.8},{"pop":"Amerindian","pct_start":88.8,"pct_end":97.2},{"pop":"East_Asian","pct_start":97.2,"pct_end":99.5}],"20":[{"pop":"Baltic","pct_start":0,"pct_end":48.8},{"pop":"North_Atlantic","pct_start":48.8,"pct_end":84.1},{"pop":"Amerindian","pct_start":84.1,"pct_end":90.1},{"pop":"Red_Sea","pct_start":90.1,"pct_end":95.7},{"pop":"Northeast_African","pct_start":95.7,"pct_end":99.3}],"21":[{"pop":"Baltic","pct_start":0,"pct_end":52.7},{"pop":"Red_Sea","pct_start":52.7,"pct_end":65.0},{"pop":"West_Asian","pct_start":65.0,"pct_end":74.7},{"pop":"Siberian","pct_start":74.7,"pct_end":83.6},{"pop":"North_Atlantic","pct_start":83.6,"pct_end":89.5},{"pop":"Northeast_African","pct_start":89.5,"pct_end":95.2},{"pop":"Amerindian","pct_start":95.2,"pct_end":99.3},{"pop":"Oceanian","pct_start":99.3,"pct_end":100.1},{"pop":"Sub","pct_start":100.1,"pct_end":100.9}],"22":[{"pop":"North_Atlantic","pct_start":0,"pct_end":55.9},{"pop":"Baltic","pct_start":55.9,"pct_end":74.7},{"pop":"West_Asian","pct_start":74.7,"pct_end":83.6},{"pop":"West_Med","pct_start":83.6,"pct_end":92.3},{"pop":"East_Asian","pct_start":92.3,"pct_end":99.9}]}};
 const ethCalc={"Richard Smith":"Eurogenes K13","Mary Doonan":"Eurogenes K13","*Deanna Wood":"Eurogenes K13","Aaron Parry":"Eurogenes K13","Diana Folk":"Eurogenes K13","Elizabeth Hollands":"Eurogenes K13","Gregory Fellows":"Eurogenes K13","*Martin Lindner":"Eurogenes K13","*Mindy":"Eurogenes K13","*Sarah Lindner":"Eurogenes K13","Cary":"Eurogenes K13"};
+const VERIFY_LABELS={1:'⭐ Level I — Documented',2:'✓ Level II — World Tree',3:'✓ Level III — DNA',4:'⚠ Level IV — In Research'};
+const VERIFY_COLS={1:'#9b59b6',2:'#1db085',3:'#f39c12',4:'#e67e22'};
+const LINE_COLS={red:'#c44820',yellow:'#e8954a',blue:'#378ADD',purple:'#9b59b6'};
+const LINE_LABELS={red:'🔴 Rose Stoughton',yellow:'🟡 Anne Couvent/Savoy',blue:'🔵 Simon Ross',purple:'🟣 Sasseville'};
+const LUSIGNAN_MOTHERS=[
+  {name:'Aenor de Lusignan',husband:'Geoffroy IV de Thouars',dates:'b.1130',lines:['red','yellow','blue','purple'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Agathe de Lusignan',husband:'Geoffroi de Pons V',dates:'',lines:['purple'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Agnes de Lusignan',husband:'Guillaume de Chauvigny II',dates:'b.1230 d.1256',lines:['yellow'],verified:3,members:['Elizabeth Hollands'],descent:true,note:'Mother was Isabelle d\u2019Angoul\u00eame (former wife of King John of England). Elizabeth descends through Chauvigny → Balzac → Drouin → Sasseville → Hollands paternal line.'},
+  {name:'Alice de Lusignan, Countess of Surrey',husband:'John de Warenne, 6th Earl of Surrey',dates:'b.1224 d.1256',lines:['blue'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Alice de Lusignan, Dame de Marcillac',husband:'Gilbert de Clare',dates:'b.1248 d.1314',lines:['blue'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Anne de Lusignan, Princess of Cyprus',husband:'Louis I de Savoie',dates:'b.1418 d.1462',lines:['yellow'],verified:2,members:['Elizabeth Hollands'],note:'Gateway to Savoy line — confirmed 39-generation path to MD via Lavoie/New France. Daughter of Janus of Cyprus, great-granddaughter of Amaury II King of Cyprus & Jerusalem.'},
+  {name:'Burgundia de Lusignan',husband:'Gautier de Montfaucon',dates:'',lines:[],verified:4,members:['Elizabeth Hollands']},
+  {name:'Eustachie de Lusignan',husband:'Dreux de Mello III',dates:'b.1252',lines:['purple'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Isabel de Lusignan de Valence',husband:'John de Hastings, 1st Baron Hastings',dates:'b.1266 d.1334',lines:['blue'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Isabella de Lusignan',husband:'Maurice de Craon IV',dates:'b.1228 d.1283',lines:['yellow'],verified:2,members:['Elizabeth Hollands'],note:'Confirmed 13-generation path to Anne Couvent (1604) via Craon → Mauny → Maridor → Couvent. Isabella → Maurice de Craon V → Amaury de Craon III → Guillaume de Craon → Marie de Craon → Hervé de Mauny → Guillaume de Maulny → Pierre de Mauny → Renée de Maulny → Olivier de Maridor → Anne de Maridor → Guillaume Couvent → Anne Couvent.'},
+  {name:'Isabella de Lusignan of Cyprus',husband:'Henry d\'Antioch',dates:'',lines:[],verified:4,members:['Elizabeth Hollands']},
+  {name:'Isabelle de Lusignan',husband:'Eudes de Dampierre IV',dates:'',lines:[],verified:4,members:[]},
+  {name:'Jeanne de Lusignan',husband:'Piers de Geneville, Lord of Ludlow',dates:'b.c.1260 d.before 18 Apr 1323',lines:['red','blue'],verified:2,members:['Elizabeth Hollands'],geni:'',descent:true,note:'Co-heiress of Lusignan territories. Sold rights to Philippe IV 1309. Buried Abbaye de Valence. Elizabeth descends through 3 lines via Joan de Geneville → Roger Mortimer (Lines A, B, C).'},
+  {name:'Joan de Lusignan de Valence',husband:'John the Red Comyn of Badenoch',dates:'',lines:['blue'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Mahaud de Lusignan',husband:'Geoffroy du Puy-du-Fou',dates:'',lines:['yellow','red','blue','purple'],verified:3,members:['Elizabeth Hollands'],note:'Appears in ALL FOUR gateway lines — most significant convergence point'},
+  {name:'Mahaut de Lusignan',husband:'Guillaume Chabot',dates:'',lines:['yellow','purple'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Mahaut de Lusignan of Hereford',husband:'Humphrey de Bohun, 2nd Earl of Hereford',dates:'',lines:['red','blue'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Marguerite de Lusignan',husband:'Aymeri de Thouars',dates:'',lines:['purple'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Marie de Lusignan',husband:'Alphonse de Brienne',dates:'',lines:['yellow','purple'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Valence de Lusignan',husband:'Hugues II l\'Archevêque de Parthenay',dates:'',lines:['yellow','purple'],verified:3,members:['Elizabeth Hollands']},
+  {name:'Yolande de Lusignan de Fougères',husband:'Hélie Rudel de Pons',dates:'b.1257 d.1314',lines:['purple'],verified:3,members:['Elizabeth Hollands']},
+];
+const MEMBER_DESCENTS=[
+  {member:'Elizabeth Hollands',lines:[
+    'Line A (Red): Jeanne de Lusignan → Joan de Geneville → Joan de Mortimer → Audley → Stoughton → Otis → Poitevin → Tremblay ⚠ Combe/Baskerville gap',
+    'Line B (Red): Jeanne de Lusignan → Joan de Geneville → Blanche de Mortimer → Grandison → Stoughton → Otis → Tremblay',
+    'Line C (Blue): Jeanne de Lusignan → Joan de Geneville → Roger Mortimer 2nd Earl → Boteler → Scottish Ross',
+    'Line D (Blue): Jeanne de Lusignan → Joan de Geneville → Katherine Mortimer → Beauchamp → Scottish Ross',
+  ],verified:2,note:"4 separate lines from Jeanne de Lusignan. Aenor de Lusignan (b.1130) is Elizabeth's 25th great grandmother through Thouars line. 45 Lusignan ancestors confirmed in GEDCOM."},
+  {member:'Elizabeth Hollands',lines:[
+    'Paternal (Agnes de Lusignan): Elizabeth → Brian Hollands → Irene Muncey → Cecile Deschenes → Marie-Alpheda Sasseville → Demerise Brassard → Brassard → Catherine Gagnon → Joseph-Marie Gagnon → Marguerite Drouin → Robert Drouin → Clementine de Balzac (1530) → Guillaume de Balzac → Pierre de Balzac Entragues → Antoinette de Castelnau-Caylus (1445) → Catherine de Chauvigny → Guy II → Guy I → Andre de Chauvigny II → Guillaume de Chauvigny III → Agnes de Lusignan (1230)',
+    'Paternal (Simon Ross / Scottish): Elizabeth → Brian Hollands → ... → Aenor de Lusignan (1130) → Thouars → Hugh XII de Lusignan → Jeanne de Lusignan → Joan de Geneville → Roger Mortimer → Janet de Mortimer → Andrew de Grey → Gray → Ogilvy of Auchterhouse → Margaret Ogilvy → Marion Grant → Alexander Ross → John Ross → Simon Ross of Gladfield (1728)',
+  ],verified:2,note:'Agnes de Lusignan - mother was Isabelle d\u2019Angoul\u00eame, former wife of King John of England. Simon Ross confirmed as direct ancestor (39 generations to Hugh Venator b.885). 45 Lusignan ancestors confirmed in GEDCOM. Shared ancestor with Mary Doonan: Mathurin Dube (b.1631) + Catherine Marie Champion (b.1654). Shared ancestor with Mindy: Michel Tremblay (b.1662).'},
+  {member:'*Martin Lindner',lines:['Lusignan line — in research'],verified:4,note:'DNA clusters strongly in Barra and Shetland Islands — convergence point for Scottish noble lines. Large-scale Scottish migration to East Prussia documented (Stuart, Hamilton, Douglas, Hay families in Gumbinnen region - his paternal grandmother origin). Potential Hohenzollern connection through Amtsadel (official nobility) descendants placed with bourgeois families as estate tenants. Dutch/Danish nobility through mother: von Maydell, von Noval-Zastrow, de Witt families - triangulated through Schouten of Amsterdam (Dutch patrician family with Stuart ancestors). Parents are 4th cousins (MRCA) indicating noble endogamy. Martin notes kinship with Elizabeth through these converging Scottish-Prussian-Dutch lines.'},
+  {member:'Mary Doonan',lines:['Lusignan line — in research'],verified:4,note:'Shared ancestor with Elizabeth (paternal): Mathurin Dubé (b.1631 d.1695) + Catherine Marie Champion (b.1654 d.1694) — 8th grandfather connection confirmed in GEDCOM. Potential Comeau → Lusignan connection under investigation.'},
+  {member:'Richard Smith',lines:['Lusignan line — in research'],verified:4,note:'Descent line to be documented.'},
+  {member:'*Deanna Wood',lines:['Lusignan line — in research'],verified:4,note:'Descent line to be documented.'},
+  {member:'*Mindy',lines:['Lusignan line — in research'],verified:4,note:'Shared ancestor with Elizabeth: Michel Tremblay (b.6 Sep 1662 d.17 Oct 1727) — confirmed in GEDCOM. Descent line to be fully documented.'},
+];
+
+const MRCA={
+  'Elizabeth Hollands|Mary Doonan':{
+    confirmed:[{name:'Mathurin Dubé + Catherine Marie Champion',dates:'b.1631 d.1695 / b.1654 d.1694',source:'GEDCOM confirmed — @I1010@ / @I3068@',level:'II',pathA:'Elizabeth → Brian Hollands → Irene Muncey → Cécile Deschênes → Marie-Alpheda Sasseville → Demerise Brassard → ... → Mathurin Dubé',pathB:'Mary Doonan → [French Canadian line] → Mathurin Dubé'}],
+    hypo:[{name:'Lusignan via Comeau line',conf:'IV',note:'Pierre de Comeau II DNA confirmed. Comeau → Lusignan documentation pending.'}]
+  },
+  'Elizabeth Hollands|*Mindy':{
+    confirmed:[{name:'Michel Tremblay',dates:'b.6 Sep 1662 d.17 Oct 1727',source:'GEDCOM confirmed — @I116@',level:'II',pathA:'Elizabeth → Christiane Tremblay → Albert Tremblay → ... → Michel Tremblay',pathB:'Mindy → [Tremblay line] → Michel Tremblay'}],
+    hypo:[{name:'Jeanne de Lusignan via Geneville-Mortimer',conf:'IV',note:'Both maternal lines connect through French Canadian Norman settlers who descend from same Poitevin-Norman community.'}]
+  },
+  'Elizabeth Hollands|*Deanna Wood':{
+    confirmed:[],
+    hypo:[{name:'Jeanne de Lusignan (c.1260–1323)',conf:'IV',note:'Both maternal AT-phased sides connect through Geneville-Mortimer line. Deanna shares segments on chr 1 and 6 with Elizabeth via maternal grandpa AT.',pathA:'Elizabeth → Stoughton/Otis/Poitevin → Jeanne de Lusignan',pathB:'Deanna → maternal AT line → Jeanne de Lusignan'}]
+  },
+  'Elizabeth Hollands|*Martin Lindner':{
+    confirmed:[],
+    hypo:[{name:'Roger Mortimer / Gray / Ogilvy line',conf:'IV',note:'Martin DNA clusters in Barra and Shetland — key convergence for Scottish noble lines. Scottish migration to East Prussia (Stuart, Hamilton, Douglas, Hay in Gumbinnen). Both connect through Mortimer → Gray → Ogilvy of Auchterhouse → Ross pathway. Martin notes kinship with Elizabeth — "Happy Sunday Cuz."',pathA:'Elizabeth → Simon Ross of Gladfield → Ogilvy → Gray → Janet de Mortimer → Roger Mortimer',pathB:'Martin → Scottish noble Prussian settlers → same Mortimer/Marcher network'}]
+  },
+  'Elizabeth Hollands|Aaron Parry':{
+    confirmed:[],
+    hypo:[{name:'Norman French Canadian line',conf:'IV',note:'Aaron shares segments on chr 2 and 8 with Elizabeth. Likely connects through French Canadian Norman settler community in early Quebec.'}]
+  },
+  'Elizabeth Hollands|Cary':{
+    confirmed:[],
+    hypo:[{name:'Aenor de Lusignan (b.1130) via Norman line',conf:'IV',note:'Cary half French Canadian through mother MBLK. French Canadian side likely connects through same Norman settler network. Maire Kokkonen (paternal aunt) appears independently in Deanna, Martin, Gregory, Mary, Elizabeth files.'}]
+  },
+  'Elizabeth Hollands|*Sarah Lindner':{
+    confirmed:[],
+    hypo:[{name:'Jeanne de Lusignan via Stoughton',conf:'IV',note:'Sarah shares segment on chr 15 with Elizabeth via maternal line. Rose Stoughton → Otis → Poitevin → Tremblay pathway most likely convergence.',pathA:'Elizabeth → Stoughton → Jeanne de Lusignan',pathB:'Sarah → maternal Christa line → Stoughton pathway'}]
+  },
+  '*Martin Lindner|*Mindy':{
+    confirmed:[],
+    hypo:[{name:'Jeanne de Lusignan via Geneville-Mortimer',conf:'IV',note:'Share segments on chr 2, 16, 17 via maternal lines. Both mothers (Gaby and RRH) present. Convergence likely through Mortimer network.',pathA:'Martin → Gaby → ... → Mortimer/Lusignan',pathB:'Mindy → JWW/RRH → ... → Mortimer/Lusignan'}]
+  },
+  '*Martin Lindner|*Deanna Wood':{
+    confirmed:[],
+    hypo:[{name:'Jeanne de Lusignan line',conf:'IV',note:'Share segments on chr 11, 14, 15, 19 via maternal lines. Both connect through Lusignan/Norman pathway.'}]
+  },
+  'Mary Doonan|*Deanna Wood':{
+    confirmed:[],
+    hypo:[{name:'French Canadian Norman settler',conf:'IV',note:'Share segments on chr 1, 7, 19. Likely connects through early French Canadian settler community — same Poitevin-Norman origin as Elizabeth lines.'}]
+  },
+};
+function getMRCA(a,b){return MRCA[a+'|'+b]||MRCA[b+'|'+a]||null;}
+
+
+// ══════════════ MRCA PANEL ══════════════
+const LEVEL_COL={'I':'#9b59b6','II':'#1db085','III':'#f39c12','IV':'#e67e22'};
+let mrcaSelA=null,mrcaSelB=null;
+
+function buildMRCAPanel(a,b){
+  const panel=document.getElementById('mrca-panel');
+  if(!panel)return;
+  if(!a){panel.innerHTML='';panel.style.display='none';return;}
+  const mrca=b?getMRCA(a,b):null;
+  const colA=MCOL[a]||'#888', nA=a.replace('*','');
+  const colB=b?(MCOL[b]||'#888'):'#888', nB=b?b.replace('*',''):'';
+
+  if(!b){
+    // Single member selected - show their descent summary
+    const entries=MEMBER_DESCENTS.filter(d=>d.member===a);
+    panel.style.display='block';
+    panel.innerHTML=`
+      <div style="padding:10px 14px;border-bottom:1px solid var(--color-border);font-size:10px;">
+        <strong style="color:${colA}">${nA}</strong> — 
+        <span style="color:#aaa;">Shift+click another member to compare MRCA</span>
+      </div>
+      <div style="padding:10px 14px;">
+        ${entries.length?entries.map(e=>e.lines.map(l=>`<div style="font-size:9px;color:var(--color-text-secondary);line-height:1.7;padding:3px 6px;border-left:2px solid ${colA}44;margin-bottom:3px;">→ ${l}</div>`).join('')).join('')
+        :'<div style="font-size:9px;color:#aaa;font-style:italic;">No descent data yet. Add in Members tab.</div>'}
+      </div>`;
+    return;
+  }
+
+  function confHTML(list){
+    if(!list.length)return'<div style="font-size:9px;color:#aaa;font-style:italic;padding:8px;">None confirmed yet</div>';
+    return list.map(m=>`
+      <div style="background:var(--color-background-primary);border-radius:8px;padding:10px;margin-bottom:6px;border-left:3px solid #1db085;">
+        <div style="font-size:10px;font-weight:600;color:#1db085;margin-bottom:3px;">✓ ${m.name}</div>
+        ${m.dates?`<div style="font-size:9px;color:#aaa;margin-bottom:3px;">${m.dates}</div>`:''}
+        ${m.pathA?`<div style="font-size:9px;color:var(--color-text-secondary);padding-left:6px;border-left:2px solid ${colA}55;margin-bottom:2px;"><span style="color:${colA}">${nA}</span> → ... → MRCA</div>`:''}
+        ${m.pathB?`<div style="font-size:9px;color:var(--color-text-secondary);padding-left:6px;border-left:2px solid ${colB}55;margin-bottom:4px;"><span style="color:${colB}">${nB}</span> → ... → MRCA</div>`:''}
+        <div style="font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:#1db08522;color:#1db085;">${m.source}</div>
+      </div>`).join('');
+  }
+
+  function hypoHTML(list){
+    if(!list.length)return'<div style="font-size:9px;color:#aaa;font-style:italic;padding:8px;">None identified yet</div>';
+    return list.map(m=>{const lc=LEVEL_COL[m.conf]||'#888';return`
+      <div style="background:var(--color-background-primary);border-radius:8px;padding:10px;margin-bottom:6px;border-left:3px solid ${lc};">
+        <div style="font-size:10px;font-weight:600;color:${lc};margin-bottom:3px;">⟳ ${m.name}</div>
+        ${m.pathA?`<div style="font-size:9px;color:var(--color-text-secondary);padding-left:6px;border-left:2px solid ${colA}55;margin-bottom:2px;"><span style="color:${colA}">${nA}</span> → ... → MRCA</div>`:''}
+        ${m.pathB?`<div style="font-size:9px;color:var(--color-text-secondary);padding-left:6px;border-left:2px solid ${colB}55;margin-bottom:4px;"><span style="color:${colB}">${nB}</span> → ... → MRCA</div>`:''}
+        ${m.note?`<div style="font-size:9px;color:var(--color-text-secondary);font-style:italic;margin-top:4px;">${m.note}</div>`:''}
+        <div style="margin-top:4px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:4px;background:${lc}22;color:${lc};">Level ${m.conf} hypothesis</div>
+      </div>`}).join('');
+  }
+
+  if(!mrca){
+    panel.style.display='block';
+    panel.innerHTML=`<div style="padding:14px;font-size:9px;color:#aaa;font-style:italic;">
+      No MRCA data yet for <strong style="color:${colA}">${nA}</strong> ↔ 
+      <strong style="color:${colB}">${nB}</strong>. Add descent information in the Members tab.</div>`;
+    return;
+  }
+
+  panel.style.display='block';
+  panel.innerHTML=`
+    <div style="padding:10px 14px;border-bottom:1px solid var(--color-border);font-size:10px;">
+      <strong style="font-size:11px;">Most Recent Common Ancestor</strong>
+      <span style="color:#aaa;margin-left:8px;"><strong style="color:${colA}">${nA}</strong> ↔ <strong style="color:${colB}">${nB}</strong></span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+      <div style="padding:12px;border-right:1px solid var(--color-border);">
+        <div style="font-size:9px;font-weight:700;color:#1db085;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">✓ Confirmed</div>
+        ${confHTML(mrca.confirmed)}
+      </div>
+      <div style="padding:12px;">
+        <div style="font-size:9px;font-weight:700;color:#f39c12;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">⟳ Hypothetical</div>
+        ${hypoHTML(mrca.hypo)}
+      </div>
+    </div>`;
+}
+
+function buildLineage(){
+  // Build member lineage tabs for all 11 members
+  const memberLineageTabs = document.getElementById('member-lineage-tabs');
+  const memberLineageContent = document.getElementById('member-lineage-content');
+  const elizabethDetail = document.getElementById('elizabeth-lineage-detail');
+  
+  if(memberLineageTabs && !memberLineageTabs.children.length){
+    const allMembers = ['Elizabeth Hollands','Aaron Parry','Cary','*Deanna Wood','Diana Folk','Gregory Fellows','*Martin Lindner','Mary Doonan','*Mindy','Richard Smith','*Sarah Lindner'];
+    let activeLineageMember = 'Elizabeth Hollands';
+
+    function renderLineageTab(member){
+      activeLineageMember = member;
+      // Update tab styles
+      Array.from(memberLineageTabs.children).forEach(btn=>{
+        const bm = btn.dataset.member;
+        const col = MCOL[bm]||'#888';
+        btn.style.background = bm===member ? col : 'transparent';
+        btn.style.color = bm===member ? '#fff' : col;
+      });
+      // Show/hide Elizabeth detail
+      if(elizabethDetail){
+        elizabethDetail.style.display = member==='Elizabeth Hollands' ? 'block' : 'none';
+      }
+      // Show member descent cards
+      if(memberLineageContent){
+        memberLineageContent.innerHTML = '';
+        // Find descent entries for this member
+        const entries = MEMBER_DESCENTS.filter(d=>d.member===member || 
+          (member==='Elizabeth Hollands' && d.member==='Elizabeth Hollands'));
+        if(entries.length){
+          entries.forEach(d=>{
+            const col = MCOL[d.member]||'#888';
+            const verifyCol = VERIFY_COLS[d.verified]||'#888';
+            const card = document.createElement('div');
+            card.style.cssText=`background:var(--color-background-secondary);border-radius:10px;padding:14px;border-left:3px solid ${col};margin-bottom:8px;`;
+            card.innerHTML=`
+              ${d.lines.map(l=>`<div style="font-size:10px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:4px;padding:6px 8px;background:var(--color-background-primary);border-radius:6px;border-left:2px solid ${col}44;">→ ${l}</div>`).join('')}
+              ${d.note?`<div style="font-size:9px;color:var(--color-text-secondary);margin-top:8px;font-style:italic;padding:8px;background:var(--color-background-secondary);border-radius:6px;border:1px solid ${col}22;">${d.note}</div>`:''}
+              <div style="margin-top:8px;font-size:9px;padding:2px 6px;display:inline-block;border-radius:6px;background:${verifyCol}22;color:${verifyCol};">${VERIFY_LABELS[d.verified]}</div>
+              <div style="margin-top:4px;font-size:9px;color:#aaa;">Tags: <em>to be determined</em></div>
+            `;
+            memberLineageContent.appendChild(card);
+          });
+        } else {
+          memberLineageContent.innerHTML = `<div style="padding:16px;font-size:10px;color:#aaa;font-style:italic;">No descent data yet for ${member.replace('*','')}. Add notes in the Notes tab.</div>`;
+        }
+      }
+    }
+
+    allMembers.forEach(m=>{
+      const col = MCOL[m]||'#888';
+      const btn = document.createElement('button');
+      btn.textContent = m.replace('*','');
+      btn.dataset.member = m;
+      btn.style.cssText=`padding:4px 10px;border-radius:12px;border:1.5px solid ${col};font-size:10px;font-weight:500;cursor:pointer;transition:all 0.12s;background:transparent;color:${col};`;
+      btn.onclick=()=>renderLineageTab(m);
+      memberLineageTabs.appendChild(btn);
+    });
+    renderLineageTab('Elizabeth Hollands');
+  }
+
+  const mothersGrid = document.getElementById('lusignan-mothers-grid');
+  if(mothersGrid && !mothersGrid.children.length){
+    LUSIGNAN_MOTHERS.forEach(m=>{
+      const card = document.createElement('div');
+      card.style.cssText='background:var(--color-background-secondary);border-radius:10px;padding:12px;border-top:2px solid '+(m.lines.length?LINE_COLS[m.lines[0]]:'#888')+';';
+      const linesBadges = m.lines.map(l=>`<span style="display:inline-block;padding:2px 6px;border-radius:8px;font-size:9px;background:${LINE_COLS[l]}22;color:${LINE_COLS[l]};margin:1px;">${LINE_LABELS[l]}</span>`).join('');
+      const verifyCol = VERIFY_COLS[m.verified]||'#888';
+      const geniLink = m.geni ? `<a href="${m.geni}" target="_blank" style="font-size:9px;color:#1db085;text-decoration:none;margin-left:6px;">→ Geni profile</a>` : '<span style="font-size:9px;color:#aaa;margin-left:6px;">Geni link pending</span>';
+      const descentLink = m.descent ? `<a href="#" onclick="showTab('lineage',document.querySelector('[onclick*=lineage]'));return false;" style="font-size:9px;color:#378ADD;text-decoration:none;display:block;margin-top:4px;">→ See Elizabeth's descent from this line</a>` : '';
+      card.innerHTML=`
+        <div style="font-size:11px;font-weight:600;color:var(--color-text-primary);margin-bottom:3px;">${m.name} ${geniLink}</div>
+        <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:4px;">× ${m.husband}</div>
+        ${m.dates?`<div style="font-size:9px;color:#aaa;margin-bottom:4px;">${m.dates}</div>`:''}
+        ${m.note?`<div style="font-size:9px;color:var(--color-text-secondary);margin-bottom:6px;font-style:italic;">${m.note}</div>`:''}
+        <div style="font-size:9px;padding:2px 6px;display:inline-block;border-radius:6px;background:${verifyCol}22;color:${verifyCol};">${VERIFY_LABELS[m.verified]}</div>
+        ${m.members.length?`<div style="font-size:9px;color:#aaa;margin-top:4px;">Members: ${m.members.map(x=>x.replace('*','')).join(', ')}</div>`:''}
+        ${descentLink}
+      `;
+      mothersGrid.appendChild(card);
+    });
+  }
+
+}
+
+
+
 function showTab(name,btn){
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  btn.classList.add('active');
-  if(name==='chrom') buildChromView();
-  if(name==='family') buildFamilyPanel();
-  if(name==='notes') buildNotes();
-  if(name==='ethnicity') buildEthInputs();
+  try{
+    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    const pane=document.getElementById('tab-'+name);
+    if(pane)pane.classList.add('active');
+    if(btn)btn.classList.add('active');
+    if(name==='chrom'){try{buildChromView();buildEthInputs();}catch(e){console.error('buildChromView:',e);}}
+    if(name==='family'){try{buildFamilyPanel();}catch(e){console.error('buildFamilyPanel:',e);}}
+    if(name==='notes'){try{buildNotes();}catch(e){console.error('buildNotes:',e);}}
+    if(name==='mothers'){try{buildMothers();}catch(e){console.error('buildMothers:',e);}}
+    if(name==='lineage'){try{buildLineage();}catch(e){console.error('buildLineage:',e);}}
+  }catch(e){console.error('showTab error:',e);}
+}
+function switchSubTab(which){
+  const chromContent = document.getElementById('subtab-chrom-content');
+  const ethContent   = document.getElementById('subtab-eth-content');
+  const chromBtn     = document.getElementById('subtab-chrom-btn');
+  const ethBtn       = document.getElementById('subtab-eth-btn');
+  if(which==='chrom'){
+    chromContent.style.display=''; ethContent.style.display='none';
+    chromBtn.classList.add('active'); ethBtn.classList.remove('active');
+    chromBtn.style.background='#1db085'; chromBtn.style.color='#fff';
+    ethBtn.style.background='transparent'; ethBtn.style.color='#9b59b6';
+    buildChromView();
+  } else {
+    chromContent.style.display='none'; ethContent.style.display='';
+    ethBtn.classList.add('active'); chromBtn.classList.remove('active');
+    ethBtn.style.background='#9b59b6'; ethBtn.style.color='#fff';
+    chromBtn.style.background='transparent'; chromBtn.style.color='#1db085';
+    buildEthInputs();
+  }
 }
 
 // ══════════════ TAB 1: MIND MAP ══════════════
@@ -392,9 +797,9 @@ function activeConns(){return sel?CONNS.filter(c=>c.A===sel||c.B===sel):CONNS;}
 
 function mmDraw(){
   ctx.clearRect(0,0,W,H);
-  const dark=matchMedia('(prefers-color-scheme:dark)').matches;
+  const dark=false /* light theme only */;
   ctx.fillStyle=dark?'#1a1a1a':'#f8f7f4'; ctx.fillRect(0,0,W,H);
-  const textCol=dark?'#c2c0b6':'#3d3d3a';
+  const textCol='#1a1a1a';
   const ac=activeConns();
   const activeM=new Set(ac.flatMap(c=>[c.A,c.B]));
   // group pairs
@@ -467,65 +872,43 @@ function mmDraw(){
 
 // Buttons
 const mmBtns=document.getElementById('mm-btns');
-MEMBERS.forEach(m=>{
+try{MEMBERS.forEach(m=>{
   const btn=document.createElement('button');
   btn.className='mbtn';btn.textContent=m.replace('*','');
   btn.style.borderColor=MCOL[m];btn.style.color=MCOL[m];btn.dataset.m=m;
   btn.addEventListener('click',()=>selectMember(m===sel?null:m));
   mmBtns.appendChild(btn);
-});
+})}catch(e){console.error('mmBtns:',e);};
 
 function selectMember(m){
+  // Shift-held second click = pair comparison
+  if(window._shiftHeld && sel && m && m!==sel){
+    mrcaSelA=sel; mrcaSelB=m;
+    buildMRCAPanel(sel,m);
+  } else {
+    mrcaSelA=m; mrcaSelB=null;
+    buildMRCAPanel(m,null);
+  }
   sel=m;
-  document.querySelectorAll('#mm-btns .mbtn').forEach(b=>{
-    const bm=b.dataset.m;b.classList.remove('on','dim');b.style.background='transparent';b.style.color=MCOL[bm];
-    if(!m) return;
+  document.querySelectorAll('.mbtn').forEach(b=>{
+    const bm=b.dataset.m;
+    b.classList.remove('on','dim');
+    b.style.background='transparent';b.style.color=MCOL[bm];
+    if(!m)return;
     const partners=new Set(CONNS.filter(c=>c.A===m||c.B===m).flatMap(c=>[c.A,c.B]));
     if(bm===m){b.classList.add('on');b.style.background=MCOL[bm];b.style.color='#fff';}
-    else if(!partners.has(bm)) b.classList.add('dim');
+    else if(!partners.has(bm)){b.classList.add('dim');}
   });
   const info=document.getElementById('mm-info');
-  if(!m){info.textContent='Click any member to focus on their connections. Click again to reset.';}
-  else{
+  if(!m){
+    info.textContent='Click any member to focus on connections. Shift+click a second member to compare MRCA.';
+  } else {
     const conns=CONNS.filter(c=>c.A===m||c.B===m);
     const partners=[...new Set(conns.map(c=>c.A===m?c.B:c.A))];
-    const fd=FAMILY_DATA[m];
-    const famStr=fd&&fd.phasing.length?` <span style="font-size:10px;opacity:0.7">· Phasing: ${fd.phasing.map(f=>f.label+' ('+f.role+')').join(', ')}</span>`:'';
-    const misStr=fd&&fd.missing_parents&&fd.phasing.length===0?' <span style="color:#e67e22;font-size:10px">⚠ no phasing kit</span>':'';
-    info.innerHTML=`<strong style="color:${MCOL[m]}">${m}</strong> — ${conns.length} segments with ${partners.length} members: ${partners.join(', ')}${famStr}${misStr}`;
+    info.innerHTML=`<strong style="color:${MCOL[m]}">${m.replace('*','')}</strong> — ${conns.length} segments · ${partners.length} connections: ${partners.map(p=>p.replace('*','')).join(', ')} <span style="color:#aaa;font-size:10px;"> · Shift+click another member to compare MRCA</span>`;
   }
   mmDraw();
 }
-
-mmCv.addEventListener('click',e=>{
-  const rect=mmCv.getBoundingClientRect();
-  const mx=(e.clientX-rect.left)*(W/rect.width),my=(e.clientY-rect.top)*(H/rect.height);
-  let hit=null;MEMBERS.forEach(m=>{const n=nodes[m];if(Math.hypot(mx-n.x,my-n.y)<n.r+6)hit=m;});
-  selectMember(hit===sel?null:hit);
-});
-
-mmCv.addEventListener('mousemove',e=>{
-  const rect=mmCv.getBoundingClientRect();
-  const mx=(e.clientX-rect.left)*(W/rect.width),my=(e.clientY-rect.top)*(H/rect.height);
-  const tt=document.getElementById('tt');
-  const ac=activeConns();
-  let hitC=null;ac.forEach(c=>{if(c._mx&&Math.hypot(mx-c._mx,my-c._my)<(c._cr||14)+4)hitC=c;});
-  let hitN=null;MEMBERS.forEach(m=>{const n=nodes[m];if(Math.hypot(mx-n.x,my-n.y)<n.r+5)hitN=m;});
-  mmCv.style.cursor=(hitC||hitN)?'pointer':'default';
-  if(hitC){
-    const col=COL[hitC.side];
-    tt.innerHTML=`<strong>${hitC.A.replace('*','')} ↔ ${hitC.B.replace('*','')}</strong><br>Chr ${hitC.chr} · ${hitC.cM} cM<br><span style="color:${col}">● ${SIDE_LABEL[hitC.side]}</span><br><em style="font-size:10px;color:#888">${hitC.phase}</em>`;
-    tt.style.display='block';positionTT(e);
-  } else if(hitN){
-    const conns=CONNS.filter(c=>c.A===hitN||c.B===hitN);
-    const fd=FAMILY_DATA[hitN];
-    const famStr=fd&&fd.phasing.length?`<br><span style="font-size:10px;color:#888">Phasing: ${fd.phasing.map(f=>f.label+' ('+f.role+')').join(', ')}</span>`:'';
-    const misStr=fd&&fd.missing_parents&&fd.phasing.length===0?`<br><span style="color:#e67e22;font-size:10px">⚠ No phasing kit — connections unresolved</span>`:'';
-    tt.innerHTML=`<strong>${hitN}</strong><br>${conns.length} connections · ${conns.reduce((s,c)=>s+c.cM,0).toFixed(1)} cM total${famStr}${misStr}`;
-    tt.style.display='block';positionTT(e);
-  } else tt.style.display='none';
-});
-mmCv.addEventListener('mouseleave',()=>document.getElementById('tt').style.display='none');
 
 // ══════════════ TAB 2: CHROMOSOME VIEW ══════════════
 let chromFilter=new Set(MEMBERS);
@@ -959,6 +1342,29 @@ function updateEthLegend(){
 function buildFamilyPanel(){
   const grid=document.getElementById('fam-grid');
   if(grid.children.length)return;
+  // Add Quest + Verification reference at top
+  const ref = document.createElement('div');
+  ref.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;';
+  ref.innerHTML=`
+    <div style="background:#f8fafc;border-radius:8px;padding:12px;border-left:3px solid #B8963E;">
+      <div style="font-size:10px;font-weight:700;color:#B8963E;margin-bottom:6px;">⚔️ Heritage Quest Levels</div>
+      <div style="font-size:9px;line-height:1.8;color:#555;">
+        <div><strong style="color:#e67e22;">Quest IV</strong> — Search for Origins (base camp)</div>
+        <div><strong style="color:#f39c12;">Quest III</strong> — Proof of Lineage</div>
+        <div><strong style="color:#1db085;">Quest II</strong> — Noble Charter</div>
+        <div><strong style="color:#9b59b6;">Quest I</strong> — Steward's Path ⭐ (summit)</div>
+      </div>
+    </div>
+    <div style="background:#f8fafc;border-radius:8px;padding:12px;border-left:3px solid #B8963E;">
+      <div style="font-size:10px;font-weight:700;color:#B8963E;margin-bottom:6px;">📜 Verification Levels</div>
+      <div style="font-size:9px;line-height:1.8;color:#555;">
+        <div><strong style="color:#e67e22;">Level IV</strong> — In Research (starting point)</div>
+        <div><strong style="color:#f39c12;">Level III</strong> — DNA Corroborated</div>
+        <div><strong style="color:#1db085;">Level II</strong> — World Tree Confirmed</div>
+        <div><strong style="color:#9b59b6;">Level I</strong> — Documented Proof ⭐ (highest)</div>
+      </div>
+    </div>`;
+  grid.appendChild(ref);
   MEMBERS.forEach(m=>{
     const fd=FAMILY_DATA[m];
     if(!fd) return;
@@ -978,15 +1384,14 @@ function buildFamilyPanel(){
       <div class="fam-row"><span class="fam-label">Parent tested?</span><span class="fam-value">
         ${fd.phasing.some(p=>p.role==='mother'||p.role==='father')?'<span class="fam-tag tested-tag">✓ at least one</span>':'<span class="fam-tag missing-tag">not yet</span>'}
       </span></div>
-      <div class="fam-row"><span class="fam-label">Native ancestry</span><span class="fam-value">
-        ${fd.amerindian==='confirmed'?'<span class="fam-tag tested-tag">✓ confirmed</span>':fd.amerindian==='not found on mother\'s side yet'?'<span class="fam-tag" style="background:#e67e2222;color:#e67e22;border-color:#e67e22">not found yet</span>':'<span class="fam-tag missing-tag">unknown</span>'}
-      </span></div>
+      
       <div class="fam-row" style="margin-top:4px;"><span class="fam-label">Known ancestry</span>
         <span class="fam-value"><input type="text" placeholder="Surnames, locations, periods…" value="${storedData.ancestry||''}" onchange="saveFam('${safeId}','ancestry',this.value)"></span>
       </div>
       <div class="fam-row"><span class="fam-label">Earliest ancestor</span>
         <span class="fam-value"><input type="text" placeholder="Name, place, approx date" value="${storedData.earliest||''}" onchange="saveFam('${safeId}','earliest',this.value)"></span>
       </div>
+      ${fd.regional?`<div style="background:#f0f4ff;border-radius:6px;padding:7px 9px;margin-bottom:6px;font-size:9px;color:#378ADD;border-left:2px solid #378ADD;"><strong>🗺 Regional ancestry:</strong> ${fd.regional}</div>`:''}
       ${fd.request?`<div class="fam-request">📋 <strong>Request for ${m.replace('*','')}:</strong><br>${fd.request}</div>`:''}
     `;
     grid.appendChild(card);
@@ -1114,18 +1519,141 @@ function positionTT(e){
   tt.style.left=x+'px';tt.style.top=y+'px';
 }
 
+
+function buildMothers(){
+  const grid=document.getElementById('lusignan-mothers-grid');
+  if(!grid||grid.children.length)return;
+  LUSIGNAN_MOTHERS.forEach(m=>{
+    const col=m.lines.length?(LINE_COLS[m.lines[0]]||'#888'):'#888';
+    const verifyCol=VERIFY_COLS[m.verified]||'#888';
+    const geniLink=m.geni?`<a href="${m.geni}" target="_blank" style="font-size:9px;color:#1db085;text-decoration:none;margin-left:6px;">→ Geni</a>`:'<span style="font-size:9px;color:#aaa;margin-left:6px;">Geni pending</span>';
+    const descentLink=m.descent?`<a href="#" onclick="showTab('lineage',document.querySelector('[onclick*=lineage]'));setTimeout(()=>{const el=document.getElementById('elizabeth-lineage-detail');if(el)el.style.display='block';},100);return false;" style="font-size:9px;color:#378ADD;text-decoration:none;display:block;margin-top:4px;">→ Elizabeth's descent from this line</a>`:'';
+    const card=document.createElement('div');
+    card.style.cssText=`background:var(--color-background-secondary);border-radius:10px;padding:12px;border-top:2px solid ${col};`;
+    card.innerHTML=`
+      <div style="font-size:11px;font-weight:600;color:var(--color-text-primary);margin-bottom:3px;">${m.name} ${geniLink}</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:4px;">× ${m.husband}</div>
+      ${m.dates?`<div style="font-size:9px;color:#aaa;margin-bottom:4px;">${m.dates}</div>`:''}
+      ${m.note?`<div style="font-size:9px;color:var(--color-text-secondary);margin-bottom:6px;font-style:italic;">${m.note}</div>`:''}
+      <div style="font-size:9px;padding:2px 6px;display:inline-block;border-radius:6px;background:${verifyCol}22;color:${verifyCol};">${VERIFY_LABELS[m.verified]}</div>
+      ${m.members.length?`<div style="font-size:9px;color:#aaa;margin-top:4px;">Members: ${m.members.map(x=>x.replace('*','')).join(', ')}</div>`:''}
+      ${descentLink}`;
+    grid.appendChild(card);
+  });
+}
+
+
+// ══════════════ BASE PAIR GROUPS ══════════════
+function buildBPGroups(){
+  const container = document.getElementById('bp-groups-content');
+  if(!container || container.children.length) return;
+
+  const COL_SIDE = {'mom-at':'#1db085','mom':'#5ba8d4','dad':'#c44820','unresolved':'#888'};
+  const LABEL_SIDE = {'mom-at':'Maternal (phased)','mom':'Maternal (parent)','dad':'Paternal','unresolved':'Unresolved'};
+
+  // Build pairwise groups from CONNS (members sharing same chr window)
+  // Group: pairs sharing overlapping segments
+  const pairGroups = {};
+  CONNS.forEach(c=>{
+    const key = [c.A,c.B].sort().join('|');
+    if(!pairGroups[key]) pairGroups[key]={A:c.A,B:c.B,segs:[]};
+    pairGroups[key].segs.push(c);
+  });
+
+  // Show triangulation groups first
+  const triSection = document.createElement('div');
+  triSection.innerHTML = '<div style="font-size:10px;font-weight:600;color:#e67e22;margin-bottom:6px;">▲ Triangulation Groups (3+ members)</div>';
+
+  TRI_GROUPS.forEach(tg=>{
+    const col = COL_SIDE[tg.side]||'#888';
+    const card = document.createElement('div');
+    card.style.cssText = `background:#f8fafc;border-radius:8px;padding:10px 12px;margin-bottom:6px;border-left:3px solid ${col};`;
+    const memberDots = tg.members.map(m=>`<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${MCOL[m]||'#888'};margin-right:2px;vertical-align:middle;" title="${m.replace('*','')}"></span><span style="font-size:9px;color:${MCOL[m]||'#888'};margin-right:6px;">${m.replace('*','')}</span>`).join('');
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:10px;font-weight:600;color:${col};">Chr ${tg.chr}</span>
+        <span style="font-size:9px;color:#aaa;">${(tg.s/1000000).toFixed(1)}–${(tg.e/1000000).toFixed(1)} Mb</span>
+        <span style="font-size:9px;padding:1px 6px;border-radius:4px;background:${col}22;color:${col};">${LABEL_SIDE[tg.side]}</span>
+        <span style="font-size:9px;color:#888;">▲ ${tg.members.length} members</span>
+      </div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;align-items:center;">${memberDots}</div>
+    `;
+    // Click to highlight in mindmap
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', ()=>{
+      // Highlight first member
+      selectMember(tg.members[0]===sel?null:tg.members[0]);
+    });
+    triSection.appendChild(card);
+  });
+  container.appendChild(triSection);
+
+  // Then show all pairwise connections grouped by chromosome
+  const pairSection = document.createElement('div');
+  pairSection.style.marginTop = '12px';
+  pairSection.innerHTML = '<div style="font-size:10px;font-weight:600;color:#555;margin-bottom:6px;">↔ All Pairwise Connections by Chromosome</div>';
+
+  // Group by chromosome
+  const byChr = {};
+  CONNS.forEach(c=>{
+    if(c.chr === '?') return; // skip unconfirmed
+    (byChr[c.chr] = byChr[c.chr]||[]).push(c);
+  });
+
+  const chrOrder = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','X'];
+  chrOrder.filter(chr=>byChr[chr]).forEach(chr=>{
+    const segs = byChr[chr];
+    const chrCard = document.createElement('div');
+    chrCard.style.cssText = 'margin-bottom:4px;';
+    
+    const rows = segs.map(c=>{
+      const col = COL_SIDE[c.side]||'#888';
+      const colA = MCOL[c.A]||'#888';
+      const colB = MCOL[c.B]||'#888';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:3px 8px;border-radius:4px;cursor:pointer;hover:background:#f0f0f0;"
+        onclick="selectMember('${c.A}'===sel?null:'${c.A}')">
+        <span style="font-size:9px;font-weight:600;color:${colA};">${c.A.replace('*','')}</span>
+        <span style="font-size:9px;color:#aaa;">↔</span>
+        <span style="font-size:9px;font-weight:600;color:${colB};">${c.B.replace('*','')}</span>
+        <span style="font-size:9px;color:#aaa;">${c.cM} cM</span>
+        <span style="width:6px;height:6px;border-radius:50%;background:${col};display:inline-block;flex-shrink:0;" title="${LABEL_SIDE[c.side]}"></span>
+        ${c.side==='unresolved'?'<span style="font-size:8px;color:#aaa;">–</span>':''}
+      </div>`;
+    }).join('');
+
+    chrCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+        <span style="font-size:10px;font-weight:600;color:#1a1a1a;width:40px;">Chr ${chr}</span>
+        <span style="font-size:9px;color:#aaa;">${segs.length} segment${segs.length>1?'s':''}</span>
+      </div>
+      <div style="padding-left:8px;border-left:2px solid #e0e0e0;">${rows}</div>
+    `;
+    pairSection.appendChild(chrCard);
+  });
+
+  // Add unconfirmed
+  const unconf = CONNS.filter(c=>c.chr==='?');
+  if(unconf.length){
+    const uCard = document.createElement('div');
+    uCard.style.marginTop = '8px';
+    uCard.innerHTML = `<div style="font-size:9px;color:#888;font-style:italic;">⏳ Newly confirmed (chromosome pending): ` +
+      unconf.map(c=>`${c.A.replace('*','')} ↔ ${c.B.replace('*','')} ${c.cM}cM`).join(', ') + '</div>';
+    pairSection.appendChild(uCard);
+  }
+
+  container.appendChild(pairSection);
+}
+
 // Init
-mmLayout();mmDraw();
+try{mmLayout();mmDraw();buildBPGroups();}catch(e){console.error('Init error:',e);}
 window.addEventListener('resize',()=>{
   mmLayout();mmDraw();
-  if(document.getElementById('tab-chrom').classList.contains('active'))buildChromView();
+  const _tc=document.getElementById('tab-chrom');if(_tc&&_tc.classList.contains('active'))buildChromView();
 });
+
+
+
+
 </script>
-<div style="text-align:center;padding:24px 16px 32px;font-size:10px;color:#aaa;border-top:1px solid #eee;margin-top:20px;line-height:1.8;">
-  <strong style="color:#888;">Ancestral Convergence</strong> — House of Lusignan DNA Project<br>
-  © 2026 KLBR8. All rights reserved.<br>
-  This tool and its methodology are proprietary. For licensing or heritage group enquiries contact <a href="mailto:elizabeth@klbr8.com" style="color:#aaa;">elizabeth@klbr8.com</a>.<br>
-  <span style="font-size:9px;opacity:0.7;">Built with ♥ for the project members · Powered by GEDmatch · Eurogenes K13 · <a href="https://ko-fi.com/allelio" target="_blank" style="color:#FF5E5B;text-decoration:none;">Support on Ko-fi</a></span>
-</div>
 </body>
 </html>
