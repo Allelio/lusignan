@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>House of Lusignan — DNA Project</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --muted: #6f6f6f;
+      --line: #e2e2de;
+      --gold: #b8963e;
+      --green: #1db085;
+      --red: #c44820;
+      --purple: #8d64d8;
+      --blue: #378add;
+      --orange: #e67e22;
+      --shadow: 0 10px 24px rgba(0,0,0,0.06);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .page-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .title h1 {
+      margin: 0 0 4px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #2c1a0e;
+    }
+
+    .title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .support {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 14px;
+      background: #ff5e5b;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      white-space: nowrap;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      font-size: 18px;
+      color: #2c1a0e;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .top-tabs,
+    .sub-tabs,
+    .view-tabs,
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .top-tabs { margin-bottom: 18px; }
+    .sub-tabs, .view-tabs { margin-bottom: 14px; }
+
+    button {
+      font: inherit;
+    }
+
+    .tab-btn,
+    .sub-btn,
+    .view-btn,
+    .chip {
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: #656565;
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: .15s ease;
+    }
+
+    .tab-btn.active,
+    .sub-btn.active,
+    .view-btn.active,
+    .chip.active {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+
+    .tab-page,
+    .sub-page,
+    .dna-view {
+      display: none;
+    }
+
+    .tab-page.active,
+    .sub-page.active,
+    .dna-view.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      background: #fbfbfa;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .card h3,
+    .card h4 {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #2c1a0e;
+    }
+
+    .hero {
+      min-height: 220px;
+    }
+
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 300px;
+      margin-top: 12px;
+    }
+
+    .node {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--gold);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .arrow {
+      text-align: center;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .timeline .step {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      min-height: 90px;
+    }
+
+    .tri-layout {
+      display: grid;
+      grid-template-columns: 330px 1fr;
+      gap: 16px;
+    }
+
+    .tri-list {
+      display: grid;
+      gap: 8px;
+      max-height: 760px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .tri-item {
+      background: #fcfcfb;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      cursor: pointer;
+    }
+
+    .tri-item.active {
+      background: #fff7ea;
+      border-color: var(--gold);
+    }
+
+    .tri-item-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #2c1a0e;
+      margin-bottom: 5px;
+    }
+
+    .tri-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .maternal { background: rgba(29,176,133,.14); color: #13785a; }
+    .paternal { background: rgba(196,72,32,.14); color: #b63b17; }
+    .unresolved { background: rgba(120,120,120,.14); color: #666; }
+    .high { background: rgba(29,176,133,.12); color: #13785a; }
+    .partial { background: rgba(230,126,34,.12); color: #c86d13; }
+    .low { background: rgba(196,72,32,.12); color: #b63b17; }
+
+    .tri-main {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tri-head {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 12px;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 6px 8px;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+
+    .kv .k {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 8px;
+    }
+
+    .member-card {
+      background: #f8fafc;
+      border: 1px solid #e7ebef;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .member-name {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: #2c1a0e;
+    }
+
+    .mini {
+      font-size: 10px;
+      color: #555;
+      line-height: 1.65;
+    }
+
+    .path-grid,
+    .study-grid,
+    .identity-grid,
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+    }
+
+    .path-card {
+      background: #fff9f1;
+      border: 1px solid #efe2ca;
+      border-left: 4px solid var(--gold);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 11px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .why-box {
+      background: linear-gradient(135deg, #fff9ef, #f8fafc);
+      border: 1px solid #efe2ca;
+      border-left: 4px solid var(--gold);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 11px;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    .placeholder {
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      background: #fafafa;
+      border: 1.5px dashed #d4d4d0;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    textarea.notes {
+      width: 100%;
+      min-height: 100px;
+      border: 1px solid #d9d9d6;
+      border-radius: 10px;
+      padding: 10px 12px;
+      resize: vertical;
+      font: inherit;
+      font-size: 11px;
+    }
+
+    @media (max-width: 980px) {
+      .grid-2, .grid-3, .grid-4, .timeline, .tri-layout, .tri-head {
+        grid-template-columns: 1fr;
+      }
+      .topbar {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <div class="topbar">
+      <div class="title">
+        <h1>⚜ House of Lusignan — DNA Project</h1>
+        <p>MRCA-focused visual rebuild for lineage, triangulation, studies, and member review.</p>
+      </div>
+      <a class="support" href="https://ko-fi.com/allelio" target="_blank" rel="noopener noreferrer">♥ Support Allelio</a>
+    </div>
+
+    <div class="top-tabs">
+      <button class="tab-btn active" data-page="ancestral">🏛 Ancestral Convergence</button>
+      <button class="tab-btn" data-page="dna">🧬 DNA Connections</button>
+      <button class="tab-btn" data-page="knights">⚔️ Knights &amp; Dames</button>
+      <button class="tab-btn" data-page="research">📜 Research &amp; FAQ</button>
+    </div>
+
+    <section class="tab-page active" id="page-ancestral">
+      <div class="sub-tabs">
+        <button class="sub-btn active" data-scope="ancestral" data-target="daughters">👸 Lusignan Daughters</button>
+        <button class="sub-btn" data-scope="ancestral" data-target="royal">👑 Royal Ancestry</button>
+        <button class="sub-btn" data-scope="ancestral" data-target="studies">🔭 Studies</button>
+      </div>
+
+      <div class="sub-page active" id="ancestral-daughters" data-scope="ancestral">
+        <div class="grid grid-2">
+          <div class="panel hero">
+            <h2 class="section-title">Ancestral Story Flow</h2>
+            <div class="muted">Use this as the documentary spine: Lusignan daughters, noble marriages, migration, and living descendants.</div>
+            <div class="flow">
+              <div class="node">House of Lusignan</div>
+              <div class="arrow">↓</div>
+              <div class="node">Daughters married into noble houses</div>
+              <div class="arrow">↓</div>
+              <div class="node">Lines spread across Europe</div>
+              <div class="arrow">↓</div>
+              <div class="node">Modern descendants in the project</div>
+            </div>
+          </div>
+          <div class="panel hero">
+            <h2 class="section-title">Key Figures</h2>
+            <div class="grid grid-2">
+              <div class="card"><h3>Jeanne de Lusignan</h3><div class="mini">Gateway line card placeholder</div></div>
+              <div class="card"><h3>Agnes de Lusignan</h3><div class="mini">Paternal gateway placeholder</div></div>
+              <div class="card"><h3>Sophie von Württemberg</h3><div class="mini">Master MRCA convergence placeholder</div></div>
+              <div class="card"><h3>Margaret of Lorraine</h3><div class="mini">Royal convergence placeholder</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2 class="section-title">Maternal Timeline</h2>
+          <div class="timeline">
+            <div class="step"><strong>1099–1200</strong><br><span class="muted">Early Lusignan daughters</span></div>
+            <div class="step"><strong>1200–1300</strong><br><span class="muted">Dynastic marriage spread</span></div>
+            <div class="step"><strong>1300–1500</strong><br><span class="muted">Lorraine / Guise intersections</span></div>
+            <div class="step"><strong>1500–1800</strong><br><span class="muted">Migration and branch survival</span></div>
+            <div class="step"><strong>1800–Present</strong><br><span class="muted">Project descendants</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-page" id="ancestral-royal" data-scope="ancestral">
+        <div class="grid grid-2">
+          <div class="panel">
+            <h2 class="section-title">Member Royal Pathways</h2>
+            <div class="chip-row">
+              <button class="chip active">Elizabeth</button>
+              <button class="chip">Mary</button>
+              <button class="chip">Deanna</button>
+              <button class="chip">Martin</button>
+            </div>
+            <div class="card" style="margin-top:12px;">
+              <h3>Selected member summary</h3>
+              <div class="mini">Use this area for the active member’s documented royal lines, gateway ancestors, and confidence notes.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <h2 class="section-title">Descent Path Visual</h2>
+            <div class="placeholder">Royal descent chain or lineage cards go here.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-page" id="ancestral-studies" data-scope="ancestral">
+        <div class="panel">
+          <h2 class="section-title">Studies</h2>
+          <div class="muted">Use studies as interpretive lenses for triangulation groups, not as disconnected reference blocks.</div>
+        </div>
+        <div class="study-grid">
+          <div class="path-card"><strong>Romanov &amp; Stewarts</strong><br>Reference kits and shared hotspot support.</div>
+          <div class="path-card"><strong>Davidic / Stuart</strong><br>Independent Stuart-linked pathway context.</div>
+          <div class="path-card"><strong>Haplogroup R-FT166311</strong><br>Mary’s Romanov / Holstein-Gottorp anchor line.</div>
+          <div class="path-card"><strong>East Prusia</strong><br>Martin’s Hohenzollern-adjacent documentary context.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-page" id="page-dna">
+      <div class="panel">
+        <h2 class="section-title">DNA Connections</h2>
+        <div class="muted">The main goal here is narrowing the MRCA through shared base-pair groups, member overlap, known ancestry, and supporting studies.</div>
+        <div class="view-tabs" style="margin-top:12px;">
+          <button class="view-btn active" data-view="triangulation">▲ Triangulation Groups</button>
+          <button class="view-btn" data-view="connections">🕸 Connections</button>
+          <button class="view-btn" data-view="chromosomes">🧬 Chromosomes</button>
+          <button class="view-btn" data-view="ethnicity">🌍 Ethnicity Context</button>
+          <button class="view-btn" data-view="ydna">🔬 Y-DNA</button>
+        </div>
+      </div>
+
+      <div class="dna-view active" id="dna-triangulation">
+        <div class="tri-layout">
+          <div class="panel">
+            <h2 class="section-title">Triangulation Groups</h2>
+            <div class="chip-row" style="margin: 10px 0 12px;">
+              <button class="chip active" data-filter="all">All</button>
+              <button class="chip" data-filter="maternal">Maternal</button>
+              <button class="chip" data-filter="paternal">Paternal</button>
+              <button class="chip" data-filter="high">High confidence</button>
+            </div>
+            <div class="tri-list" id="tri-list"></div>
+          </div>
+          <div class="tri-main" id="tri-main"></div>
+        </div>
+      </div>
+
+      <div class="dna-view" id="dna-connections">
+        <div class="grid grid-2">
+          <div class="panel"><h2 class="section-title">Connections Map</h2><div class="placeholder">Use your existing mindmap or member-network canvas here.</div></div>
+          <div class="panel"><h2 class="section-title">Active Context</h2><div class="card"><h3>Selected member or group</h3><div class="mini">Show MRCA notes, strongest shared windows, and links to studies.</div></div></div>
+        </div>
+      </div>
+
+      <div class="dna-view" id="dna-chromosomes">
+        <div class="panel"><h2 class="section-title">Chromosome Browser</h2><div class="placeholder">Use this for actual base-pair inspection and window review. Prioritize triangulated windows over general noise.</div></div>
+      </div>
+
+      <div class="dna-view" id="dna-ethnicity">
+        <div class="grid grid-2">
+          <div class="panel">
+            <h2 class="section-title">Ethnicity Context</h2>
+            <div class="card"><div class="mini">Use ethnicity only as supporting context. Whole-chromosome percentages do not prove ancestry at the specific shared base-pair window.</div></div>
+          </div>
+          <div class="panel"><h2 class="section-title">Member Context Cards</h2><div class="placeholder">Member ethnicity cards or pies go here.</div></div>
+        </div>
+      </div>
+
+      <div class="dna-view" id="dna-ydna">
+        <div class="grid grid-2">
+          <div class="panel">
+            <h2 class="section-title">Haplogroup Path</h2>
+            <div class="flow">
+              <div class="node">R</div>
+              <div class="arrow">↓</div>
+              <div class="node">R1</div>
+              <div class="arrow">↓</div>
+              <div class="node">R-U106</div>
+              <div class="arrow">↓</div>
+              <div class="node">R-FT166311</div>
+            </div>
+          </div>
+          <div class="panel">
+            <h2 class="section-title">Evidence</h2>
+            <div class="path-card"><strong>Mary Doonan</strong><br>Jean Baptiste Engelhardt → Peter III / Holstein-Gottorp → Frederick IV chain.</div>
+            <div class="path-card" style="margin-top:8px;"><strong>Project Significance</strong><br>Use Y-DNA as a lineage anchor, not as a substitute for the autosomal triangulation groups.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-page" id="page-knights">
+      <div class="panel">
+        <h2 class="section-title">Knights &amp; Dames</h2>
+        <div class="muted">Identity layer for member cards, roles, titles, DNA link status, and project participation.</div>
+      </div>
+      <div class="identity-grid">
+        <div class="card"><h3>Member card</h3><div class="mini">👑 Royal line · 🧬 DNA-linked · ⚔️ Role</div></div>
+        <div class="card"><h3>Member card</h3><div class="mini">Profile placeholder</div></div>
+        <div class="card"><h3>Member card</h3><div class="mini">Profile placeholder</div></div>
+        <div class="card"><h3>Member card</h3><div class="mini">Profile placeholder</div></div>
+      </div>
+    </section>
+
+    <section class="tab-page" id="page-research">
+      <div class="panel">
+        <h2 class="section-title">Research &amp; FAQ</h2>
+        <div class="muted">Move long explanations here so the main working tabs stay visual and focused.</div>
+      </div>
+      <div class="faq-grid">
+        <div class="card"><h3>What is triangulation?</h3><div class="mini">Explain overlap, base-pair windows, and group logic.</div></div>
+        <div class="card"><h3>What is phasing?</h3><div class="mini">Explain maternal, paternal, and unresolved evidence.</div></div>
+        <div class="card"><h3>What does ethnicity show?</h3><div class="mini">Whole-chromosome context only, not direct proof at the exact segment.</div></div>
+        <div class="card"><h3>How are studies used?</h3><div class="mini">As supporting lenses for candidate ancestral pathways.</div></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const TRI_DATA = [
+      {
+        id: 'chr15-27-30',
+        chr: '15',
+        start: '27.8',
+        end: '30.1',
+        side: 'paternal',
+        confidence: 'high',
+        members: [
+          { name: 'Martin Lindner', overlap: 'Mindy, Sarah, Gregory', strongest: '5.6 cM', phased: 'maternal phased in source data', ancestry: 'East Prusia · Hohenzollern · Scottish noble families' },
+          { name: 'Mindy', overlap: 'Martin, Aaron, Gregory', strongest: '4.5 cM', phased: 'paternal', ancestry: 'parent-phased lines pending deeper convergence review' },
+          { name: 'Sarah Lindner', overlap: 'Martin, Aaron', strongest: '5.3 cM', phased: 'paternal in this group context', ancestry: 'Lindner / East Prusia-linked context' },
+          { name: 'Aaron Parry', overlap: 'Sarah, Mindy', strongest: '5.3 cM', phased: 'paternal in this group context', ancestry: 'possible Comeau / Lorraine pathway' },
+          { name: 'Gregory Fellows', overlap: 'Martin, Mindy', strongest: '5.2 cM', phased: 'unresolved overall, but useful group overlap', ancestry: 'still under research' }
+        ],
+        studies: ['Romanov & Stewarts', 'East Prusia'],
+        paths: [
+          'Lorraine → Guise → Stuart convergence',
+          'Hohenzollern / East Prusia royal-adjacent pathway',
+          'Possible Lusignan signal through later noble intermarriage network'
+        ],
+        why: 'This is one of the strongest shared windows in the project. Multiple members overlap in the same base-pair region, and some carry documented ancestry tied to Holstein-Gottorp, Hohenzollern, or Stuart-adjacent pathways. That makes this window more useful for MRCA narrowing than a generic distant-match interpretation.',
+        notes: 'Check whether this window aligns with Lorraine / Guise / Stuart-linked descent chains already documented in the project.'
+      },
+      {
+        id: 'chr18-7-8',
+        chr: '18',
+        start: '7.1',
+        end: '8.5',
+        side: 'maternal',
+        confidence: 'partial',
+        members: [
+          { name: 'Martin Lindner', overlap: 'Sarah, Cary, Mary, Richard', strongest: '4.4 cM', phased: 'maternal phased', ancestry: 'East Prusia · Hohenzollern' },
+          { name: 'Sarah Lindner', overlap: 'Martin, Richard', strongest: '5.5 cM', phased: 'maternal phased', ancestry: 'Lindner family line context' },
+          { name: 'Cary', overlap: 'Martin, Mary', strongest: '6.1 cM', phased: 'currently unresolved overall', ancestry: 'Finnish / wider European lines under study' },
+          { name: 'Mary Doonan', overlap: 'Martin, Cary', strongest: '5.1 cM', phased: 'Romanov / Holstein-Gottorp relevant', ancestry: 'Engelhardt · Holstein-Gottorp · R-FT166311' },
+          { name: 'Richard Smith', overlap: 'Sarah', strongest: '5.5 cM', phased: 'unresolved', ancestry: 'Costa Rican / Iberian / colonial Spanish heritage' }
+        ],
+        studies: ['Romanov & Stewarts', 'Haplogroup R-FT166311', 'East Prusia'],
+        paths: [
+          'Holstein-Gottorp → Romanov evidence cluster',
+          'Hohenzollern-adjacent convergence',
+          'Potential Iberian / European noble crossover requiring deeper study'
+        ],
+        why: 'This group pulls together members with very different documented ancestry streams into the same small region. The overlap between East Prusia, Holstein-Gottorp, and Iberian-connected members may help narrow whether the segment points toward a royal intermarriage cluster rather than a single recent regional ancestor.',
+        notes: 'Compare this window against member-specific proven lines and any Lusignan gateways already documented.'
+      }
+    ];
+
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPages = document.querySelectorAll('.tab-page');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabPages.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('page-' + btn.dataset.page).classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.sub-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const scope = btn.dataset.scope;
+        document.querySelectorAll(`.sub-btn[data-scope="${scope}"]`).forEach(b => b.classList.remove('active'));
+        document.querySelectorAll(`.sub-page[data-scope="${scope}"]`).forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(`${scope}-${btn.dataset.target}`).classList.add('active');
+      });
+    });
+
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const views = document.querySelectorAll('.dna-view');
+    viewButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewButtons.forEach(b => b.classList.remove('active'));
+        views.forEach(v => v.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('dna-' + btn.dataset.view).classList.add('active');
+      });
+    });
+
+    function cap(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    function renderTriList(filter = 'all') {
+      let items = TRI_DATA;
+      if (filter === 'maternal' || filter === 'paternal') items = TRI_DATA.filter(x => x.side === filter);
+      if (filter === 'high') items = TRI_DATA.filter(x => x.confidence === 'high');
+      const list = document.getElementById('tri-list');
+      list.innerHTML = items.map((g, i) => `
+        <div class="tri-item ${i === 0 ? 'active' : ''}" data-id="${g.id}">
+          <div class="tri-item-title">Chr ${g.chr} · ${g.start}–${g.end} Mb</div>
+          <div class="tri-meta">
+            <span>${g.members.length} members</span>
+            <span class="badge ${g.side}">${cap(g.side)}</span>
+            <span class="badge ${g.confidence}">${cap(g.confidence)}</span>
+          </div>
+        </div>
+      `).join('');
+
+      if (items.length) renderTriMain(items[0].id);
+      else document.getElementById('tri-main').innerHTML = '<div class="panel">No groups match this filter.</div>';
+
+      list.querySelectorAll('.tri-item').forEach(el => {
+        el.addEventListener('click', () => {
+          list.querySelectorAll('.tri-item').forEach(x => x.classList.remove('active'));
+          el.classList.add('active');
+          renderTriMain(el.dataset.id);
+        });
+      });
+    }
+
+    function renderTriMain(id) {
+      const g = TRI_DATA.find(x => x.id === id);
+      const main = document.getElementById('tri-main');
+      main.innerHTML = `
+        <div class="tri-head">
+          <div class="panel">
+            <h2 class="section-title">Chr ${g.chr} · ${g.start}–${g.end} Mb</h2>
+            <div class="muted">Base-pair group under review for shared MRCA and ancestry convergence.</div>
+            <div class="kv">
+              <div class="k">Members</div><div>${g.members.map(m => m.name).join(', ')}</div>
+              <div class="k">Side</div><div><span class="badge ${g.side}">${cap(g.side)}</span></div>
+              <div class="k">Confidence</div><div><span class="badge ${g.confidence}">${cap(g.confidence)}</span></div>
+              <div class="k">Window</div><div>${g.start}–${g.end} Mb</div>
+            </div>
+          </div>
+          <div class="panel">
+            <h2 class="section-title">Related Studies</h2>
+            <div class="study-grid">
+              ${g.studies.map(s => `<div class="path-card"><strong>${s}</strong><br>Supporting interpretive lens for this group.</div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2 class="section-title">Member Overlap</h2>
+          <div class="member-grid">
+            ${g.members.map(m => `
+              <div class="member-card">
+                <div class="member-name">${m.name}</div>
+                <div class="mini"><strong>Overlaps:</strong> ${m.overlap}</div>
+                <div class="mini"><strong>Strongest segment:</strong> ${m.strongest}</div>
+                <div class="mini"><strong>Phased side:</strong> ${m.phased}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="panel">
+          <h2 class="section-title">Known Ancestry in This Group</h2>
+          <div class="path-grid">
+            ${g.members.map(m => `<div class="path-card"><strong>${m.name}</strong><br>${m.ancestry}</div>`).join('')}
+          </div>
+        </div>
+        <div class="panel">
+          <h2 class="section-title">Potential Shared Pathways</h2>
+          <div class="path-grid">
+            ${g.paths.map(p => `<div class="path-card">${p}</div>`).join('')}
+          </div>
+        </div>
+        <div class="why-box"><strong>Why this group matters:</strong><br>${g.why}</div>
+        <div class="panel">
+          <h2 class="section-title">Working Notes</h2>
+          <textarea class="notes">${g.notes}</textarea>
+        </div>
+      `;
+    }
+
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTriList(btn.dataset.filter);
+      });
+    });
+
+    renderTriList('all');
+  </script>
+</body>
+</html>
