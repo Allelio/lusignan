@@ -188,6 +188,40 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
   <button class="mtab" data-t="studies">📜 Studies</button>
 </div>
 
+<!-- ══ TAB: MOTHERS ══ -->
+<div class="tpage active" id="tp-mothers">
+  <div class="panel">
+    <div class="ptitle">👸 The 21 Lusignan Daughters</div>
+    <div class="psub">The Lusignan genetic legacy spread primarily through daughters who married into noble families across Europe — England, Scotland, Savoy, Cyprus, the Holy Land, and eventually New France.</div>
+    <div class="gmoth" id="moth-grid" style="margin-top:14px;"></div>
+  </div>
+</div>
+
+<!-- ══ TAB: MEMBERS ══ -->
+<div class="tpage" id="tp-members">
+  <div class="panel">
+    <div class="gmem" id="mgrid"></div>
+    <div id="mdet" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:none;"></div>
+  </div>
+</div>
+
+<!-- ══ TAB: CHROMOSOMES ══ -->
+<div class="tpage" id="tp-dna">
+  <div class="panel">
+    <div class="ptitle">🧬 Chromosome Browser</div>
+    <div class="psub">Shared segments per chromosome. Orange = triangulation groups. Hover any segment for detail.</div>
+    <div class="legend">
+      <div class="leg"><div class="lsw" style="background:#1db085"></div>Maternal (phased)</div>
+      <div class="leg"><div class="lsw" style="background:#5ba8d4"></div>Maternal (parent)</div>
+      <div class="leg"><div class="lsw" style="background:#c44820"></div>Paternal</div>
+      <div class="leg"><div class="lsw" style="background:#888;border:1px dashed #bbb"></div>Unresolved</div>
+      <div class="leg"><div class="lsw" style="background:#e67e22;border-radius:0"></div>▲ Tri group</div>
+    </div>
+    <div class="brow" id="ch-btns"></div>
+    <div id="chrom-browser"></div>
+  </div>
+</div>
+
 <!-- ══ TAB: CONNECTIONS ══ -->
 <div class="tpage" id="tp-connections">
   <div class="panel">
@@ -212,43 +246,6 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
     <div id="mrca-p"></div>
     <div style="margin-top:8px;font-size:12px;color:var(--muted);" id="mminfo">Click any member to focus. Shift+click a second to compare.</div>
   </div>
-
-  </div>
-
-</div>
-
-<!-- ══ TAB: MEMBERS ══ -->
-<div class="tpage" id="tp-members">
-  <div class="panel">
-    <div class="gmem" id="mgrid"></div>
-    <div id="mdet" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:none;"></div>
-  </div>
-</div>
-
-<!-- ══ TAB: CHROMOSOMES ══ -->
-<div class="tpage" id="tp-dna">
-  <div class="panel">
-    <div class="ptitle">🧬 Chromosome Browser</div>
-    <div class="psub">Shared segments per chromosome. Orange brackets = triangulation groups. Hover any segment for detail.</div>
-    <div class="legend">
-      <div class="leg"><div class="lsw" style="background:#1db085"></div>Maternal (phased)</div>
-      <div class="leg"><div class="lsw" style="background:#5ba8d4"></div>Maternal (parent)</div>
-      <div class="leg"><div class="lsw" style="background:#c44820"></div>Paternal</div>
-      <div class="leg"><div class="lsw" style="background:#888;border:1px dashed #bbb"></div>Unresolved</div>
-      <div class="leg"><div class="lsw" style="background:#e67e22;border-radius:0"></div>▲ Tri group</div>
-    </div>
-    <div class="brow" id="ch-btns"></div>
-    <div id="chrom-browser"></div>
-  </div>
-</div>
-
-<!-- ══ TAB: MOTHERS ══ -->
-<div class="tpage active" id="tp-mothers">
-  <div class="panel">
-    <div class="ptitle">👸 The 21 Lusignan Daughters</div>
-    <div class="psub">The Lusignan genetic legacy spread primarily through daughters who married into noble families across Europe — England, Scotland, Savoy, Cyprus, the Holy Land, and eventually New France.</div>
-    <div class="gmoth" id="moth-grid" style="margin-top:14px;"></div>
-  </div>
 </div>
 
 <!-- ══ TAB: STUDIES ══ -->
@@ -260,15 +257,16 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
       <button class="stab" data-st="marvin">🔬 Marvin Lovenfeldt</button>
     </div>
 
+    <!-- Studies: All -->
     <div id="ss-overview" class="spage active">
       <div id="studies-list"></div>
     </div>
 
+    <!-- Studies: HK & Paul -->
     <div id="ss-romanov" class="spage">
-    <div class="panel">
-      <div class="ptitle">👑 Royal Romanov &amp; Stewarts Study — Reference Kits</div>
-      <div class="psub">HK = Heather Kennedy T819749 · descends from Queen Victoria via Kaiser Wilhelm II (Hohenzollern)<br>Paul = Paul Rockwell T894146 · Royal Romanov reference kit<br>Both kits have documented royal descent and are used to triangulate member connections to the Lorraine/Romanov/Stuart network.</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+      <div style="font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:12px;">👑 Royal Romanov &amp; Stewarts Study — Reference Kits</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.7;">HK = Heather Kennedy T819749 · descends from Queen Victoria via Kaiser Wilhelm II (Hohenzollern)<br>Paul = Paul Rockwell T894146 · Royal Romanov reference kit<br>Both kits have documented royal descent and are used to triangulate member connections to the Lorraine/Romanov/Stuart network.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
         <div style="background:var(--ac);border-radius:10px;padding:12px;border-left:4px solid #8B0000;">
           <div style="font-family:'Cinzel',serif;font-size:12px;color:#8B0000;font-weight:700;margin-bottom:4px;">★ HK — Heather Kennedy</div>
           <div style="font-size:11px;color:var(--muted);line-height:1.7;">Kit T819749 · Queen Victoria → Kaiser Wilhelm II (Hohenzollern) → HK<br>Total with project: 289cM across all members<br>Largest single: Martin 6.9cM Chr17<br>Chr 15 (27–30Mb): present in hottest project window<br>Chr 18 (6–8Mb): matches Martin, Sarah, Diana, Mary simultaneously<br>Chr 6 (42–43Mb): Elizabeth ★★ triangulates with both HK + Paul<br>Chr 1 (147–151Mb): Aaron ★★ triangulates with both HK + Paul</div>
@@ -279,56 +277,52 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
         </div>
       </div>
       <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);margin-bottom:8px;">Mary Doonan — R-FT166311 Haplogroup (Romanov/Holstein-Gottorp)</div>
-      <div style="background:var(--ac);border-radius:10px;padding:12px;border-left:4px solid #e8954a;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.75;">
+      <div style="background:var(--ac);border-radius:10px;padding:12px;border-left:4px solid #e8954a;margin-bottom:16px;font-size:12px;color:var(--muted);line-height:1.75;">
         Mary's paternal Y-DNA haplogroup R-FT166311 is the Romanov/Holstein-Gottorp signature — confirmed via father + brother (&lt;0.01% globally).<br>
         Chain: Mary → Jean Baptiste Engelhardt (b.1757) → Peter III/Holstein-Gottorp + Anna von Engelhardt → Frederick IV von Schleswig-Holstein-Gottorp.<br>
         Mary↔HK: 30.4cM / 8 segments (7th generation estimate) · Mary↔Paul: 42.3cM / 12 segments.<br>
         Mary and Martin both connect through this Holstein-Gottorp line. Deanna also connects to the same network.
       </div>
-      <div class="ptitle" style="margin-bottom:8px;">All Members — cM totals with HK and Paul</div>
+      <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);margin-bottom:8px;">All Members — cM totals with HK and Paul</div>
       <table class="rtbl">
         <thead><tr><th>Member</th><th>↔ HK</th><th>↔ Paul</th><th>Combined</th><th>Notes</th></tr></thead>
         <tbody id="rtbody2"></tbody>
       </table>
     </div>
-  </div>
 
-  <div id="ss-marvin" class="spage">
-    <div class="panel">
-      <div class="ptitle">🔬 New Match: Marvin Lovenfeldt</div>
-      <div class="psub">Kit KY5067736 · FTDNA · Under evaluation for project membership</div>
-      <div class="marvcard">
+    <!-- Studies: Marvin -->
+    <div id="ss-marvin" class="spage">
+      <div style="font-family:'Cinzel',serif;font-size:14px;color:var(--purple);margin-bottom:4px;">🔬 New Match: Marvin Lovenfeldt</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">Kit KY5067736 · FTDNA · Under evaluation for project membership</div>
+      <div class="marvcard" style="margin-bottom:14px;">
         <div class="marv-t">Connection Summary</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.8;">Marvin connects to <strong>6 of 11 project members</strong>. No match with Aaron, Richard, or CMK at any threshold. Strongest connection: <strong>Mindy 56.4 cM / 15 segments</strong> — largest single match in this set.</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.8;">Marvin connects to <strong>6 of 11 project members</strong>. No match with Aaron, Richard, or Cary at any threshold. Strongest connection: <strong>Mindy 56.4 cM / 15 segments</strong> — largest single match in this set.</div>
       </div>
-      <table class="stbl">
+      <table class="stbl" style="margin-bottom:14px;">
         <thead><tr><th>Member</th><th>cM</th><th>Segments</th><th>Largest</th><th>Chromosomes</th></tr></thead>
         <tbody id="marv-tbody"></tbody>
       </table>
-    </div>
-    <div class="g2">
-      <div class="panel">
-        <div class="ptitle">Aaron — No Match</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.7;">Aaron Parry (JU5116468) shares <strong>no segments</strong> with Marvin at the 3cM threshold. Marvin's connection to the project runs through other lines, not Aaron's. The Chr 6 Aaron↔Martin paternal segment (likely via Johanna Christiana Augustina Lindner) is not shared with Marvin.</div>
-      </div>
-      <div class="panel">
-        <div class="ptitle">Triangulation Signals</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.7;">
-          <strong>Marvin ↔ Gregory Chr18 · 7.1 cM</strong> overlaps the Chr 18 tri group (Martin, Sarah, Mary, Richard).<br>
-          <strong>Marvin ↔ Martin Chr15 · 4.8 cM</strong> near the hottest project window.<br>
-          <strong>Marvin ↔ Mindy 56.4 cM / 15 segs</strong> — strongest signal in this set.<br><br>
-          Chr 18 overlap (Gregory, Martin, Marvin) and Chr 15 (Martin, Marvin) suggest Marvin may connect through the Lorraine/Hohenzollern pathway as Martin.
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div style="background:var(--ac);border-radius:10px;padding:12px;border-left:4px solid var(--purple);">
+          <div style="font-family:'Cinzel',serif;font-size:11px;color:var(--purple);font-weight:700;margin-bottom:6px;">Aaron — No Match</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Aaron Parry (JU5116468) shares <strong>no segments</strong> with Marvin at the 3cM threshold. The Chr 6 Aaron↔Martin paternal segment (likely via Johanna Christiana Augustina Lindner) is not shared with Marvin.</div>
+        </div>
+        <div style="background:var(--ac);border-radius:10px;padding:12px;border-left:4px solid #e67e22;">
+          <div style="font-family:'Cinzel',serif;font-size:11px;color:#e67e22;font-weight:700;margin-bottom:6px;">Triangulation Signals</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">
+            <strong>Marvin ↔ Gregory Chr18 · 7.1 cM</strong> overlaps the Chr 18 tri group.<br>
+            <strong>Marvin ↔ Martin Chr15 · 4.8 cM</strong> near the hottest project window.<br>
+            <strong>Marvin ↔ Mindy 56.4 cM / 15 segs</strong> — strongest signal.<br><br>
+            Chr 18 (Gregory, Martin, Marvin) and Chr 15 (Martin, Marvin) suggest Lorraine/Hohenzollern pathway.
+          </div>
         </div>
       </div>
-    </div>
-    <div class="panel">
-      <div class="ptitle">Full Segment Data by Member</div>
+      <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);margin-bottom:8px;">Full Segment Data by Member</div>
       <div id="marv-segs"></div>
     </div>
-  </div>
-  </div><!-- /outer panel -->
-</div><!-- /tp-studies -->
 
+  </div><!-- /panel -->
+</div><!-- /tp-studies -->
 </div><!-- /wrap -->
 <div id="tt"></div>
 
