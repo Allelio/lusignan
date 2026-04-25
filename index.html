@@ -219,8 +219,10 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
 
 <!-- ══ TAB: MEMBERS ══ -->
 <div class="tpage" id="tp-members">
-  <div class="gmem" id="mgrid"></div>
-  <div id="mdet" class="panel"></div>
+  <div class="panel">
+    <div class="gmem" id="mgrid"></div>
+    <div id="mdet" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:none;"></div>
+  </div>
 </div>
 
 <!-- ══ TAB: CHROMOSOMES ══ -->
@@ -245,23 +247,24 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
   <div class="panel">
     <div class="ptitle">👸 The 21 Lusignan Daughters</div>
     <div class="psub">The Lusignan genetic legacy spread primarily through daughters who married into noble families across Europe — England, Scotland, Savoy, Cyprus, the Holy Land, and eventually New France.</div>
+    <div class="gmoth" id="moth-grid" style="margin-top:14px;"></div>
   </div>
-  <div class="gmoth" id="moth-grid"></div>
 </div>
 
 <!-- ══ TAB: STUDIES ══ -->
 <div class="tpage" id="tp-studies">
-  <div class="stab-row" id="stud-stabs">
-    <button class="stab active" data-st="overview">📜 All Studies</button>
-    <button class="stab" data-st="romanov">👑 HK &amp; Paul</button>
-    <button class="stab" data-st="marvin">🔬 Marvin Lovenfeldt</button>
-  </div>
+  <div class="panel">
+    <div class="stab-row" id="stud-stabs">
+      <button class="stab active" data-st="overview">📜 All Studies</button>
+      <button class="stab" data-st="romanov">👑 HK &amp; Paul</button>
+      <button class="stab" data-st="marvin">🔬 Marvin Lovenfeldt</button>
+    </div>
 
-  <div id="ss-overview" class="spage active">
-    <div id="studies-list"></div>
-  </div>
+    <div id="ss-overview" class="spage active">
+      <div id="studies-list"></div>
+    </div>
 
-  <div id="ss-romanov" class="spage">
+    <div id="ss-romanov" class="spage">
     <div class="panel">
       <div class="ptitle">👑 Royal Romanov &amp; Stewarts Study — Reference Kits</div>
       <div class="psub">HK = Heather Kennedy T819749 · descends from Queen Victoria via Kaiser Wilhelm II (Hohenzollern)<br>Paul = Paul Rockwell T894146 · Royal Romanov reference kit<br>Both kits have documented royal descent and are used to triangulate member connections to the Lorraine/Romanov/Stuart network.</div>
@@ -323,7 +326,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
       <div id="marv-segs"></div>
     </div>
   </div>
-</div>
+  </div><!-- /outer panel -->
+</div><!-- /tp-studies -->
 
 </div><!-- /wrap -->
 <div id="tt"></div>
